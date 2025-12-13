@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import clsx from 'clsx';
 import { assets } from '../data/images';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+
+  // Check if we are on the Home page (transparent header) or other pages (solid header)
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -17,18 +19,6 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => setIsOpen(false), [location]);
-
-  // Menu Animation Variants
-  const menuVars = {
-    initial: { scaleY: 0 },
-    animate: { scaleY: 1, transition: { duration: 0.5, ease: [0.12, 0, 0.39, 0] } },
-    exit: { scaleY: 0, transition: { delay: 0.5, duration: 0.5, ease: [0.22, 1, 0.36, 1] } }
-  };
-
-  const linkVars = {
-    initial: { y: "30vh", transition: { duration: 0.5, ease: [0.37, 0, 0.63, 1] } },
-    open: { y: 0, transition: { duration: 0.7, ease: [0, 0.55, 0.45, 1] } }
-  };
 
   const navLinks = [
     { title: "Home", href: "/" },
@@ -39,85 +29,85 @@ const Navbar = () => {
   ];
 
   return (
-    <header className={clsx(
-      "fixed top-0 left-0 w-full z-50 transition-all duration-500",
-      scrolled || isOpen ? "py-4" : "py-8"
-    )}>
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      scrolled || !isHome ? "bg-white shadow-md py-3" : "bg-transparent py-4"
+    }`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         
-        {/* Logo */}
-        <Link to="/" className="relative z-50 flex items-center group">
-          <img 
-            src={assets.logoWords} 
-            alt="Grandkonsul" 
-            className={clsx("h-16 md:h-20 lg:h-24 transition-opacity duration-300", isOpen ? "opacity-100" : (scrolled ? "opacity-100" : "opacity-100 mix-blend-difference"))}
-          />
+        {/* Logo - Larger and positioned higher */}
+        <Link to="/" className="flex items-center gap-2 z-50 -mt-2">
+           {/* Swap logo based on background color for visibility */}
+           <img 
+             src={scrolled || !isHome ? assets.logoWords : assets.logoWords} 
+             alt="Grandkonsul" 
+             className="h-20 md:h-28 lg:h-32 object-contain" // Much larger logo
+           />
+           {/* If on home and not scrolled, show text manually if logo image doesn't have words */}
+           {!scrolled && isHome && (
+             <span className="font-serif text-xl font-bold text-white tracking-widest hidden md:block">
+               GRANDKONSUL
+             </span>
+           )}
         </Link>
 
-        {/* Desktop Menu - Minimalist */}
-        <div className="hidden md:flex items-center gap-12">
-           {navLinks.map((link) => (
-             <Link key={link.title} to={link.href} className="relative group overflow-hidden">
-                <span className={clsx("block text-sm font-medium tracking-widest transition-transform duration-300 group-hover:-translate-y-full", scrolled ? "text-grand-dark" : "text-white mix-blend-difference")}>
-                  {link.title}
-                </span>
-                <span className="absolute top-0 left-0 block text-sm font-medium tracking-widest text-grand-gold transition-transform duration-300 translate-y-full group-hover:translate-y-0">
-                  {link.title}
-                </span>
-             </Link>
-           ))}
+        {/* Desktop Menu - Simplified & Visible */}
+        <div className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <Link 
+              key={link.title} 
+              to={link.href}
+              className={`text-sm font-bold uppercase tracking-widest transition-colors hover:text-grand-gold ${
+                scrolled || !isHome ? "text-grand-dark" : "text-white"
+              }`}
+            >
+              {link.title}
+            </Link>
+          ))}
+          
+          <Link 
+            to="/contact"
+            className={`px-6 py-2 rounded-full font-bold text-xs uppercase tracking-widest transition-all ${
+              scrolled || !isHome 
+                ? "bg-grand-green text-white hover:bg-grand-gold" 
+                : "bg-white text-grand-green hover:bg-grand-gold hover:text-white"
+            }`}
+          >
+            Get in Touch
+          </Link>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Toggle */}
         <button 
           onClick={() => setIsOpen(!isOpen)} 
-          className="md:hidden relative z-50 text-grand-gold focus:outline-none"
+          className={`md:hidden z-50 ${scrolled || !isHome ? "text-grand-dark" : "text-white"}`}
         >
-          {isOpen ? <X size={32} /> : <Menu size={32} />}
+          {isOpen ? <X size={28} className="text-grand-dark" /> : <Menu size={28} />}
         </button>
       </div>
 
-      {/* FULL SCREEN MOBILE OVERLAY */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            variants={menuVars}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            className="fixed inset-0 bg-grand-green origin-top h-screen flex flex-col justify-center px-8 z-40"
+            initial={{ opacity: 0, y: "-100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "-100%" }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="fixed inset-0 bg-white z-40 flex flex-col items-center justify-center gap-8"
           >
-            <div className="flex flex-col gap-6">
-              {navLinks.map((link, index) => (
-                <div key={index} className="overflow-hidden">
-                  <motion.div
-                    variants={linkVars}
-                    initial="initial"
-                    animate="open"
-                    exit="initial"
-                    transition={{ delay: 0.1 * index }}
-                  >
-                    <Link 
-                      to={link.href} 
-                      className="text-5xl md:text-7xl font-serif font-bold text-white hover:text-grand-gold transition-colors"
-                    >
-                      {link.title}
-                    </Link>
-                  </motion.div>
-                </div>
-              ))}
-            </div>
-            
-            <motion.div 
-               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
-               className="absolute bottom-10 left-8 text-white/50 text-sm"
-            >
-               <p>Lagos • London • Dubai</p>
-            </motion.div>
+            {navLinks.map((link) => (
+              <Link 
+                key={link.title} 
+                to={link.href}
+                className="text-3xl font-serif font-bold text-grand-dark hover:text-grand-gold transition-colors"
+              >
+                {link.title}
+              </Link>
+            ))}
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </nav>
   );
 };
 

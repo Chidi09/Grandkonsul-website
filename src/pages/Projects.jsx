@@ -43,14 +43,44 @@ const Projects = () => {
       {/* We make this container very tall (300vh) to give us 'room' to scroll horizontally */}
       <section ref={targetRef} className="hidden md:block relative h-[300vh] bg-grand-dark">
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-          <motion.div style={{ x, willChange: "transform" }} className="flex gap-20 pl-20">
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-            {/* End Card */}
-            <div className="h-[500px] w-[400px] flex items-center justify-center text-white">
-               <h2 className="text-6xl font-serif">Next Project?</h2>
+          
+          {/* Increased gap from gap-20 to gap-40 (10rem spacing) */}
+          <motion.div style={{ x, willChange: "transform" }} className="flex gap-40 pl-20 pr-40">
+            
+            {/* Title Card */}
+            <div className="flex-shrink-0 w-[30vw] flex flex-col justify-center">
+               <h2 className="text-white text-8xl font-serif font-bold leading-tight">
+                 Selected <br/> <span className="text-grand-gold">Works</span>
+               </h2>
+               <p className="text-gray-400 mt-6 max-w-md">Swipe to explore our architectural landmarks.</p>
             </div>
+            {/* Project Cards */}
+            {projects.map((project, i) => (
+              <div key={project.id} className="relative h-[70vh] w-[450px] flex-shrink-0 group cursor-pointer">
+                {/* Image Container */}
+                <div className="w-full h-full overflow-hidden relative border-r border-white/10">
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                  />
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-colors duration-500"></div>
+                </div>
+                
+                {/* Text: Moved to left-0 (aligned with image) and added width constraint */}
+                <div className="absolute -bottom-16 left-0 w-[150%] pointer-events-none">
+                   <h3 className="text-5xl font-serif text-white font-bold opacity-50 group-hover:opacity-100 transition-opacity duration-500">
+                     {project.title}
+                   </h3>
+                   <p className="text-grand-gold text-sm uppercase tracking-widest mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                     {project.location}
+                   </p>
+                </div>
+              </div>
+            ))}
+            
+            {/* End padding */}
+            <div className="w-[20vw]"></div> 
           </motion.div>
         </div>
       </section>
@@ -75,32 +105,6 @@ const Projects = () => {
   );
 };
 
-// --- SUB COMPONENTS ---
-const ProjectCard = ({ project }) => {
-  return (
-    <div className="relative group h-[600px] w-[450px] flex-shrink-0 cursor-pointer">
-      <div className="w-full h-full overflow-hidden relative">
-        <img 
-          src={project.image} 
-          alt={project.title} 
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
-        />
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
-      </div>
-      
-      {/* Floating Title (Outside the image for artistic feel) */}
-      <div className="absolute -bottom-12 -left-10 z-20 mix-blend-difference">
-         <h3 className="text-6xl font-serif text-white font-bold whitespace-nowrap opacity-50 group-hover:opacity-100 transition-opacity duration-500">
-           {project.title}
-         </h3>
-         <p className="text-grand-gold text-sm uppercase tracking-widest mt-2 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-           {project.location} — {project.category}
-         </p>
-      </div>
-    </div>
-  );
-};
 
 const MobileProjectCard = ({ project, index }) => {
   return (

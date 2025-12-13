@@ -40,6 +40,13 @@ h1, h2, h3, h4, h5, h6 {
   color: transparent;
 }
 
+/* Optional: Thinner stroke for mobile to keep it crisp */
+@media (max-width: 768px) {
+  .stroke-gold {
+    -webkit-text-stroke: 0.5px #c5a059;
+  }
+}
+
 /* Ensure smooth reveal for the accordion */
 .accordion-enter {
   opacity: 0;
@@ -71,5 +78,16 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar-thumb {
   background: #c5a059;
   border-radius: 4px;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
