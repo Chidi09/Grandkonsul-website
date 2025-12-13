@@ -27,7 +27,6 @@ const Home = () => {
           <HeroSection />
           <MarqueeSection />
           <AboutSection />
-          <HorizontalGallery />
           <ServicesOverview />
           <FAQPreview />
           <CallToAction />
@@ -62,9 +61,9 @@ const HeroSection = () => {
     offset: ["start start", "end start"]
   });
 
-  // Aggressive Parallax for Mobile Depth
+  // Parallax
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]); // Text moves faster than BG
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]); // Reduced speed for better visibility
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   return (
@@ -80,19 +79,14 @@ const HeroSection = () => {
              alt="Luxury Architecture"
            />
         </div>
-        {/* Dark gradient for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-grand-dark/90"></div>
+        {/* Stronger gradient at bottom for text contrast, lighter at top */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/80"></div>
       </motion.div>
 
       {/* 2. CSS PARTICLES (Lightweight for Mobile) */}
       <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
-        {/* Manually placed particles to avoid JS loop calculation overhead */}
         <div className="particle w-1 h-1 top-[20%] left-[10%]" style={{ animationDelay: '0s' }}></div>
         <div className="particle w-2 h-2 top-[50%] left-[20%]" style={{ animationDelay: '1s' }}></div>
-        <div className="particle w-1 h-1 top-[30%] left-[80%]" style={{ animationDelay: '2s' }}></div>
-        <div className="particle w-1.5 h-1.5 top-[70%] left-[60%]" style={{ animationDelay: '3s' }}></div>
-        <div className="particle w-1 h-1 top-[15%] left-[50%]" style={{ animationDelay: '4s' }}></div>
-        <div className="particle w-2 h-2 top-[85%] left-[30%]" style={{ animationDelay: '1.5s' }}></div>
       </div>
 
       {/* 3. CONTENT */}
@@ -100,28 +94,28 @@ const HeroSection = () => {
         style={{ opacity, y: textY }} 
         className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4 pt-20"
       >
-        {/* Intro */}
+        {/* Intro Tagline - HIGH VISIBILITY */}
         <motion.div 
-           initial={{ opacity: 0, scale: 0.9 }} 
-           animate={{ opacity: 1, scale: 1 }} 
-           transition={{ delay: 2.2, duration: 0.8 }}
-           className="mb-8"
+          initial={{ opacity: 0, scale: 0.9 }} 
+          animate={{ opacity: 1, scale: 1 }} 
+          transition={{ delay: 2.2, duration: 0.8 }} 
+          className="mb-6 md:mb-8"
         >
-          <div className="h-[1px] w-12 bg-grand-gold mx-auto mb-6 md:hidden shadow-[0_0_10px_#c5a059]"></div>
-          <p className="text-grand-gold uppercase tracking-[0.3em] text-xs font-bold drop-shadow-md">
+          <div className="h-[2px] w-12 bg-grand-gold mx-auto mb-6 md:hidden shadow-[0_0_15px_#c5a059]"></div>
+          <p className="text-grand-gold uppercase tracking-[0.3em] text-sm font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] bg-black/20 px-4 py-1 rounded-full backdrop-blur-sm">
             Redefining Luxury Living
           </p>
         </motion.div>
         
-        {/* TYPOGRAPHY STACK */}
-        <div className="flex flex-col items-center justify-center leading-none gap-2">
+        {/* TYPOGRAPHY STACK - SOLID & BRIGHT */}
+        <div className="flex flex-col items-center justify-center leading-none gap-2 drop-shadow-[0_4px_10px_rgba(0,0,0,1)]">
           
           <div className="overflow-hidden">
             <motion.h1 
               initial={{ y: "100%" }} 
               animate={{ y: "0%" }} 
-              transition={{ delay: 2.3, duration: 1, ease: "easeOut" }}
-              className="text-[17vw] md:text-[11vw] font-serif font-bold text-white tracking-tighter mix-blend-overlay"
+              transition={{ delay: 2.3, duration: 1 }}
+              className="text-[17vw] md:text-[11vw] font-serif font-bold text-white tracking-tighter"
             >
               GRAND
             </motion.h1>
@@ -131,8 +125,8 @@ const HeroSection = () => {
             <motion.h1 
               initial={{ y: "100%" }} 
               animate={{ y: "0%" }} 
-              transition={{ delay: 2.5, duration: 1, ease: "easeOut" }}
-              className="text-[17vw] md:text-[11vw] font-serif font-bold text-grand-gold tracking-tighter text-shimmer drop-shadow-2xl"
+              transition={{ delay: 2.5, duration: 1 }}
+              className="text-[17vw] md:text-[11vw] font-serif font-bold text-grand-gold tracking-tighter text-shimmer"
             >
               KONSUL
             </motion.h1>
@@ -142,23 +136,23 @@ const HeroSection = () => {
             <motion.h1 
               initial={{ y: "100%" }} 
               animate={{ y: "0%" }} 
-              transition={{ delay: 2.7, duration: 1, ease: "easeOut" }}
-              className="text-[17vw] md:text-[11vw] font-serif font-bold text-transparent stroke-gold tracking-tighter opacity-80"
+              transition={{ delay: 2.7, duration: 1 }}
+              className="text-[17vw] md:text-[11vw] font-serif font-bold text-white tracking-tighter"
             >
               GARDENS
             </motion.h1>
           </div>
         </div>
 
-        {/* Scroll Indicator */}
+        {/* Scroll Indicator - BRIGHTER */}
         <motion.div 
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
-          transition={{ delay: 3.5, duration: 1 }}
+          transition={{ delay: 3.5 }} 
           className="absolute bottom-12 left-0 w-full flex flex-col items-center gap-3"
         >
-          <span className="text-white/50 text-[10px] uppercase tracking-widest animate-pulse">Scroll to Explore</span>
-          <div className="h-16 w-[1px] bg-gradient-to-b from-transparent via-grand-gold to-transparent shadow-[0_0_8px_#c5a059]"></div>
+          <span className="text-white text-xs font-bold uppercase tracking-widest animate-pulse drop-shadow-md">Scroll to Explore</span>
+          <div className="h-16 w-[2px] bg-grand-gold shadow-[0_0_10px_#c5a059]"></div>
         </motion.div>
 
       </motion.div>
@@ -267,90 +261,7 @@ const AboutSection = () => {
   );
 };
 
-// --- 5. HORIZONTAL GALLERY (SHORTENED to 3) ---
-const HorizontalGallery = () => {
-  const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: targetRef });
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]); // Adjusted scroll distance since fewer items
-
-  // Only take the first 3 projects
-  const selectedProjects = assets.projects.slice(0, 3);
-
-  return (
-    <>
-      {/* DESKTOP VIEW: Adaptive Background & Text */}
-      <section 
-        ref={targetRef} 
-        className="hidden md:block relative h-[250vh] bg-grand-light dark:bg-grand-dark transition-colors duration-500"
-      >
-        <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-          <motion.div style={{ x }} className="flex gap-32 pl-20 pr-40">
-            
-            {/* Title Section */}
-            <div className="flex-shrink-0 w-[25vw] flex flex-col justify-center z-10">
-               <div className="h-1 w-20 bg-grand-gold mb-8"></div>
-               <h2 className="text-grand-dark dark:text-white text-7xl font-serif font-bold leading-none transition-colors duration-500">
-                 Selected <br/> <span className="text-transparent stroke-gold">Works</span>
-               </h2>
-               <p className="text-gray-600 dark:text-gray-400 mt-8 text-lg max-w-xs leading-relaxed transition-colors duration-500">
-                 A preview of our defining moments in architecture.
-               </p>
-            </div>
-
-            {selectedProjects.map((project, i) => (
-              <div key={i} className="relative h-[65vh] w-[35vw] flex-shrink-0 group cursor-pointer">
-                <div className="w-full h-full overflow-hidden relative rounded-sm shadow-xl dark:shadow-none">
-                  <img 
-                    src={project.src} 
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110 img-adaptive" 
-                  />
-                  {/* Overlay: Lighter in light mode, Darker in dark mode */}
-                  <div className="absolute inset-0 bg-black/10 dark:bg-black/40 group-hover:bg-transparent transition-colors duration-500"></div>
-                </div>
-                
-                <div className="absolute -bottom-14 left-0">
-                   <h3 className="text-4xl font-serif text-grand-dark dark:text-white font-bold opacity-60 group-hover:opacity-100 transition-all duration-500">
-                     {project.title}
-                   </h3>
-                </div>
-              </div>
-            ))}
-            
-            {/* CTA */}
-            <div className="flex-shrink-0 w-[30vw] flex items-center justify-center">
-              <a href="/projects" className="group flex flex-col items-center gap-4">
-                <div className="w-24 h-24 rounded-full border border-grand-gold/30 dark:border-white/20 flex items-center justify-center group-hover:bg-grand-gold group-hover:border-grand-gold transition-all duration-500">
-                  <ArrowUpRight className="text-grand-dark dark:text-white h-8 w-8 group-hover:scale-125 transition-transform" />
-                </div>
-                <span className="text-grand-dark dark:text-white font-serif text-2xl group-hover:text-grand-gold transition-colors">View All Projects</span>
-              </a>
-            </div>
-
-          </motion.div>
-        </div>
-      </section>
-
-      {/* MOBILE VIEW: Adaptive */}
-      <section className="md:hidden bg-grand-light dark:bg-grand-dark py-20 px-6 transition-colors duration-500">
-        <h2 className="text-grand-dark dark:text-white text-5xl font-serif font-bold leading-tight mb-12">
-          Selected <br/> <span className="text-grand-gold">Works</span>
-        </h2>
-        <div className="flex flex-col gap-16">
-          {selectedProjects.map((project, i) => (
-            <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} key={i} className="group">
-              <div className="h-[400px] w-full overflow-hidden rounded-sm mb-6 relative shadow-lg">
-                <img src={project.src} alt={project.title} className="w-full h-full object-cover img-adaptive" />
-              </div>
-              <h3 className="text-grand-dark dark:text-white text-3xl font-serif font-bold transition-colors">{project.title}</h3>
-            </motion.div>
-          ))}
-          <a href="/projects" className="block w-full py-4 text-center border border-grand-gold text-grand-gold mt-4 rounded-sm uppercase tracking-widest font-bold text-sm">View Full Portfolio</a>
-        </div>
-      </section>
-    </>
-  );
-};
+// REMOVED: HorizontalGallery (Selected Works) section
 
 // --- 6. SERVICES SPOTLIGHT (Mouse-Tracking Spotlight Effect) ---
 const ServicesOverview = () => {
