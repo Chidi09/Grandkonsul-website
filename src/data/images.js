@@ -30,6 +30,7 @@ export const assets = {
   heroBg,
   luxuryInterior,
   velvetSofa,
+  cubeHouse: geometric, // Exported so it can be used on Services page
   services: {
     development, // Construction Crane
     relocation,  // Business Woman

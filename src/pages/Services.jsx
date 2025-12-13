@@ -25,17 +25,17 @@ const Services = () => {
     },
     { 
       title: "Service Accommodation", 
-      img: assets.luxuryInterior, 
+      img: assets.cubeHouse, 
       desc: "Experience the comfort of home with the luxury of a hotel. Our fully furnished, high-specification apartments offer flexible short-term living solutions for business travelers and expatriates seeking style, convenience, and privacy in prime locations." 
     },
     { 
       title: "HMO & Management", 
-      img: assets.services.coLiving, 
+      img: assets.services.meeting, 
       desc: "We specialize in the development and management of Houses of Multiple Occupancy (HMO), optimizing rental yields for investors while providing safe, modern, and community-focused living spaces for tenants. Our management ensures compliance and high occupancy rates." 
     },
     { 
       title: "Rent to Rent", 
-      img: assets.services.meeting, 
+      img: assets.services.coLiving, 
       desc: "A hassle-free solution for landlords seeking financial certainty. We lease your property long-term, handle all maintenance and tenant management, and provide you with guaranteed fixed rental income every month, removing the stress of voids and arrears." 
     }
   ];
