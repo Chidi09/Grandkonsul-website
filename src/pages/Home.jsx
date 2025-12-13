@@ -1,8 +1,10 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Building2, Globe, Users, Home as HomeIcon, Key, Briefcase, CheckCircle2 } from 'lucide-react';
+import { ArrowUpRight, Building2, Globe, Users, Home as HomeIcon, Key, Briefcase, CheckCircle2, ChevronDown } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { assets } from '../data/images';
+import { faqs } from '../data/content';
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -27,6 +29,7 @@ const Home = () => {
           <AboutSection />
           <HorizontalGallery />
           <ServicesOverview />
+          <FAQPreview />
           <CallToAction />
         </div>
       )}
@@ -163,17 +166,57 @@ const HeroSection = () => {
   );
 };
 
-// --- 3. MARQUEE (Energy) ---
+// --- 3. VELOCITY MARQUEE (Responsive to Scroll Speed) ---
 const MarqueeSection = () => {
+  const containerRef = useRef(null);
+  const lastScrollY = useRef(0);
+  const lastTime = useRef(Date.now());
+  const [scrollSpeed, setScrollSpeed] = useState(1);
+  
+  useEffect(() => {
+    let timeoutId;
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const currentTime = Date.now();
+      const timeDelta = currentTime - lastTime.current;
+      
+      if (timeDelta > 0) {
+        const scrollDelta = Math.abs(currentScrollY - lastScrollY.current);
+        const velocity = scrollDelta / timeDelta; // pixels per ms
+        
+        // Map velocity to speed multiplier (0.5x to 3x)
+        const speedMultiplier = Math.min(3, Math.max(0.5, velocity * 100 + 1));
+        setScrollSpeed(speedMultiplier);
+      }
+      
+      lastScrollY.current = currentScrollY;
+      lastTime.current = currentTime;
+      
+      // Decay speed back to 1 after scrolling stops
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setScrollSpeed(1);
+      }, 150);
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(timeoutId);
+    };
+  }, []);
+  
+  const duration = 20 / scrollSpeed; // Faster scroll = shorter duration = faster animation
+  
   return (
-    <div className="py-12 bg-grand-dark border-y border-white/10 overflow-hidden">
+    <div ref={containerRef} className="py-12 bg-grand-light dark:bg-grand-dark border-y border-grand-dark/10 dark:border-white/10 overflow-hidden">
       <motion.div 
         animate={{ x: "-50%" }} 
-        transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
+        transition={{ repeat: Infinity, ease: "linear", duration }}
         className="flex gap-10 whitespace-nowrap"
       >
         {[...Array(4)].map((_, i) => (
-          <h2 key={i} className="text-8xl font-serif text-white/10 font-bold">
+          <h2 key={i} className="text-6xl md:text-8xl font-serif text-grand-dark/10 dark:text-white/5 font-bold">
             PREMIUM ESTATES • CORPORATE RELOCATION • JOINT VENTURES •
           </h2>
         ))}
@@ -185,14 +228,14 @@ const MarqueeSection = () => {
 // --- 4. ABOUT / VISION (Fixing the Sofa Crop) ---
 const AboutSection = () => {
   return (
-    <section className="py-20 md:py-32 bg-grand-light text-grand-dark relative">
+    <section className="py-20 md:py-32 bg-grand-light dark:bg-grand-dark text-grand-dark dark:text-white relative">
       <div className="container mx-auto px-6 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
         <div className="order-2 md:order-1">
           <h3 className="text-grand-gold uppercase tracking-widest font-bold mb-4 text-sm md:text-base">Our Philosophy</h3>
           <h2 className="text-4xl md:text-7xl font-serif font-bold leading-none mb-6 md:mb-8">
             We don't just build.<br/>We <span className="text-grand-green italic">curate.</span>
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
             Grandkonsul Gardens represents the pinnacle of luxury living. From the architectural blueprint to the velvet sofa in the lobby, we obsess over details so you don't have to.
           </p>
           <div className="flex gap-4">
@@ -200,7 +243,7 @@ const AboutSection = () => {
                 <h4 className="text-3xl md:text-4xl font-serif font-bold text-grand-gold">150+</h4>
                 <p className="text-[10px] md:text-xs uppercase tracking-wider">Projects</p>
              </div>
-             <div className="w-px bg-gray-300 h-10 md:h-12"></div>
+             <div className="w-px bg-gray-300 dark:bg-gray-700 h-10 md:h-12"></div>
              <div className="text-center">
                 <h4 className="text-3xl md:text-4xl font-serif font-bold text-grand-gold">$50M+</h4>
                 <p className="text-[10px] md:text-xs uppercase tracking-wider">Asset Value</p>
@@ -291,38 +334,67 @@ const HorizontalGallery = () => {
   );
 };
 
-// --- 6. SERVICES OVERVIEW (ICONS ONLY) ---
+// --- 6. SERVICES SPOTLIGHT (Mouse-Tracking Spotlight Effect) ---
 const ServicesOverview = () => {
+  const containerRef = useRef(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
   const services = [
-    { title: "Property Development", icon: Building2, desc: "End-to-end construction management." },
-    { title: "Relocation Services", icon: Globe, desc: "Seamless corporate & personal moves." },
-    { title: "Joint Ventures", icon: Users, desc: "Strategic land partnerships." },
-    { title: "Service Accommodation", icon: Briefcase, desc: "Premium short-stay solutions." },
-    { title: "HMO Management", icon: HomeIcon, desc: "High-yield multi-occupancy housing." },
-    { title: "Rent to Rent", icon: Key, desc: "Guaranteed income for landlords." },
+    { title: "Property Development", icon: Building2 },
+    { title: "Relocation Services", icon: Globe },
+    { title: "Joint Ventures", icon: Users },
+    { title: "Service Accommodation", icon: Briefcase },
+    { title: "HMO Management", icon: HomeIcon },
+    { title: "Rent to Rent", icon: Key },
   ];
 
+  const handleMouseMove = (e) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  const spotlightStyle = {
+    background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(197, 160, 89, 0.15), transparent 40%)`,
+  };
+
   return (
-    <section className="py-20 bg-grand-light">
-      <div className="container mx-auto px-6">
+    <section 
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      className="py-20 bg-grand-light dark:bg-grand-dark relative overflow-hidden"
+    >
+      {/* Spotlight overlay */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-0 md:opacity-100 transition-opacity duration-300"
+        style={spotlightStyle}
+      />
+      
+      <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-grand-green mb-4">Our Expertise</h2>
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-grand-green dark:text-grand-gold mb-4">Our Expertise</h2>
           <div className="w-16 h-1 bg-grand-gold mx-auto"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 md:gap-8">
           {services.map((s, i) => (
             <motion.a 
               href="/services"
               key={i}
-              whileHover={{ y: -10 }}
-              className="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-transparent hover:border-grand-gold/20 group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              whileHover={{ y: -10, scale: 1.05 }}
+              className="bg-white dark:bg-white/5 p-6 md:p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-transparent hover:border-grand-gold/20 group cursor-pointer"
             >
-              <div className="w-14 h-14 bg-grand-green/5 rounded-full flex items-center justify-center mb-6 group-hover:bg-grand-gold group-hover:text-white transition-colors text-grand-green">
-                <s.icon size={28} />
+              <div className="w-12 h-12 md:w-14 md:h-14 bg-grand-green/5 dark:bg-grand-gold/10 rounded-full flex items-center justify-center mb-4 md:mb-6 group-hover:bg-grand-gold group-hover:text-white transition-colors text-grand-green dark:text-grand-gold mx-auto">
+                <s.icon size={24} className="md:w-7 md:h-7" />
               </div>
-              <h3 className="text-xl font-serif font-bold text-grand-dark mb-3 group-hover:text-grand-gold transition-colors">{s.title}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
+              <h3 className="text-base md:text-lg font-serif font-bold text-grand-dark dark:text-white text-center group-hover:text-grand-gold transition-colors">{s.title}</h3>
             </motion.a>
           ))}
         </div>
@@ -331,7 +403,57 @@ const ServicesOverview = () => {
   );
 };
 
-// --- 7. CTA (With Documents List) ---
+// --- 7. FAQ PREVIEW ---
+const FAQPreview = () => {
+  const previewFAQs = faqs.slice(0, 2);
+
+  return (
+    <section className="py-20 bg-grand-light dark:bg-grand-dark">
+      <div className="container mx-auto px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-grand-green dark:text-grand-gold mb-4">
+              Frequently Asked Questions
+            </h2>
+            <div className="w-16 h-1 bg-grand-gold mx-auto"></div>
+          </div>
+
+          <div className="space-y-6 mb-8">
+            {previewFAQs.map((faq, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white dark:bg-white/5 p-6 rounded-xl border border-gray-200 dark:border-white/10 shadow-sm"
+              >
+                <h3 className="text-xl font-serif font-bold text-grand-dark dark:text-white mb-3">
+                  {faq.question}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                  {faq.answer}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link 
+              to="/services" 
+              className="inline-flex items-center gap-2 text-grand-green dark:text-grand-gold font-bold hover:gap-4 transition-all group"
+            >
+              View All FAQs
+              <ChevronDown className="rotate-[-90deg] group-hover:translate-x-2 transition-transform" size={20} />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// --- 8. CTA (With Documents List) ---
 const CallToAction = () => {
   const documents = [
     "Receipt of Payment",
@@ -341,7 +463,7 @@ const CallToAction = () => {
   ];
 
   return (
-    <section className="py-20 md:py-32 bg-grand-green text-white relative overflow-hidden">
+    <section className="py-20 md:py-32 bg-grand-green dark:bg-[#003d33] text-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#c5a059_1px,transparent_1px)] [background-size:20px_20px]"></div>
       <div className="container mx-auto px-6 relative z-10">

@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { assets } from '../data/images';
+import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,13 +41,13 @@ const Navbar = () => {
   ];
 
   const navbarClasses = scrolled
-    ? "bg-white/80 backdrop-blur-xl shadow-sm py-4 border-b border-white/20 supports-[backdrop-filter]:bg-white/60"
+    ? "bg-white/80 dark:bg-grand-dark/80 backdrop-blur-xl shadow-sm py-4 border-b border-white/20 dark:border-white/10 supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-grand-dark/60"
     : "bg-transparent py-6 border-b border-transparent";
 
-  const textColor = scrolled ? "text-grand-dark" : "text-white";
+  const textColor = scrolled ? "text-grand-dark dark:text-white" : "text-white";
   const logoSrc = scrolled ? assets.logoWords : assets.logo;
   // Use specific dark color for menu button when scrolled to ensure visibility
-  const menuButtonColor = scrolled ? "text-grand-dark" : "text-white";
+  const menuButtonColor = scrolled ? "text-grand-dark dark:text-white" : "text-white";
 
   return (
     <>
@@ -68,7 +69,7 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-10">
+          <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
               <Link 
                 key={link.title} 
@@ -79,11 +80,13 @@ const Navbar = () => {
               </Link>
             ))}
             
+            <ThemeToggle variant="inline" />
+            
             <Link 
               to="/contact"
               className={`px-8 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-all shadow-lg hover:shadow-grand-gold/20 hover:scale-105 active:scale-95 ${
                  scrolled
-                  ? "bg-grand-green text-white hover:bg-grand-gold"
+                  ? "bg-grand-green text-white hover:bg-grand-gold dark:bg-grand-green dark:hover:bg-grand-gold"
                   : "bg-white text-grand-green hover:bg-grand-gold hover:text-white"
               }`}
             >
@@ -112,15 +115,20 @@ const Navbar = () => {
               exit={{ opacity: 0, clipPath: "circle(0% at 100% 0)" }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               // z-[9999] ensures it is above EVERYTHING
-              className="fixed inset-0 bg-white/95 backdrop-blur-2xl z-[9999] flex flex-col items-center justify-center gap-8 h-[100dvh] w-screen"
+              className="fixed inset-0 bg-white/95 dark:bg-grand-dark/95 backdrop-blur-2xl z-[9999] flex flex-col items-center justify-center gap-8 h-[100dvh] w-screen"
             >
               {/* Close Button Inside Portal */}
               <button 
                 onClick={() => setIsOpen(false)}
-                className="absolute top-6 right-6 text-grand-dark p-2"
+                className="absolute top-6 right-6 text-grand-dark dark:text-white p-2"
               >
                 <X size={32} />
               </button>
+              
+              {/* Theme Toggle in Mobile Menu */}
+              <div className="absolute top-6 left-6">
+                <ThemeToggle variant="inline" />
+              </div>
 
               {/* Links */}
               {navLinks.map((link, i) => (
@@ -132,7 +140,7 @@ const Navbar = () => {
                 >
                   <Link 
                     to={link.href} 
-                    className="text-4xl font-serif font-bold text-grand-dark hover:text-grand-gold transition-colors"
+                    className="text-4xl font-serif font-bold text-grand-dark dark:text-white hover:text-grand-gold transition-colors"
                   >
                     {link.title}
                   </Link>

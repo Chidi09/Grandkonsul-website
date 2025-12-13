@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 import SEO from '../components/SEO';
 import { assets } from '../data/images';
+import { faqs } from '../data/content';
 
 const Services = () => {
   const [hoveredService, setHoveredService] = useState(0);
@@ -30,12 +32,12 @@ const Services = () => {
     },
     { 
       title: "HMO & Management", 
-      img: assets.services.meeting, 
+      img: assets.services.coLiving,  // University Dorm/Modern Studio
       desc: "We specialize in the development and management of Houses of Multiple Occupancy (HMO), optimizing rental yields for investors while providing safe, modern, and community-focused living spaces for tenants. Our management ensures compliance and high occupancy rates." 
     },
     { 
       title: "Rent to Rent", 
-      img: assets.services.coLiving, 
+      img: assets.services.meeting,  // Glass Office
       desc: "A hassle-free solution for landlords seeking financial certainty. We lease your property long-term, handle all maintenance and tenant management, and provide you with guaranteed fixed rental income every month, removing the stress of voids and arrears." 
     }
   ];
@@ -106,8 +108,74 @@ const Services = () => {
           </div>
 
         </div>
+
+        {/* --- FAQ SECTION --- */}
+        <div className="mt-32 max-w-4xl mx-auto">
+          <motion.h2 
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-6xl font-serif font-bold text-white mb-4 text-center"
+          >
+            Frequently Asked Questions
+          </motion.h2>
+          <div className="w-16 h-1 bg-grand-gold mx-auto mb-12"></div>
+
+          <div className="space-y-4">
+            {faqs.map((faq, i) => (
+              <FAQItem key={i} faq={faq} index={i} />
+            ))}
+          </div>
+        </div>
       </div>
     </>
+  );
+};
+
+// FAQ Accordion Component
+const FAQItem = ({ faq, index }) => {
+  const [isOpen, setIsOpen] = useState(index === 0); // First one open by default
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1 }}
+      className="bg-white/5 dark:bg-white/5 border border-white/10 rounded-xl overflow-hidden"
+    >
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full p-6 flex justify-between items-center text-left hover:bg-white/5 transition-colors"
+      >
+        <h3 className="text-xl font-serif font-bold text-white pr-8">
+          {faq.question}
+        </h3>
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <ChevronDown className="text-grand-gold shrink-0" size={24} />
+        </motion.div>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
+            <div className="px-6 pb-6">
+              <p className="text-gray-300 leading-relaxed">
+                {faq.answer}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };
 
