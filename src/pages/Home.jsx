@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Building2, Globe, Users, Home as HomeIcon, Key, Briefcase, CheckCircle2, ChevronDown } from 'lucide-react';
+import { ArrowUpRight, Building2, Globe, Users, Home as HomeIcon, Key, Briefcase, CheckCircle2, ChevronDown, HelpCircle, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { assets } from '../data/images';
@@ -403,50 +403,100 @@ const ServicesOverview = () => {
   );
 };
 
-// --- 7. FAQ PREVIEW ---
+// --- 7. FAQ PREVIEW (Enhanced Design) ---
 const FAQPreview = () => {
   const previewFAQs = faqs.slice(0, 2);
 
   return (
-    <section className="py-20 bg-grand-light dark:bg-grand-dark">
-      <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-grand-green dark:text-grand-gold mb-4">
+    <section className="py-20 md:py-32 bg-grand-light dark:bg-grand-dark relative overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute inset-0 opacity-5 dark:opacity-10">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-grand-gold rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-grand-green rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="max-w-5xl mx-auto">
+          {/* Enhanced Header */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div className="inline-flex items-center justify-center gap-3 mb-6">
+              <div className="w-12 h-px bg-grand-gold"></div>
+              <HelpCircle className="text-grand-gold" size={32} />
+              <div className="w-12 h-px bg-grand-gold"></div>
+            </div>
+            <h2 className="text-5xl md:text-7xl font-serif font-bold text-grand-green dark:text-grand-gold mb-6">
               Frequently Asked Questions
             </h2>
-            <div className="w-16 h-1 bg-grand-gold mx-auto"></div>
-          </div>
+            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+              Get answers to common questions about our services and processes
+            </p>
+          </motion.div>
 
-          <div className="space-y-6 mb-8">
+          {/* Enhanced FAQ Cards */}
+          <div className="space-y-6 mb-12">
             {previewFAQs.map((faq, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white dark:bg-white/5 p-6 rounded-xl border border-gray-200 dark:border-white/10 shadow-sm"
+                transition={{ delay: i * 0.15, duration: 0.5 }}
+                whileHover={{ y: -5 }}
+                className="group relative"
               >
-                <h3 className="text-xl font-serif font-bold text-grand-dark dark:text-white mb-3">
-                  {faq.question}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                  {faq.answer}
-                </p>
+                <div className="bg-white dark:bg-white/5 backdrop-blur-sm p-8 md:p-10 rounded-2xl border-2 border-gray-200 dark:border-white/10 shadow-lg hover:shadow-2xl transition-all duration-300 hover:border-grand-gold/50 relative overflow-hidden">
+                  {/* Decorative Number Badge */}
+                  <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-grand-gold/10 dark:bg-grand-gold/20 flex items-center justify-center">
+                    <span className="text-2xl font-serif font-bold text-grand-gold">{i + 1}</span>
+                  </div>
+                  
+                  {/* Question Icon */}
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-grand-green/10 dark:bg-grand-gold/20 flex items-center justify-center shrink-0 group-hover:bg-grand-gold/20 dark:group-hover:bg-grand-gold/30 transition-colors">
+                      <HelpCircle className="text-grand-green dark:text-grand-gold" size={24} />
+                    </div>
+                    <div className="flex-1 pt-1">
+                      <h3 className="text-2xl md:text-3xl font-serif font-bold text-grand-dark dark:text-white mb-4 group-hover:text-grand-green dark:group-hover:text-grand-gold transition-colors">
+                        {faq.question}
+                      </h3>
+                      <div className="w-20 h-0.5 bg-grand-gold mb-4"></div>
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Hover Effect Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-grand-gold/0 via-grand-gold/0 to-grand-gold/0 group-hover:from-grand-gold/5 group-hover:via-transparent group-hover:to-transparent transition-all duration-500 pointer-events-none rounded-2xl"></div>
+                </div>
               </motion.div>
             ))}
           </div>
 
-          <div className="text-center">
+          {/* Enhanced CTA */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="text-center"
+          >
             <Link 
               to="/services" 
-              className="inline-flex items-center gap-2 text-grand-green dark:text-grand-gold font-bold hover:gap-4 transition-all group"
+              className="group inline-flex items-center gap-3 px-8 py-4 bg-grand-green dark:bg-grand-gold text-white rounded-full font-bold hover:shadow-xl hover:shadow-grand-gold/30 transition-all duration-300 hover:scale-105"
             >
-              View All FAQs
-              <ChevronDown className="rotate-[-90deg] group-hover:translate-x-2 transition-transform" size={20} />
+              <span>View All FAQs</span>
+              <ArrowRight className="group-hover:translate-x-2 transition-transform" size={20} />
             </Link>
-          </div>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mt-4">
+              Have more questions? <Link to="/contact" className="text-grand-green dark:text-grand-gold hover:underline">Contact us</Link>
+            </p>
+          </motion.div>
         </div>
       </div>
     </section>
