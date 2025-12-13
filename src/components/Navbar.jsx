@@ -43,10 +43,14 @@ const Navbar = () => {
     ? "bg-white/80 dark:bg-grand-dark/80 backdrop-blur-xl shadow-sm py-4 border-b border-white/20 dark:border-white/10 supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-grand-dark/60"
     : "bg-transparent py-6 border-b border-transparent";
 
-  const textColor = scrolled ? "text-grand-dark dark:text-white" : "text-white";
+  const textColor = scrolled 
+    ? "text-gold-outline dark:text-white" 
+    : "text-gold-outline dark:text-white";
   const logoSrc = scrolled ? assets.logoWords : assets.logo;
   // Use specific dark color for menu button when scrolled to ensure visibility
-  const menuButtonColor = scrolled ? "text-grand-dark dark:text-white" : "text-white";
+  const menuButtonColor = scrolled 
+    ? "text-gold-outline dark:text-white" 
+    : "text-gold-outline dark:text-white";
 
   return (
     <>
@@ -61,7 +65,7 @@ const Navbar = () => {
                className="h-12 md:h-16 object-contain transition-all duration-300" 
              />
              {!scrolled && (
-               <span className="font-serif text-2xl font-bold text-white tracking-widest hidden lg:block ml-2">
+               <span className="font-serif text-2xl font-bold text-gold-outline dark:text-white tracking-widest hidden lg:block ml-2">
                  GRANDKONSUL
                </span>
              )}
