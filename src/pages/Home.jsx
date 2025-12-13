@@ -309,57 +309,95 @@ const HorizontalGallery = () => {
   );
 };
 
-// --- 6. SERVICES (Accordion on PC, Snap Slider on Mobile) ---
+// --- 6. SERVICES (Bento Grid on PC, Snap Slider on Mobile) ---
 const ServicesSection = () => {
-  const [active, setActive] = useState(0);
-
+  // Expanded Professional Content
   const services = [
-    { title: "Property Development", img: assets.services.development, desc: "From breaking ground to ribbon cutting, we manage complex construction with precision." },
-    { title: "Corporate Relocation", img: assets.services.relocation, desc: "Seamless movement of staff and executives across borders." },
-    { title: "Joint Ventures", img: assets.services.handshake, desc: "Partner with us to unlock the true potential of your land assets." },
-    { title: "HMO & Management", img: assets.services.coLiving, desc: "High-yield multi-occupancy solutions designed for modern living." },
+    { 
+      title: "Property Development", 
+      img: assets.services.development, 
+      desc: "We oversee the entire lifecycle of luxury real estate creation. From initial land acquisition and architectural conceptualization to construction management and final handover, our team ensures precision, quality, and strict adherence to timelines." 
+    },
+    { 
+      title: "Relocation Services", 
+      img: assets.services.relocation, 
+      desc: "Relocating is more than just moving boxes. We provide comprehensive support for individuals and corporations, managing logistics, settling-in services, and cultural orientation to ensure a smooth transition into your new environment." 
+    },
+    { 
+      title: "Joint Ventures", 
+      img: assets.services.handshake, 
+      desc: "Maximize the potential of your land assets through strategic partnerships. We bring the capital, technical expertise, and development experience needed to transform underutilized property into high-yield real estate assets." 
+    },
+    { 
+      title: "Service Accommodation", 
+      img: assets.luxuryInterior, 
+      desc: "Experience the comfort of home with the luxury of a hotel. Our fully furnished, high-specification apartments offer flexible short-term living solutions for business travelers and expatriates seeking style and convenience." 
+    },
+    { 
+      title: "HMO & Management", 
+      img: assets.services.coLiving, 
+      desc: "We specialize in the development and management of Houses of Multiple Occupancy (HMO), optimizing rental yields for investors while providing safe, modern, and community-focused living spaces for tenants." 
+    },
+    { 
+      title: "Rent to Rent", 
+      img: assets.services.meeting, 
+      desc: "A hassle-free solution for landlords seeking financial certainty. We lease your property long-term, handle all maintenance and tenant management, and provide you with guaranteed fixed rental income every month." 
+    }
   ];
 
   return (
     <section className="py-20 md:py-32 bg-grand-light">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-serif font-bold text-grand-green mb-10 md:mb-16 text-center">Our Expertise</h2>
+        <h2 className="text-4xl md:text-6xl font-serif font-bold text-grand-green mb-6 text-center">Our Expertise</h2>
+        <div className="w-24 h-1 bg-grand-gold mx-auto mb-16"></div>
         
-        {/* DESKTOP: Accordion */}
-        <div className="hidden md:flex flex-row gap-4 h-[80vh]">
+        {/* DESKTOP: BENTO GRID (Normal, Beautiful, Professional) */}
+        <div className="hidden md:grid grid-cols-3 gap-8">
           {services.map((s, i) => (
             <motion.div 
               key={i}
-              onClick={() => setActive(i)}
-              animate={{ flex: active === i ? 3 : 1 }}
-              className="relative overflow-hidden rounded-lg cursor-pointer transition-all duration-700 ease-[0.22, 1, 0.36, 1]"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="group relative h-[500px] overflow-hidden rounded-lg cursor-pointer"
             >
-              <img src={s.img} alt={s.title} className="absolute inset-0 w-full h-full object-cover" />
-              <div className={`absolute inset-0 ${active === i ? 'bg-black/30' : 'bg-black/60'} transition-colors duration-500`}></div>
+              {/* Image Background */}
+              <img 
+                src={s.img} 
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                alt={s.title}
+              />
+              
+              {/* Gradient Overlay (Darkens on Hover) */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:bg-black/60 transition-colors duration-500"></div>
+              
+              {/* Content */}
               <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                 <h3 className={`font-serif font-bold text-white transition-all duration-500 ${active === i ? 'text-4xl mb-4' : 'text-2xl -rotate-90 origin-bottom-left translate-x-8'}`}>
+                 {/* Icon/Line Decorative */}
+                 <div className="w-12 h-1 bg-grand-gold mb-6 transform origin-left transition-all duration-500 group-hover:w-20"></div>
+                 
+                 <h3 className="font-serif font-bold text-white text-3xl mb-4 group-hover:-translate-y-2 transition-transform duration-500">
                    {s.title}
                  </h3>
-                 <AnimatePresence>
-                   {active === i && (
-                     <motion.p initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="text-gray-200 max-w-md">
-                       {s.desc}
-                     </motion.p>
-                   )}
-                 </AnimatePresence>
+                 
+                 {/* Text reveals on hover (or stays visible but muted if preferred) */}
+                 <p className="text-gray-300 text-sm leading-relaxed opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                   {s.desc}
+                 </p>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* MOBILE: Horizontal Snap Slider */}
+        {/* MOBILE: Snap Slider (Unchanged as you liked it) */}
         <div className="md:hidden flex overflow-x-auto gap-4 snap-x snap-mandatory pb-8 -mx-6 px-6 no-scrollbar">
           {services.map((s, i) => (
-            <div key={i} className="snap-center shrink-0 w-[85vw] relative h-[400px] rounded-lg overflow-hidden">
-               <img src={s.img} alt={s.title} className="absolute inset-0 w-full h-full object-cover" />
-               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+            <div key={i} className="snap-center shrink-0 w-[85vw] relative h-[450px] rounded-lg overflow-hidden">
+               <img src={s.img} className="absolute inset-0 w-full h-full object-cover" alt={s.title} />
+               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
                <div className="absolute bottom-0 left-0 p-6">
-                 <h3 className="text-2xl font-serif font-bold text-white mb-2">{s.title}</h3>
+                 <h3 className="text-3xl font-serif font-bold text-white mb-3">{s.title}</h3>
                  <p className="text-gray-200 text-sm leading-relaxed">{s.desc}</p>
                </div>
             </div>
