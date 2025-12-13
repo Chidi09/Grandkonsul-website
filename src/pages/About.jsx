@@ -179,7 +179,7 @@ const About = () => {
               <p className="text-sm tracking-wider uppercase">Satisfied Clients</p>
             </div>
              <div>
-              <p className="text-4xl md:text-5xl font-serif font-bold text-grand-gold mb-2">150</p>
+              <p className="text-4xl md:text-5xl font-serif font-bold text-grand-gold mb-2">10+</p>
               <p className="text-sm tracking-wider uppercase">Completed Projects</p>
             </div>
              <div>
