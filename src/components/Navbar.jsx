@@ -80,7 +80,7 @@ const Navbar = () => {
               </Link>
             ))}
             
-            <ThemeToggle variant="inline" />
+            <ThemeToggle />
             
             <Link 
               to="/contact"
@@ -127,7 +127,7 @@ const Navbar = () => {
               
               {/* Theme Toggle in Mobile Menu */}
               <div className="absolute top-6 left-6">
-                <ThemeToggle variant="inline" />
+                <ThemeToggle />
               </div>
 
               {/* Links */}

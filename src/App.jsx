@@ -5,7 +5,6 @@ import { ReactLenis } from '@studio-freight/react-lenis';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import ThemeToggle from './components/ThemeToggle';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
@@ -39,7 +38,6 @@ function App() {
             <div className="flex flex-col min-h-screen bg-grand-light dark:bg-grand-dark selection:bg-grand-gold selection:text-white transition-colors duration-500">
               <Navbar />
               <ScrollToTop />
-              <ThemeToggle variant="floating" />
               <main className="flex-grow">
                 <Routes>
                   <Route path="/" element={<Home />} />
