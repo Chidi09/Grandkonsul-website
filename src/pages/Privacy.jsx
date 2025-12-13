@@ -18,7 +18,7 @@ const Privacy = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
-            className="prose prose-lg dark:prose-invert prose-headings:font-serif prose-headings:text-grand-dark dark:prose-headings:text-white prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-a:text-grand-gold prose-strong:text-grand-dark dark:prose-strong:text-white prose-li:text-gray-600 dark:prose-li:text-gray-300 max-w-none"
+            className="prose prose-lg dark:prose-invert prose-headings:font-serif prose-headings:text-grand-dark dark:prose-headings:text-white prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-a:text-grand-gold prose-strong:text-grand-dark dark:prose-strong:text-white prose-li:text-gray-600 dark:prose-li:text-gray-300 prose-h3:text-grand-dark dark:prose-h3:text-white prose-p:text-gray-600 dark:prose-p:text-gray-300 max-w-none text-grand-dark dark:text-white"
           >
             <h3>1. Introduction</h3>
             <p>
