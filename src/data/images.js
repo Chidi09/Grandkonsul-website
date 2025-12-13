@@ -40,7 +40,6 @@ export const assets = {
   },
   projects: [
     { src: villaPool, title: "Villa Aurora", loc: "Lekki Phase 1" },
-    { src: geometric, title: "The Cube House", loc: "Victoria Island" },
     { src: skyscraper, title: "Akanksha Complex", loc: "Abuja" },
     { src: brutalist, title: "Villa George", loc: "Ikoyi" },
     { src: apartment, title: "Contemporary Villa", loc: "Banana Island" },

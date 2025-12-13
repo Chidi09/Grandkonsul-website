@@ -7,13 +7,6 @@ export const projects = [
     image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1600&auto=format&fit=crop"
   },
   {
-    id: 2,
-    title: "The Cube House",
-    category: "Modern Architecture",
-    location: "Victoria Island",
-    image: "https://images.unsplash.com/photo-1600596542815-6ad4c12756ab?q=80&w=1600&auto=format&fit=crop"
-  },
-  {
     id: 3,
     title: "Akanksha Complex",
     category: "Commercial",
