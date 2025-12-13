@@ -7,18 +7,18 @@ const Terms = () => {
       <SEO title="Terms of Service" description="Rules and regulations for using Grandkonsul's website." />
       
       {/* Header */}
-      <div className="bg-grand-dark pt-40 pb-20 text-center">
+      <div className="bg-grand-green dark:bg-grand-dark pt-40 pb-20 text-center">
         <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4">Terms of Service</h1>
         <p className="text-grand-gold uppercase tracking-widest text-sm">Last Updated: January 2025</p>
       </div>
 
       {/* Content */}
-      <section className="py-20 bg-grand-light">
-        <div className="container mx-auto px-6 max-w-4xl bg-white p-10 md:p-16 rounded-lg shadow-sm">
+      <section className="py-20 bg-grand-light dark:bg-grand-dark">
+        <div className="container mx-auto px-6 max-w-4xl bg-white dark:bg-white/5 p-10 md:p-16 rounded-lg shadow-sm border border-transparent dark:border-white/10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
-            className="prose prose-lg prose-headings:font-serif prose-headings:text-grand-dark prose-p:text-gray-600 prose-a:text-grand-gold max-w-none"
+            className="prose prose-lg dark:prose-invert prose-headings:font-serif prose-headings:text-grand-dark dark:prose-headings:text-white prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-a:text-grand-gold prose-strong:text-grand-dark dark:prose-strong:text-white max-w-none"
           >
             <h3>1. Acceptance of Terms</h3>
             <p>

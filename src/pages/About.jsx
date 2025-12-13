@@ -42,7 +42,7 @@ const About = () => {
       </div>
 
       {/* --- The Story Section --- */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-grand-dark">
         <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
@@ -50,13 +50,13 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl font-serif font-bold text-grand-green mb-6">
+            <h2 className="text-3xl font-serif font-bold text-grand-green dark:text-grand-gold mb-6">
               We Shape How You <span className="text-grand-gold">Move and Live</span>
             </h2>
-            <p className="text-gray-600 leading-relaxed mb-6 text-lg">
+            <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-lg">
               With deep roots in property development and relocation services, our mission is to deliver excellence through thoughtful planning, reliable execution, and a client-first mindset.
             </p>
-            <p className="text-gray-600 leading-relaxed">
+            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
               Whether it's helping families settle into new homes, supporting companies with seamless staff relocations, or managing ground-up construction projects, we bring vision and value to every project. We are not just builders; we are partners in your journey.
             </p>
           </motion.div>
@@ -68,7 +68,7 @@ const About = () => {
             transition={{ duration: 0.8 }}
             className="relative"
           >
-            <div className="w-full h-[400px] bg-gray-200 rounded-sm overflow-hidden shadow-2xl">
+            <div className="w-full h-[400px] bg-gray-200 dark:bg-gray-800 rounded-sm overflow-hidden shadow-2xl">
               <img 
                 src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop" 
                 alt="Corporate Office" 
@@ -82,7 +82,7 @@ const About = () => {
       </section>
 
       {/* --- Mission & Vision (Dark Section) --- */}
-      <section className="py-20 bg-grand-dark text-white">
+      <section className="py-20 bg-grand-dark dark:bg-grand-dark text-white">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12">
             
@@ -91,14 +91,14 @@ const About = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-white/5 p-8 border-l-4 border-grand-gold backdrop-blur-sm"
+              className="bg-white/5 dark:bg-white/5 p-8 border-l-4 border-grand-gold backdrop-blur-sm"
             >
               <div className="flex items-center gap-3 mb-4 text-grand-gold">
                 <Target size={32} />
                 <h3 className="text-2xl font-serif font-bold">Our Mission</h3>
               </div>
               <h4 className="text-xl font-medium mb-3">Solutions built for life and movement</h4>
-              <p className="text-gray-400 leading-relaxed">
+              <p className="text-gray-300 dark:text-gray-400 leading-relaxed">
                 To provide exceptional property development and relocation solutions that enhance lives, build communities, and deliver lasting value — guided by integrity, innovation, and a deep understanding of our clients' needs.
               </p>
             </motion.div>
@@ -109,14 +109,14 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-white/5 p-8 border-l-4 border-grand-gold backdrop-blur-sm"
+              className="bg-white/5 dark:bg-white/5 p-8 border-l-4 border-grand-gold backdrop-blur-sm"
             >
               <div className="flex items-center gap-3 mb-4 text-grand-gold">
                 <Eye size={32} />
                 <h3 className="text-2xl font-serif font-bold">Our Vision</h3>
               </div>
               <h4 className="text-xl font-medium mb-3">Shaping spaces. Connecting lives.</h4>
-              <p className="text-gray-400 leading-relaxed">
+              <p className="text-gray-300 dark:text-gray-400 leading-relaxed">
                 To be a trusted leader in property and relocation services across Africa and beyond — known for excellence, reliability, and a personalized approach to every project we deliver.
               </p>
             </motion.div>
@@ -126,9 +126,9 @@ const About = () => {
       </section>
 
       {/* --- Core Values --- */}
-      <section className="py-20 bg-grand-light">
+      <section className="py-20 bg-grand-light dark:bg-grand-dark">
         <div className="container mx-auto px-6 text-center mb-16">
-          <h2 className="text-3xl font-serif font-bold text-grand-green">What We Stand For</h2>
+          <h2 className="text-3xl font-serif font-bold text-grand-green dark:text-grand-gold">What We Stand For</h2>
           <div className="w-20 h-1 bg-grand-gold mx-auto mt-4"></div>
         </div>
 
@@ -139,35 +139,35 @@ const About = () => {
           viewport={{ once: true }}
           className="container mx-auto px-6 grid md:grid-cols-3 gap-8"
         >
-          <motion.div variants={itemVariants} className="bg-white p-8 shadow-sm hover:shadow-lg transition-shadow rounded-lg text-center">
-            <div className="w-16 h-16 bg-grand-green/10 text-grand-green rounded-full flex items-center justify-center mx-auto mb-6">
+          <motion.div variants={itemVariants} className="bg-white dark:bg-white/5 p-8 shadow-sm hover:shadow-lg transition-shadow rounded-lg text-center border border-transparent dark:border-white/10">
+            <div className="w-16 h-16 bg-grand-green/10 dark:bg-grand-gold/10 text-grand-green dark:text-grand-gold rounded-full flex items-center justify-center mx-auto mb-6">
               <Award size={32} />
             </div>
-            <h3 className="text-xl font-bold mb-3">Expertise that Delivers</h3>
-            <p className="text-gray-600">Decades of combined experience ensuring every detail is handled with professional precision.</p>
+            <h3 className="text-xl font-bold mb-3 text-grand-dark dark:text-white">Expertise that Delivers</h3>
+            <p className="text-gray-600 dark:text-gray-300">Decades of combined experience ensuring every detail is handled with professional precision.</p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="bg-white p-8 shadow-sm hover:shadow-lg transition-shadow rounded-lg text-center">
-            <div className="w-16 h-16 bg-grand-green/10 text-grand-green rounded-full flex items-center justify-center mx-auto mb-6">
+          <motion.div variants={itemVariants} className="bg-white dark:bg-white/5 p-8 shadow-sm hover:shadow-lg transition-shadow rounded-lg text-center border border-transparent dark:border-white/10">
+            <div className="w-16 h-16 bg-grand-green/10 dark:bg-grand-gold/10 text-grand-green dark:text-grand-gold rounded-full flex items-center justify-center mx-auto mb-6">
               <Users size={32} />
             </div>
-            <h3 className="text-xl font-bold mb-3">Personalized Service</h3>
-            <p className="text-gray-600">We listen, adapt, and tailor our solutions to fit the unique lifestyle and goals of every client.</p>
+            <h3 className="text-xl font-bold mb-3 text-grand-dark dark:text-white">Personalized Service</h3>
+            <p className="text-gray-600 dark:text-gray-300">We listen, adapt, and tailor our solutions to fit the unique lifestyle and goals of every client.</p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="bg-white p-8 shadow-sm hover:shadow-lg transition-shadow rounded-lg text-center">
-            <div className="w-16 h-16 bg-grand-green/10 text-grand-green rounded-full flex items-center justify-center mx-auto mb-6">
+          <motion.div variants={itemVariants} className="bg-white dark:bg-white/5 p-8 shadow-sm hover:shadow-lg transition-shadow rounded-lg text-center border border-transparent dark:border-white/10">
+            <div className="w-16 h-16 bg-grand-green/10 dark:bg-grand-gold/10 text-grand-green dark:text-grand-gold rounded-full flex items-center justify-center mx-auto mb-6">
               <ShieldCheck size={32} />
             </div>
-            <h3 className="text-xl font-bold mb-3">Integrity & Trust</h3>
-            <p className="text-gray-600">Transparency is key. We build lasting relationships founded on honesty and ethical practices.</p>
+            <h3 className="text-xl font-bold mb-3 text-grand-dark dark:text-white">Integrity & Trust</h3>
+            <p className="text-gray-600 dark:text-gray-300">Transparency is key. We build lasting relationships founded on honesty and ethical practices.</p>
           </motion.div>
 
         </motion.div>
       </section>
 
       {/* --- Stats Banner --- */}
-      <section className="py-16 bg-grand-green text-white">
+      <section className="py-16 bg-grand-green dark:bg-[#003d33] text-white">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/20">
             <div>

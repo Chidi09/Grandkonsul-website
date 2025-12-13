@@ -46,11 +46,11 @@ const Services = () => {
     <>
       <SEO title="Our Services" description="Premium Services" />
 
-      <div className="bg-grand-dark min-h-screen pt-40 pb-20">
+      <div className="bg-grand-light dark:bg-grand-dark min-h-screen pt-40 pb-20">
         <div className="container mx-auto px-6">
           <motion.h1 
             initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-8xl font-serif font-bold text-white mb-10 md:mb-20 tracking-tighter"
+            className="text-5xl md:text-8xl font-serif font-bold text-grand-dark dark:text-white mb-10 md:mb-20 tracking-tighter"
           >
             EXPERTISE
           </motion.h1>
@@ -85,7 +85,7 @@ const Services = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-xl overflow-hidden shadow-lg"
+                className="bg-white dark:bg-white/5 rounded-xl overflow-hidden shadow-lg border border-transparent dark:border-white/10"
               >
                 {/* IMAGE FIX: 
                    1. 'aspect-video' forces a 16:9 widescreen ratio. 
@@ -100,8 +100,8 @@ const Services = () => {
                 {/* TEXT CONTENT */}
                 <div className="p-8">
                   <div className="w-10 h-1 bg-grand-gold mb-4"></div>
-                  <h3 className="text-2xl font-serif font-bold text-grand-dark mb-4">{s.title}</h3>
-                  <p className="text-gray-600 leading-relaxed text-sm">{s.desc}</p>
+                  <h3 className="text-2xl font-serif font-bold text-grand-dark dark:text-white mb-4">{s.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">{s.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -115,7 +115,7 @@ const Services = () => {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-serif font-bold text-white mb-4 text-center"
+            className="text-4xl md:text-6xl font-serif font-bold text-grand-dark dark:text-white mb-4 text-center"
           >
             Frequently Asked Questions
           </motion.h2>
@@ -142,13 +142,13 @@ const FAQItem = ({ faq, index }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
-      className="bg-white/5 dark:bg-white/5 border border-white/10 rounded-xl overflow-hidden"
+      className="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden shadow-sm dark:shadow-none"
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full p-6 flex justify-between items-center text-left hover:bg-white/5 transition-colors"
+        className="w-full p-6 flex justify-between items-center text-left hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
       >
-        <h3 className="text-xl font-serif font-bold text-white pr-8">
+        <h3 className="text-xl font-serif font-bold text-grand-dark dark:text-white pr-8">
           {faq.question}
         </h3>
         <motion.div
@@ -168,7 +168,7 @@ const FAQItem = ({ faq, index }) => {
             className="overflow-hidden"
           >
             <div className="px-6 pb-6">
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                 {faq.answer}
               </p>
             </div>

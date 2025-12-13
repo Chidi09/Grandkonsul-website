@@ -13,7 +13,7 @@ const Contact = () => {
     <>
       <SEO title="Contact Us" description="Get in touch with Grandkonsul for your property development and relocation needs." />
       
-      <div className="bg-grand-green pt-32 pb-16 text-center text-white">
+      <div className="bg-grand-green dark:bg-[#003d33] pt-32 pb-16 text-center text-white">
         <motion.h1 
            initial={{ opacity: 0, y: -20 }}
            animate={{ opacity: 1, y: 0 }}
@@ -23,12 +23,12 @@ const Contact = () => {
         </motion.h1>
       </div>
 
-      <section className="py-20 bg-grand-light">
+      <section className="py-20 bg-grand-light dark:bg-grand-dark">
         <div className="container mx-auto px-6">
-          <div className="bg-white rounded-xl shadow-xl overflow-hidden flex flex-col md:flex-row">
+          <div className="bg-white dark:bg-white/5 rounded-xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-transparent dark:border-white/10">
             
             {/* Contact Information (Left Side) */}
-            <div className="bg-grand-dark text-white p-10 md:w-2/5 flex flex-col justify-between relative">
+            <div className="bg-grand-dark dark:bg-grand-dark text-white p-10 md:w-2/5 flex flex-col justify-between relative">
               <div>
                 <h3 className="text-2xl font-serif font-bold text-grand-gold mb-6">Contact Information</h3>
                 <p className="text-gray-400 mb-8 leading-relaxed">
@@ -76,23 +76,23 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-                    <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors" placeholder="John" required />
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">First Name</label>
+                    <input type="text" className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors text-grand-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400" placeholder="John" required />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-                    <input type="text" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors" placeholder="Doe" required />
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Last Name</label>
+                    <input type="text" className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors text-grand-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400" placeholder="Doe" required />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                  <input type="email" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors" placeholder="john@example.com" required />
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
+                  <input type="email" className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors text-grand-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400" placeholder="john@example.com" required />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                  <textarea rows="4" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors" placeholder="How can we help you?" required></textarea>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message</label>
+                  <textarea rows="4" className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors text-grand-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400" placeholder="How can we help you?" required></textarea>
                 </div>
-                <button type="submit" className="bg-grand-green text-white px-8 py-3 rounded-sm font-semibold hover:bg-grand-gold transition-colors flex items-center gap-2">
+                <button type="submit" className="bg-grand-green dark:bg-grand-gold text-white px-8 py-3 rounded-sm font-semibold hover:bg-grand-gold dark:hover:bg-grand-gold/90 transition-colors flex items-center gap-2">
                   Send Message <Send size={18} />
                 </button>
               </form>
