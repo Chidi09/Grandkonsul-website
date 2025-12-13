@@ -9,7 +9,6 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  // Check if we are on the Home page (transparent header) or other pages (solid header)
   const isHome = location.pathname === '/';
 
   useEffect(() => {
@@ -28,37 +27,42 @@ const Navbar = () => {
     { title: "Contact", href: "/contact" },
   ];
 
+  // Logic: Home is transparent at top, Glass when scrolled. 
+  // Other pages are ALWAYS Glass.
+  const navbarClasses = isHome && !scrolled
+    ? "bg-transparent py-6 border-b border-transparent"
+    : "bg-white/80 backdrop-blur-md shadow-sm py-4 border-b border-white/20 supports-[backdrop-filter]:bg-white/60";
+
+  // Text Color Logic
+  const textColor = isHome && !scrolled ? "text-white" : "text-grand-dark";
+  const logoSrc = isHome && !scrolled ? assets.logo : assets.logoWords;
+
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-      scrolled || !isHome ? "bg-white shadow-md py-3" : "bg-transparent py-4"
-    }`}>
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${navbarClasses}`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         
-        {/* Logo - Larger and positioned higher */}
-        <Link to="/" className="flex items-center gap-2 z-50 -mt-2">
-           {/* Swap logo based on background color for visibility */}
+        {/* Logo - Significantly Larger */}
+        <Link to="/" className="flex items-center gap-2 z-50 relative">
            <img 
-             src={scrolled || !isHome ? assets.logoWords : assets.logoWords} 
+             src={logoSrc} 
              alt="Grandkonsul" 
-             className="h-20 md:h-28 lg:h-32 object-contain" // Much larger logo
+             className="h-12 md:h-16 object-contain transition-all duration-300" 
            />
-           {/* If on home and not scrolled, show text manually if logo image doesn't have words */}
-           {!scrolled && isHome && (
-             <span className="font-serif text-xl font-bold text-white tracking-widest hidden md:block">
+           {/* Fallback Text if Logo image is just icon */}
+           {isHome && !scrolled && (
+             <span className="font-serif text-2xl font-bold text-white tracking-widest hidden lg:block ml-2">
                GRANDKONSUL
              </span>
            )}
         </Link>
 
-        {/* Desktop Menu - Simplified & Visible */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => (
             <Link 
               key={link.title} 
               to={link.href}
-              className={`text-sm font-bold uppercase tracking-widest transition-colors hover:text-grand-gold ${
-                scrolled || !isHome ? "text-grand-dark" : "text-white"
-              }`}
+              className={`text-sm font-bold uppercase tracking-widest hover:text-grand-gold transition-colors ${textColor}`}
             >
               {link.title}
             </Link>
@@ -66,10 +70,10 @@ const Navbar = () => {
           
           <Link 
             to="/contact"
-            className={`px-6 py-2 rounded-full font-bold text-xs uppercase tracking-widest transition-all ${
-              scrolled || !isHome 
-                ? "bg-grand-green text-white hover:bg-grand-gold" 
-                : "bg-white text-grand-green hover:bg-grand-gold hover:text-white"
+            className={`px-8 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-all ${
+               isHome && !scrolled
+                ? "bg-white text-grand-green hover:bg-grand-gold hover:text-white"
+                : "bg-grand-green text-white hover:bg-grand-gold"
             }`}
           >
             Get in Touch
@@ -79,9 +83,9 @@ const Navbar = () => {
         {/* Mobile Toggle */}
         <button 
           onClick={() => setIsOpen(!isOpen)} 
-          className={`md:hidden z-50 ${scrolled || !isHome ? "text-grand-dark" : "text-white"}`}
+          className={`md:hidden z-50 ${textColor}`}
         >
-          {isOpen ? <X size={28} className="text-grand-dark" /> : <Menu size={28} />}
+          {isOpen ? <X size={32} className="text-grand-dark" /> : <Menu size={32} />}
         </button>
       </div>
 
@@ -93,13 +97,13 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "-100%" }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed inset-0 bg-white z-40 flex flex-col items-center justify-center gap-8"
+            className="fixed inset-0 bg-white/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8"
           >
             {navLinks.map((link) => (
               <Link 
                 key={link.title} 
                 to={link.href}
-                className="text-3xl font-serif font-bold text-grand-dark hover:text-grand-gold transition-colors"
+                className="text-4xl font-serif font-bold text-grand-dark hover:text-grand-gold transition-colors"
               >
                 {link.title}
               </Link>

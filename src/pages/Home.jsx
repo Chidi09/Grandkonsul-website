@@ -67,67 +67,65 @@ const HeroSection = () => {
   return (
     <section ref={container} className="relative h-[100dvh] w-full overflow-hidden bg-grand-dark">
       
-      {/* 1. Background Image (Parallax) */}
+      {/* Background */}
       <motion.div style={{ y }} className="absolute inset-0 z-0">
         <img 
           src={assets.heroBg} 
-          className="w-full h-full object-cover object-center scale-110 md:scale-100" // Slight zoom on mobile to avoid edges
+          className="w-full h-full object-cover object-center scale-110 md:scale-100" 
           alt="Luxury Architecture"
         />
-        {/* gradient overlay: darker on mobile for readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-grand-dark/90 md:to-grand-dark/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-grand-dark/90 md:to-grand-dark/40"></div>
       </motion.div>
 
-      {/* 2. Content Container */}
+      {/* Content - Added pt-40 for Mobile Spacing */}
       <motion.div 
         style={{ opacity }} 
-        className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4 pt-20 md:pt-0"
+        className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4 pt-40 md:pt-20"
       >
-        {/* Intro Text */}
+        {/* Intro Text - Increased margin bottom */}
         <motion.div 
            initial={{ opacity: 0, y: 20 }} 
            animate={{ opacity: 1, y: 0 }} 
            transition={{ delay: 2.2, duration: 0.8 }}
-           className="mb-6 md:mb-10"
+           className="mb-8 md:mb-12"
         >
-          <div className="h-[1px] w-12 bg-grand-gold mx-auto mb-4 md:hidden"></div> {/* Mobile accent line */}
-          <p className="text-grand-gold uppercase tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-base font-medium">
+          <div className="h-[1px] w-12 bg-grand-gold mx-auto mb-6 md:hidden"></div>
+          <p className="text-grand-gold uppercase tracking-[0.25em] md:tracking-[0.4em] text-xs md:text-sm font-medium">
             Redefining Luxury Living
           </p>
         </motion.div>
         
-        {/* BIG TYPOGRAPHY STACK */}
-        <div className="flex flex-col items-center justify-center leading-none">
+        {/* Big Typography - Added gap-2 to stack */}
+        <div className="flex flex-col items-center justify-center leading-none gap-2 md:gap-0">
           
-          {/* Line 1: GRAND (Solid White) */}
           <div className="overflow-hidden">
             <motion.h1 
               initial={{ y: "100%" }} 
               animate={{ y: "0%" }} 
               transition={{ delay: 2.3, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[18vw] md:text-[11vw] font-serif font-bold text-white tracking-tighter mix-blend-overlay md:mix-blend-normal"
+              className="text-[17vw] md:text-[11vw] font-serif font-bold text-white tracking-tighter mix-blend-overlay md:mix-blend-normal"
             >
               GRAND
             </motion.h1>
           </div>
-          {/* Line 2: KONSUL (Gold) */}
-          <div className="overflow-hidden -mt-2 md:-mt-4">
+
+          <div className="overflow-hidden">
             <motion.h1 
               initial={{ y: "100%" }} 
               animate={{ y: "0%" }} 
               transition={{ delay: 2.45, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[18vw] md:text-[11vw] font-serif font-bold text-grand-gold tracking-tighter"
+              className="text-[17vw] md:text-[11vw] font-serif font-bold text-grand-gold tracking-tighter"
             >
               KONSUL
             </motion.h1>
           </div>
-          {/* Line 3: GARDENS (Outline) */}
-          <div className="overflow-hidden -mt-2 md:-mt-4">
+
+          <div className="overflow-hidden">
             <motion.h1 
               initial={{ y: "100%" }} 
               animate={{ y: "0%" }} 
               transition={{ delay: 2.6, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[18vw] md:text-[11vw] font-serif font-bold text-transparent stroke-gold tracking-tighter opacity-80"
+              className="text-[17vw] md:text-[11vw] font-serif font-bold text-transparent stroke-gold tracking-tighter opacity-80"
             >
               GARDENS
             </motion.h1>
@@ -139,11 +137,12 @@ const HeroSection = () => {
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
           transition={{ delay: 3.5, duration: 1 }}
-          className="absolute bottom-12 md:bottom-10 left-0 w-full flex flex-col items-center gap-2"
+          className="absolute bottom-10 left-0 w-full flex flex-col items-center gap-4"
         >
           <span className="text-white/50 text-[10px] uppercase tracking-widest animate-pulse">Scroll to Explore</span>
-          <div className="h-12 w-[1px] bg-gradient-to-b from-transparent via-grand-gold to-transparent"></div>
+          <div className="h-16 w-[1px] bg-gradient-to-b from-transparent via-grand-gold to-transparent"></div>
         </motion.div>
+
       </motion.div>
     </section>
   );
