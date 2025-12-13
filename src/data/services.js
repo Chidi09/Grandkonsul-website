@@ -1,4 +1,4 @@
-import { Building2, Globe, Handshake, BedDouble, Home, Key } from 'lucide-react';
+import { Building2, Globe, Users, BedDouble, Home, Key } from 'lucide-react';
 
 export const services = [
   {
@@ -17,7 +17,7 @@ export const services = [
     id: 3,
     title: "Joint Venture Engineering",
     description: "Partner with Grandkonsul to maximize land value. We provide development expertise and investment structure while sharing returns fairly and transparently.",
-    icon: Handshake
+    icon: Users
   },
   {
     id: 4,

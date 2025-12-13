@@ -24,6 +24,7 @@ function App() {
     <HelmetProvider>
       <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothTouch: true }}>
         <Router>
+          <div className="noise-overlay"></div>
           <div className="flex flex-col min-h-screen bg-grand-light selection:bg-grand-gold selection:text-white">
             <Navbar />
             <ScrollToTop />
