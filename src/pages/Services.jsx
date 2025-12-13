@@ -25,7 +25,7 @@ const Services = () => {
     },
     { 
       title: "Service Accommodation", 
-      img: assets.cubeHouse, 
+      img: assets.luxuryInterior, 
       desc: "Experience the comfort of home with the luxury of a hotel. Our fully furnished, high-specification apartments offer flexible short-term living solutions for business travelers and expatriates seeking style, convenience, and privacy in prime locations." 
     },
     { 

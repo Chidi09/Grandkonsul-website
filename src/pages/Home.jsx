@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Building2, Globe, Users, Home as HomeIcon, Key, Briefcase } from 'lucide-react';
+import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight, Building2, Globe, Users, Home as HomeIcon, Key, Briefcase, CheckCircle2 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { assets } from '../data/images';
 
@@ -51,7 +51,7 @@ const Preloader = () => (
   </motion.div>
 );
 
-// --- 2. HERO SECTION (Optimized for Mobile & PC) ---
+// --- 2. HERO SECTION (3D MOUSE PARALLAX + PARTICLES) ---
 const HeroSection = () => {
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -59,29 +59,87 @@ const HeroSection = () => {
     offset: ["start start", "end start"]
   });
 
-  // Parallax: Moves slower on PC, subtle move on mobile
+  // Scroll Parallax
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
+  // Mouse Parallax Logic
+  const x = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Smooth out the mouse movement
+  const mouseXSpring = useSpring(x, { stiffness: 50, damping: 20 });
+  const mouseYSpring = useSpring(mouseY, { stiffness: 50, damping: 20 });
+
+  // Map mouse position to rotation degrees (3D Tilt)
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7deg", "-7deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7deg", "7deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const currentMouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = currentMouseY / height - 0.5;
+    x.set(xPct);
+    mouseY.set(yPct);
+  };
+
   return (
-    <section ref={container} className="relative h-[100dvh] w-full overflow-hidden bg-grand-dark">
+    <section 
+      ref={container} 
+      onMouseMove={handleMouseMove}
+      className="relative h-[100dvh] w-full overflow-hidden bg-grand-dark"
+      style={{ perspective: '1000px' }}
+    >
       
-      {/* Background */}
-      <motion.div style={{ y }} className="absolute inset-0 z-0">
+      {/* 1. Background Image (Parallax + Slight Scale for movement room) */}
+      <motion.div style={{ y, scale: 1.1 }} className="absolute inset-0 z-0">
         <img 
           src={assets.heroBg} 
-          className="w-full h-full object-cover object-center scale-110 md:scale-100" 
+          className="w-full h-full object-cover object-center" 
           alt="Luxury Architecture"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-grand-dark/90 md:to-grand-dark/40"></div>
       </motion.div>
 
-      {/* Content - Added pt-40 for Mobile Spacing */}
+      {/* 2. GOLD DUST PARTICLES (Floating Animation) */}
+      <div className="absolute inset-0 z-[1] pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ 
+              x: typeof window !== 'undefined' ? Math.random() * window.innerWidth : Math.random() * 1920, 
+              y: typeof window !== 'undefined' ? Math.random() * window.innerHeight : Math.random() * 1080,
+              opacity: Math.random() * 0.5 + 0.2
+            }}
+            animate={{ 
+              y: [null, (typeof window !== 'undefined' ? window.innerHeight : 1080) + 100],
+              opacity: [null, 0, null]
+            }}
+            transition={{ 
+              duration: Math.random() * 10 + 10, 
+              repeat: Infinity, 
+              ease: "linear" 
+            }}
+            className="absolute w-1 h-1 bg-grand-gold rounded-full blur-[1px]"
+          />
+        ))}
+      </div>
+
+      {/* 3. 3D Content Container */}
       <motion.div 
-        style={{ opacity }} 
+        style={{ 
+          opacity,
+          rotateX, // Apply 3D Tilt X
+          rotateY, // Apply 3D Tilt Y
+          transformStyle: 'preserve-3d'
+        }} 
         className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4 pt-40 md:pt-20"
       >
-        {/* Intro Text - Increased margin bottom */}
+        {/* Intro Text */}
         <motion.div 
            initial={{ opacity: 0, y: 20 }} 
            animate={{ opacity: 1, y: 0 }} 
@@ -89,14 +147,13 @@ const HeroSection = () => {
            className="mb-8 md:mb-12"
         >
           <div className="h-[1px] w-12 bg-grand-gold mx-auto mb-6 md:hidden"></div>
-          <p className="text-grand-gold uppercase tracking-[0.25em] md:tracking-[0.4em] text-xs md:text-sm font-medium">
+          <p className="text-grand-gold uppercase tracking-[0.25em] md:tracking-[0.4em] text-xs md:text-sm font-medium drop-shadow-lg">
             Redefining Luxury Living
           </p>
         </motion.div>
         
-        {/* Big Typography - Added gap-2 to stack */}
-        <div className="flex flex-col items-center justify-center leading-none gap-2 md:gap-0">
-          
+        {/* Big Typography */}
+        <div className="flex flex-col items-center justify-center leading-none gap-2 md:gap-0 drop-shadow-2xl">
           <div className="overflow-hidden">
             <motion.h1 
               initial={{ y: "100%" }} 
@@ -107,7 +164,6 @@ const HeroSection = () => {
               GRAND
             </motion.h1>
           </div>
-
           <div className="overflow-hidden">
             <motion.h1 
               initial={{ y: "100%" }} 
@@ -118,7 +174,6 @@ const HeroSection = () => {
               KONSUL
             </motion.h1>
           </div>
-
           <div className="overflow-hidden">
             <motion.h1 
               initial={{ y: "100%" }} 
@@ -141,7 +196,6 @@ const HeroSection = () => {
           <span className="text-white/50 text-[10px] uppercase tracking-widest animate-pulse">Scroll to Explore</span>
           <div className="h-16 w-[1px] bg-gradient-to-b from-transparent via-grand-gold to-transparent"></div>
         </motion.div>
-
       </motion.div>
     </section>
   );
@@ -315,15 +369,82 @@ const ServicesOverview = () => {
   );
 };
 
-// --- 7. CTA ---
-const CallToAction = () => (
-  <section className="py-32 bg-grand-green text-center px-6">
-    <h2 className="text-4xl md:text-7xl font-serif font-bold text-white mb-8">Ready to make your move?</h2>
-    <div className="flex justify-center gap-6">
-       <a href="/contact" className="bg-grand-gold text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-grand-green transition-all duration-300">Start a Project</a>
-       <a href="/services" className="border border-white text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-grand-green transition-all duration-300">Learn More</a>
-    </div>
-  </section>
-);
+// --- 7. CTA (With Documents List) ---
+const CallToAction = () => {
+  const documents = [
+    "Receipt of Payment",
+    "Deed of Assignment",
+    "Registered Survey",
+    "Certificate of Occupancy (C of O)"
+  ];
+
+  return (
+    <section className="py-20 md:py-32 bg-grand-green text-white relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#c5a059_1px,transparent_1px)] [background-size:20px_20px]"></div>
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          
+          {/* LEFT: Sales Pitch */}
+          <div className="text-center md:text-left">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl md:text-7xl font-serif font-bold mb-6">
+                Buy an Apartment <span className="text-grand-gold">Now.</span>
+              </h2>
+              <p className="text-lg text-gray-300 mb-8 leading-relaxed max-w-md mx-auto md:mx-0">
+                Secure your future with Grandkonsul Gardens. We prioritize transparency and legality, ensuring your investment is safe, documented, and delivered on time.
+              </p>
+              
+              <div className="flex flex-col md:flex-row gap-4 justify-center md:justify-start">
+                <a href="/contact" className="bg-grand-gold text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-grand-green transition-all duration-300 shadow-lg hover:shadow-grand-gold/50">
+                  Secure Your Unit
+                </a>
+                <a href="/projects" className="border border-white/30 text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-grand-green transition-all duration-300">
+                  View Availability
+                </a>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* RIGHT: Documents Checklist (The "Trust" Badge) */}
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 md:p-12 rounded-2xl">
+            <h3 className="text-2xl font-serif font-bold mb-2">What we offer alongside</h3>
+            <p className="text-grand-gold text-sm uppercase tracking-widest mb-8">Verified Documentation</p>
+            
+            <ul className="space-y-6">
+              {documents.map((doc, i) => (
+                <motion.li 
+                  key={i}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  viewport={{ once: true }}
+                  className="flex items-center gap-4 group"
+                >
+                  <div className="w-8 h-8 rounded-full bg-grand-gold/20 flex items-center justify-center text-grand-gold group-hover:bg-grand-gold group-hover:text-white transition-colors">
+                    <CheckCircle2 size={18} />
+                  </div>
+                  <span className="text-lg font-medium text-gray-200 group-hover:text-white transition-colors">
+                    {doc}
+                  </span>
+                </motion.li>
+              ))}
+            </ul>
+
+            {/* Trust Note */}
+            <div className="mt-8 pt-8 border-t border-white/10 text-xs text-gray-400 leading-relaxed">
+              * All documents are processed immediately upon purchase completion and verified by our legal team.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default Home;
