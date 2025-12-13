@@ -39,8 +39,8 @@ const Contact = () => {
                   <div className="flex items-start gap-4">
                     <MapPin className="text-grand-gold mt-1" size={20} />
                     <div>
-                      <h4 className="font-bold text-white">UK Office</h4>
-                      <p className="text-gray-400 text-sm">6391 Elgin St. Celina,<br/>Delaware 10299</p>
+                      <h4 className="font-bold text-white">Visit Us</h4>
+                      <p className="text-gray-400 text-sm">Itori, Ewekoro LGA, Abeokuta,<br/>Ogun State, Nigeria</p>
                     </div>
                   </div>
                   
@@ -48,7 +48,7 @@ const Contact = () => {
                     <Phone className="text-grand-gold mt-1" size={20} />
                     <div>
                       <h4 className="font-bold text-white">Phone</h4>
-                      <p className="text-gray-400 text-sm">+2 237 467 134-98</p>
+                      <p className="text-gray-400 text-sm">+447846324245<br/>+234 8125935055</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">

@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Building2, Globe, Users, Home as HomeIcon, Key, Briefcase, CheckCircle2 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { assets } from '../data/images';
@@ -51,7 +51,7 @@ const Preloader = () => (
   </motion.div>
 );
 
-// --- 2. HERO SECTION (3D MOUSE PARALLAX + PARTICLES) ---
+// --- 2. HERO SECTION (Mobile-Optimized with CSS Animations) ---
 const HeroSection = () => {
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -59,126 +59,87 @@ const HeroSection = () => {
     offset: ["start start", "end start"]
   });
 
-  // Scroll Parallax
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
-  // Mouse Parallax Logic
-  const x = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // Smooth out the mouse movement
-  const mouseXSpring = useSpring(x, { stiffness: 50, damping: 20 });
-  const mouseYSpring = useSpring(mouseY, { stiffness: 50, damping: 20 });
-
-  // Map mouse position to rotation degrees (3D Tilt)
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7deg", "-7deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7deg", "7deg"]);
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const currentMouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = currentMouseY / height - 0.5;
-    x.set(xPct);
-    mouseY.set(yPct);
-  };
+  // Aggressive Parallax for Mobile Depth
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]); // Text moves faster than BG
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   return (
-    <section 
-      ref={container} 
-      onMouseMove={handleMouseMove}
-      className="relative h-[100dvh] w-full overflow-hidden bg-grand-dark"
-      style={{ perspective: '1000px' }}
-    >
+    <section ref={container} className="relative h-[100dvh] w-full overflow-hidden bg-grand-dark">
       
-      {/* 1. Background Image (Parallax + Slight Scale for movement room) */}
-      <motion.div style={{ y, scale: 1.1 }} className="absolute inset-0 z-0">
-        <img 
-          src={assets.heroBg} 
-          className="w-full h-full object-cover object-center" 
-          alt="Luxury Architecture"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-grand-dark/90 md:to-grand-dark/40"></div>
+      {/* 1. CINEMATIC BACKGROUND (Ken Burns CSS) */}
+      {/* We use a div for the animation to avoid interfering with the parallax motion div */}
+      <motion.div style={{ y }} className="absolute inset-0 z-0">
+        <div className="w-full h-full animate-ken-burns">
+           <img 
+             src={assets.heroBg} 
+             className="w-full h-full object-cover object-center" 
+             alt="Luxury Architecture"
+           />
+        </div>
+        {/* Dark gradient for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-grand-dark/90"></div>
       </motion.div>
 
-      {/* 2. GOLD DUST PARTICLES (Floating Animation) */}
-      <div className="absolute inset-0 z-[1] pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ 
-              x: typeof window !== 'undefined' ? Math.random() * window.innerWidth : Math.random() * 1920, 
-              y: typeof window !== 'undefined' ? Math.random() * window.innerHeight : Math.random() * 1080,
-              opacity: Math.random() * 0.5 + 0.2
-            }}
-            animate={{ 
-              y: [null, (typeof window !== 'undefined' ? window.innerHeight : 1080) + 100],
-              opacity: [null, 0, null]
-            }}
-            transition={{ 
-              duration: Math.random() * 10 + 10, 
-              repeat: Infinity, 
-              ease: "linear" 
-            }}
-            className="absolute w-1 h-1 bg-grand-gold rounded-full blur-[1px]"
-          />
-        ))}
+      {/* 2. CSS PARTICLES (Lightweight for Mobile) */}
+      <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
+        {/* Manually placed particles to avoid JS loop calculation overhead */}
+        <div className="particle w-1 h-1 top-[20%] left-[10%]" style={{ animationDelay: '0s' }}></div>
+        <div className="particle w-2 h-2 top-[50%] left-[20%]" style={{ animationDelay: '1s' }}></div>
+        <div className="particle w-1 h-1 top-[30%] left-[80%]" style={{ animationDelay: '2s' }}></div>
+        <div className="particle w-1.5 h-1.5 top-[70%] left-[60%]" style={{ animationDelay: '3s' }}></div>
+        <div className="particle w-1 h-1 top-[15%] left-[50%]" style={{ animationDelay: '4s' }}></div>
+        <div className="particle w-2 h-2 top-[85%] left-[30%]" style={{ animationDelay: '1.5s' }}></div>
       </div>
 
-      {/* 3. 3D Content Container */}
+      {/* 3. CONTENT */}
       <motion.div 
-        style={{ 
-          opacity,
-          rotateX, // Apply 3D Tilt X
-          rotateY, // Apply 3D Tilt Y
-          transformStyle: 'preserve-3d'
-        }} 
-        className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4 pt-40 md:pt-20"
+        style={{ opacity, y: textY }} 
+        className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4 pt-20"
       >
-        {/* Intro Text */}
+        {/* Intro */}
         <motion.div 
-           initial={{ opacity: 0, y: 20 }} 
-           animate={{ opacity: 1, y: 0 }} 
+           initial={{ opacity: 0, scale: 0.9 }} 
+           animate={{ opacity: 1, scale: 1 }} 
            transition={{ delay: 2.2, duration: 0.8 }}
-           className="mb-8 md:mb-12"
+           className="mb-8"
         >
-          <div className="h-[1px] w-12 bg-grand-gold mx-auto mb-6 md:hidden"></div>
-          <p className="text-grand-gold uppercase tracking-[0.25em] md:tracking-[0.4em] text-xs md:text-sm font-medium drop-shadow-lg">
+          <div className="h-[1px] w-12 bg-grand-gold mx-auto mb-6 md:hidden shadow-[0_0_10px_#c5a059]"></div>
+          <p className="text-grand-gold uppercase tracking-[0.3em] text-xs font-bold drop-shadow-md">
             Redefining Luxury Living
           </p>
         </motion.div>
         
-        {/* Big Typography */}
-        <div className="flex flex-col items-center justify-center leading-none gap-2 md:gap-0 drop-shadow-2xl">
+        {/* TYPOGRAPHY STACK */}
+        <div className="flex flex-col items-center justify-center leading-none gap-2">
+          
           <div className="overflow-hidden">
             <motion.h1 
               initial={{ y: "100%" }} 
               animate={{ y: "0%" }} 
-              transition={{ delay: 2.3, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[17vw] md:text-[11vw] font-serif font-bold text-white tracking-tighter mix-blend-overlay md:mix-blend-normal"
+              transition={{ delay: 2.3, duration: 1, ease: "easeOut" }}
+              className="text-[17vw] md:text-[11vw] font-serif font-bold text-white tracking-tighter mix-blend-overlay"
             >
               GRAND
             </motion.h1>
           </div>
+
           <div className="overflow-hidden">
             <motion.h1 
               initial={{ y: "100%" }} 
               animate={{ y: "0%" }} 
-              transition={{ delay: 2.45, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[17vw] md:text-[11vw] font-serif font-bold text-grand-gold tracking-tighter"
+              transition={{ delay: 2.5, duration: 1, ease: "easeOut" }}
+              className="text-[17vw] md:text-[11vw] font-serif font-bold text-grand-gold tracking-tighter text-shimmer drop-shadow-2xl"
             >
               KONSUL
             </motion.h1>
           </div>
+
           <div className="overflow-hidden">
             <motion.h1 
               initial={{ y: "100%" }} 
               animate={{ y: "0%" }} 
-              transition={{ delay: 2.6, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 2.7, duration: 1, ease: "easeOut" }}
               className="text-[17vw] md:text-[11vw] font-serif font-bold text-transparent stroke-gold tracking-tighter opacity-80"
             >
               GARDENS
@@ -191,11 +152,12 @@ const HeroSection = () => {
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
           transition={{ delay: 3.5, duration: 1 }}
-          className="absolute bottom-10 left-0 w-full flex flex-col items-center gap-4"
+          className="absolute bottom-12 left-0 w-full flex flex-col items-center gap-3"
         >
           <span className="text-white/50 text-[10px] uppercase tracking-widest animate-pulse">Scroll to Explore</span>
-          <div className="h-16 w-[1px] bg-gradient-to-b from-transparent via-grand-gold to-transparent"></div>
+          <div className="h-16 w-[1px] bg-gradient-to-b from-transparent via-grand-gold to-transparent shadow-[0_0_8px_#c5a059]"></div>
         </motion.div>
+
       </motion.div>
     </section>
   );

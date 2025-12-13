@@ -42,11 +42,14 @@ const Footer = () => {
             <ul className="space-y-6 text-sm text-gray-400">
               <li className="flex gap-4 items-start">
                 <MapPin size={20} className="text-grand-gold shrink-0 mt-1" />
-                <span>6391 Elgin St. Celina,<br/>Delaware 10299</span>
+                <span>Itori, Ewekoro LGA, Abeokuta,<br/>Ogun State, Nigeria</span>
               </li>
-              <li className="flex gap-4 items-center">
-                <Phone size={20} className="text-grand-gold shrink-0" />
-                <span>+44 (0) 123 456 789</span>
+              <li className="flex gap-4 items-start">
+                <Phone size={20} className="text-grand-gold shrink-0 mt-1" />
+                <div>
+                  <span>+447846324245</span><br/>
+                  <span>+234 8125935055</span>
+                </div>
               </li>
               <li className="flex gap-4 items-center">
                 <Mail size={20} className="text-grand-gold shrink-0" />
