@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Facebook, Linkedin, Instagram } from 'lucide-react';
+import { assets } from '../data/images';
 
 const Footer = () => {
   return (
@@ -9,8 +10,8 @@ const Footer = () => {
           
           {/* Brand Column */}
           <div>
-            <div className="flex items-center gap-2 mb-6">
-               <div className="w-8 h-8 bg-grand-gold rounded-full flex items-center justify-center text-grand-dark font-serif font-bold">G</div>
+            <div className="flex items-center gap-3 mb-6">
+               <img src={assets.logo} alt="Grandkonsul Logo" className="h-10 w-10" />
                <span className="font-serif text-xl font-bold tracking-wide">GRAND<span className="text-grand-gold">KONSUL</span></span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">

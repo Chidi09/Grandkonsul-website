@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import clsx from 'clsx';
+import { assets } from '../data/images';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -45,11 +46,12 @@ const Navbar = () => {
       <div className="container mx-auto px-6 flex justify-between items-center">
         
         {/* Logo */}
-        <Link to="/" className="relative z-50 flex items-center gap-2 group">
-          <div className={clsx("w-10 h-10 rounded-full flex items-center justify-center font-serif font-bold transition-colors duration-300", isOpen ? "bg-white text-grand-green" : "bg-grand-gold text-white")}>G</div>
-          <span className={clsx("font-serif text-xl font-bold tracking-widest transition-colors duration-300", isOpen ? "text-white" : (scrolled ? "text-grand-green" : "text-white mix-blend-difference"))}>
-            GRANDKONSUL
-          </span>
+        <Link to="/" className="relative z-50 flex items-center group">
+          <img 
+            src={assets.logoWords} 
+            alt="Grandkonsul" 
+            className={clsx("h-8 md:h-10 transition-opacity duration-300", isOpen ? "opacity-100" : (scrolled ? "opacity-100" : "opacity-100 mix-blend-difference"))}
+          />
         </Link>
 
         {/* Desktop Menu - Minimalist */}
