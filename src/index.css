@@ -40,26 +40,10 @@ h1, h2, h3, h4, h5, h6 {
   color: transparent;
 }
 
-/* Golden text with black outline for navbar */
-.text-gold-outline {
-  color: #c5a059; /* Gold text */
-  -webkit-text-stroke: 2px #000000; /* Black outline */
-  text-shadow: 
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000,
-    0 0 3px rgba(0, 0, 0, 0.8); /* Additional shadow for visibility */
-}
-
 /* Optional: Thinner stroke for mobile to keep it crisp */
 @media (max-width: 768px) {
   .stroke-gold {
     -webkit-text-stroke: 0.5px #c5a059;
-  }
-  
-  .text-gold-outline {
-    -webkit-text-stroke: 1.5px #000000;
   }
 }
 
