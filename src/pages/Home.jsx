@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, ArrowDown } from 'lucide-react';
+import { ArrowUpRight, Building2, Globe, Handshake, Home as HomeIcon, Key, Briefcase } from 'lucide-react';
 import SEO from '../components/SEO';
 import { assets } from '../data/images';
 
@@ -27,7 +26,7 @@ const Home = () => {
           <MarqueeSection />
           <AboutSection />
           <HorizontalGallery />
-          <ServicesSection />
+          <ServicesOverview />
           <CallToAction />
         </div>
       )}
@@ -209,201 +208,108 @@ const AboutSection = () => {
   );
 };
 
-// --- 5. HORIZONTAL GALLERY (Separate Mobile/PC Logic) ---
+// --- 5. HORIZONTAL GALLERY (SHORTENED to 3) ---
 const HorizontalGallery = () => {
   const targetRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: targetRef });
-  
-  // Controls the horizontal slide of the container
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-85%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]); // Adjusted scroll distance since fewer items
+
+  // Only take the first 3 projects
+  const selectedProjects = assets.projects.slice(0, 3);
 
   return (
     <>
-      {/* DESKTOP VIEW: Parallax Horizontal Scroll */}
-      <section ref={targetRef} className="hidden md:block relative h-[300vh] bg-grand-dark">
+      {/* DESKTOP VIEW */}
+      <section ref={targetRef} className="hidden md:block relative h-[250vh] bg-grand-dark">
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-          
           <motion.div style={{ x }} className="flex gap-32 pl-20 pr-40">
-            
-            {/* Title Card */}
             <div className="flex-shrink-0 w-[25vw] flex flex-col justify-center z-10">
                <div className="h-1 w-20 bg-grand-gold mb-8"></div>
-               <h2 className="text-white text-7xl font-serif font-bold leading-none">
-                 Selected <br/> <span className="stroke-gold">Works</span>
-               </h2>
-               <p className="text-gray-400 mt-8 text-lg max-w-xs leading-relaxed">
-                 A curation of our defining moments in architecture and development.
-               </p>
+               <h2 className="text-white text-7xl font-serif font-bold leading-none">Selected <br/> <span className="stroke-gold">Works</span></h2>
+               <p className="text-gray-400 mt-8 text-lg max-w-xs leading-relaxed">A preview of our defining moments in architecture.</p>
             </div>
 
-            {/* Project Cards */}
-            {assets.projects.map((project, i) => (
+            {selectedProjects.map((project, i) => (
               <div key={i} className="relative h-[65vh] w-[35vw] flex-shrink-0 group cursor-pointer">
-                
-                {/* Image Container with Overflow Hidden */}
                 <div className="w-full h-full overflow-hidden relative rounded-sm">
-                  {/* The Image (Scales up on hover for a subtle breath effect) */}
-                  <img 
-                    src={project.src} 
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110 grayscale group-hover:grayscale-0"
-                  />
-                  {/* Dark Overlay that vanishes on hover */}
+                  <img src={project.src} alt={project.title} className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110 grayscale group-hover:grayscale-0" />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500"></div>
                 </div>
-                
-                {/* Clean Title - Removed Location */}
                 <div className="absolute -bottom-14 left-0">
-                   <h3 className="text-4xl font-serif text-white font-bold opacity-60 group-hover:opacity-100 transition-opacity duration-500">
-                     {project.title}
-                   </h3>
+                   <h3 className="text-4xl font-serif text-white font-bold opacity-60 group-hover:opacity-100 transition-opacity duration-500">{project.title}</h3>
                 </div>
-                
-                {/* Hover Number */}
-                <div className="absolute top-4 right-4 text-grand-gold font-serif text-6xl opacity-0 group-hover:opacity-20 transition-opacity duration-500">
-                  0{i + 1}
-                </div>
+                <div className="absolute top-4 right-4 text-grand-gold font-serif text-6xl opacity-0 group-hover:opacity-20 transition-opacity duration-500">0{i + 1}</div>
               </div>
             ))}
             
-            {/* CTA at the end of scroll */}
+            {/* CTA */}
             <div className="flex-shrink-0 w-[30vw] flex items-center justify-center">
-              <Link to="/projects" className="group flex flex-col items-center gap-4">
+              <a href="/projects" className="group flex flex-col items-center gap-4">
                 <div className="w-24 h-24 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-grand-gold group-hover:border-grand-gold transition-all duration-500">
                   <ArrowUpRight className="text-white h-8 w-8 group-hover:scale-125 transition-transform" />
                 </div>
                 <span className="text-white font-serif text-2xl group-hover:text-grand-gold transition-colors">View All Projects</span>
-              </Link>
+              </a>
             </div>
-
           </motion.div>
         </div>
       </section>
 
-      {/* MOBILE VIEW: Vertical Stack (Cleaned up) */}
+      {/* MOBILE VIEW */}
       <section className="md:hidden bg-grand-dark py-20 px-6">
-        <h2 className="text-white text-5xl font-serif font-bold leading-tight mb-12">
-           Selected <br/> <span className="text-grand-gold">Works</span>
-        </h2>
+        <h2 className="text-white text-5xl font-serif font-bold leading-tight mb-12">Selected <br/> <span className="text-grand-gold">Works</span></h2>
         <div className="flex flex-col gap-16">
-          {assets.projects.map((project, i) => (
-            <motion.div 
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              key={i} 
-              className="group"
-            >
-              <div className="h-[450px] w-full overflow-hidden rounded-sm mb-6 relative">
+          {selectedProjects.map((project, i) => (
+            <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} key={i} className="group">
+              <div className="h-[400px] w-full overflow-hidden rounded-sm mb-6 relative">
                 <img src={project.src} alt={project.title} className="w-full h-full object-cover" />
-                <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full">
-                  <span className="text-white/80 text-xs uppercase tracking-widest">0{i + 1}</span>
-                </div>
+                <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full"><span className="text-white/80 text-xs uppercase tracking-widest">0{i + 1}</span></div>
               </div>
               <h3 className="text-white text-3xl font-serif font-bold">{project.title}</h3>
             </motion.div>
           ))}
+          <a href="/projects" className="block w-full py-4 text-center border border-grand-gold text-grand-gold mt-4 rounded-sm uppercase tracking-widest font-bold text-sm">View Full Portfolio</a>
         </div>
       </section>
     </>
   );
 };
 
-// --- 6. SERVICES (Bento Grid on PC, Snap Slider on Mobile) ---
-const ServicesSection = () => {
-  // Expanded Professional Content
+// --- 6. SERVICES OVERVIEW (ICONS ONLY) ---
+const ServicesOverview = () => {
   const services = [
-    { 
-      title: "Property Development", 
-      img: assets.services.development, 
-      desc: "We oversee the entire lifecycle of luxury real estate creation. From initial land acquisition and architectural conceptualization to construction management and final handover, our team ensures precision, quality, and strict adherence to timelines." 
-    },
-    { 
-      title: "Relocation Services", 
-      img: assets.services.relocation, 
-      desc: "Relocating is more than just moving boxes. We provide comprehensive support for individuals and corporations, managing logistics, settling-in services, and cultural orientation to ensure a smooth transition into your new environment." 
-    },
-    { 
-      title: "Joint Ventures", 
-      img: assets.services.handshake, 
-      desc: "Maximize the potential of your land assets through strategic partnerships. We bring the capital, technical expertise, and development experience needed to transform underutilized property into high-yield real estate assets." 
-    },
-    { 
-      title: "Service Accommodation", 
-      img: assets.luxuryInterior, 
-      desc: "Experience the comfort of home with the luxury of a hotel. Our fully furnished, high-specification apartments offer flexible short-term living solutions for business travelers and expatriates seeking style and convenience." 
-    },
-    { 
-      title: "HMO & Management", 
-      img: assets.services.coLiving, 
-      desc: "We specialize in the development and management of Houses of Multiple Occupancy (HMO), optimizing rental yields for investors while providing safe, modern, and community-focused living spaces for tenants." 
-    },
-    { 
-      title: "Rent to Rent", 
-      img: assets.services.meeting, 
-      desc: "A hassle-free solution for landlords seeking financial certainty. We lease your property long-term, handle all maintenance and tenant management, and provide you with guaranteed fixed rental income every month." 
-    }
+    { title: "Property Development", icon: Building2, desc: "End-to-end construction management." },
+    { title: "Relocation Services", icon: Globe, desc: "Seamless corporate & personal moves." },
+    { title: "Joint Ventures", icon: Handshake, desc: "Strategic land partnerships." },
+    { title: "Service Accommodation", icon: Briefcase, desc: "Premium short-stay solutions." },
+    { title: "HMO Management", icon: HomeIcon, desc: "High-yield multi-occupancy housing." },
+    { title: "Rent to Rent", icon: Key, desc: "Guaranteed income for landlords." },
   ];
 
   return (
-    <section className="py-20 md:py-32 bg-grand-light">
+    <section className="py-20 bg-grand-light">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-6xl font-serif font-bold text-grand-green mb-6 text-center">Our Expertise</h2>
-        <div className="w-24 h-1 bg-grand-gold mx-auto mb-16"></div>
-        
-        {/* DESKTOP: BENTO GRID (Normal, Beautiful, Professional) */}
-        <div className="hidden md:grid grid-cols-3 gap-8">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-grand-green mb-4">Our Expertise</h2>
+          <div className="w-16 h-1 bg-grand-gold mx-auto"></div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((s, i) => (
-            <motion.div 
+            <motion.a 
+              href="/services"
               key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group relative h-[500px] overflow-hidden rounded-lg cursor-pointer"
+              whileHover={{ y: -10 }}
+              className="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-transparent hover:border-grand-gold/20 group"
             >
-              {/* Image Background */}
-              <img 
-                src={s.img} 
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                alt={s.title}
-              />
-              
-              {/* Gradient Overlay (Darkens on Hover) */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:bg-black/60 transition-colors duration-500"></div>
-              
-              {/* Content */}
-              <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                 {/* Icon/Line Decorative */}
-                 <div className="w-12 h-1 bg-grand-gold mb-6 transform origin-left transition-all duration-500 group-hover:w-20"></div>
-                 
-                 <h3 className="font-serif font-bold text-white text-3xl mb-4 group-hover:-translate-y-2 transition-transform duration-500">
-                   {s.title}
-                 </h3>
-                 
-                 {/* Text reveals on hover (or stays visible but muted if preferred) */}
-                 <p className="text-gray-300 text-sm leading-relaxed opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
-                   {s.desc}
-                 </p>
+              <div className="w-14 h-14 bg-grand-green/5 rounded-full flex items-center justify-center mb-6 group-hover:bg-grand-gold group-hover:text-white transition-colors text-grand-green">
+                <s.icon size={28} />
               </div>
-            </motion.div>
+              <h3 className="text-xl font-serif font-bold text-grand-dark mb-3 group-hover:text-grand-gold transition-colors">{s.title}</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
+            </motion.a>
           ))}
         </div>
-
-        {/* MOBILE: Snap Slider (Unchanged as you liked it) */}
-        <div className="md:hidden flex overflow-x-auto gap-4 snap-x snap-mandatory pb-8 -mx-6 px-6 no-scrollbar">
-          {services.map((s, i) => (
-            <div key={i} className="snap-center shrink-0 w-[85vw] relative h-[450px] rounded-lg overflow-hidden">
-               <img src={s.img} className="absolute inset-0 w-full h-full object-cover" alt={s.title} />
-               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-               <div className="absolute bottom-0 left-0 p-6">
-                 <h3 className="text-3xl font-serif font-bold text-white mb-3">{s.title}</h3>
-                 <p className="text-gray-200 text-sm leading-relaxed">{s.desc}</p>
-               </div>
-            </div>
-          ))}
-        </div>
-
       </div>
     </section>
   );
@@ -412,16 +318,10 @@ const ServicesSection = () => {
 // --- 7. CTA ---
 const CallToAction = () => (
   <section className="py-32 bg-grand-green text-center px-6">
-    <h2 className="text-4xl md:text-7xl font-serif font-bold text-white mb-8">
-      Ready to make your move?
-    </h2>
-    <div className="flex justify-center gap-6 flex-wrap">
-       <Link to="/contact" className="bg-grand-gold text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-grand-green transition-all duration-300">
-         Start a Project
-       </Link>
-       <Link to="/services" className="border border-white text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-grand-green transition-all duration-300">
-         Learn More
-       </Link>
+    <h2 className="text-4xl md:text-7xl font-serif font-bold text-white mb-8">Ready to make your move?</h2>
+    <div className="flex justify-center gap-6">
+       <a href="/contact" className="bg-grand-gold text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-grand-green transition-all duration-300">Start a Project</a>
+       <a href="/services" className="border border-white text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-grand-green transition-all duration-300">Learn More</a>
     </div>
   </section>
 );

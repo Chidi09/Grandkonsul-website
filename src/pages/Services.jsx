@@ -1,57 +1,49 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import SEO from '../components/SEO';
 import { assets } from '../data/images';
 
-// Map titles to images from your assets file
-const servicesData = [
-  { 
-    id: 1, 
-    title: "Property Development", 
-    desc: "End-to-end management of residential and commercial construction.", 
-    image: assets.services.development // Crane
-  },
-  { 
-    id: 2, 
-    title: "Relocation Services", 
-    desc: "Corporate and personal relocation logistics and settling-in services.", 
-    image: assets.services.relocation // Business Woman
-  },
-  { 
-    id: 3, 
-    title: "Joint Venture Engineering", 
-    desc: "Strategic partnerships to maximize land value and ROI.", 
-    image: assets.services.handshake // Fountain Pen
-  },
-  { 
-    id: 4, 
-    title: "Service Accommodation", 
-    desc: "Premium short-stay apartments for professionals.", 
-    image: assets.luxuryInterior // Use the luxury interior here
-  },
-  { 
-    id: 5, 
-    title: "HMO & Management", 
-    desc: "High-yield multi-occupancy housing solutions.", 
-    image: assets.services.meeting // Glass Office
-  },
-  { 
-    id: 6, 
-    title: "Rent to Rent", 
-    desc: "Guaranteed rent schemes for landlords.", 
-    image: assets.services.coLiving // University Dorm
-  }
-];
-
 const Services = () => {
-  const [hoveredService, setHoveredService] = useState(0); // Default to first service
+  const [hoveredService, setHoveredService] = useState(0);
+
+  // LONG, DETAILED CONTENT
+  const services = [
+    { 
+      title: "Property Development", 
+      img: assets.services.development, 
+      desc: "We oversee the entire lifecycle of luxury real estate creation. From initial land acquisition and architectural conceptualization to construction management and final handover, our team ensures precision, quality, and strict adherence to timelines. We build spaces that define the future of living." 
+    },
+    { 
+      title: "Relocation Services", 
+      img: assets.services.relocation, 
+      desc: "Relocating is more than just moving boxes; it's about moving lives. We provide comprehensive support for individuals and corporations, managing logistics, settling-in services, school searches, and cultural orientation to ensure a smooth transition into your new environment." 
+    },
+    { 
+      title: "Joint Ventures", 
+      img: assets.services.handshake, 
+      desc: "Maximize the potential of your land assets through strategic partnerships. We bring the capital, technical expertise, and development experience needed to transform underutilized property into high-yield real estate assets, ensuring fair and transparent returns for all parties." 
+    },
+    { 
+      title: "Service Accommodation", 
+      img: assets.luxuryInterior, 
+      desc: "Experience the comfort of home with the luxury of a hotel. Our fully furnished, high-specification apartments offer flexible short-term living solutions for business travelers and expatriates seeking style, convenience, and privacy in prime locations." 
+    },
+    { 
+      title: "HMO & Management", 
+      img: assets.services.coLiving, 
+      desc: "We specialize in the development and management of Houses of Multiple Occupancy (HMO), optimizing rental yields for investors while providing safe, modern, and community-focused living spaces for tenants. Our management ensures compliance and high occupancy rates." 
+    },
+    { 
+      title: "Rent to Rent", 
+      img: assets.services.meeting, 
+      desc: "A hassle-free solution for landlords seeking financial certainty. We lease your property long-term, handle all maintenance and tenant management, and provide you with guaranteed fixed rental income every month, removing the stress of voids and arrears." 
+    }
+  ];
 
   return (
     <>
       <SEO title="Our Services" description="Premium Services" />
 
-      {/* Changed bg-grand-light to bg-grand-dark for the header section */}
       <div className="bg-grand-dark min-h-screen pt-40 pb-20">
         <div className="container mx-auto px-6">
           <motion.h1 
@@ -61,68 +53,58 @@ const Services = () => {
             EXPERTISE
           </motion.h1>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
-            
-            {/* List */}
-            <div className="flex flex-col">
-              {servicesData.map((service, index) => (
-                <motion.div 
-                  key={service.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  onMouseEnter={() => setHoveredService(index)}
-                  // Changed border color to white/20 for visibility on dark bg
-                  className="group py-8 md:py-10 border-b border-white/20 cursor-pointer relative z-10"
-                >
-                  <div className="flex justify-between items-center">
-                    <h3 className={`text-2xl md:text-4xl font-serif transition-colors duration-300 ${
-                      hoveredService === index ? "text-grand-gold" : "text-white"
-                    }`}>
-                      {service.title}
-                    </h3>
-                    <ArrowUpRight className={`transition-all duration-300 transform ${
-                      hoveredService === index ? "text-grand-gold rotate-45 scale-125" : "text-gray-500 scale-100"
-                    }`} />
-                  </div>
-                  <motion.div 
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ 
-                      height: hoveredService === index ? 'auto' : 0,
-                      opacity: hoveredService === index ? 1 : 0 
-                    }}
-                    className="overflow-hidden"
-                  >
-                    <p className="pt-4 text-gray-400 text-base md:text-lg max-w-md">{service.desc}</p>
-                    {/* Mobile Only Image */}
-                    <div className="block lg:hidden mt-4 h-48 w-full rounded-lg overflow-hidden">
-                      <img src={service.image} className="w-full h-full object-cover" alt={service.title} />
-                    </div>
-                  </motion.div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Floating Image (Desktop) */}
-            <div className="hidden lg:block relative h-[600px] w-full sticky top-32 rounded-lg overflow-hidden shadow-2xl border border-white/10">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={hoveredService}
-                  src={servicesData[hoveredService].image} 
-                  initial={{ opacity: 0, scale: 1.1 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  alt="Service Preview"
-                />
-              </AnimatePresence>
-               <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black/80 to-transparent">
-                 <p className="text-white font-serif text-2xl">{servicesData[hoveredService].title}</p>
-              </div>
-            </div>
-
+          {/* --- DESKTOP VIEW (Bento Grid) --- */}
+          <div className="hidden md:grid grid-cols-3 gap-8">
+            {services.map((s, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="group relative h-[500px] overflow-hidden rounded-lg cursor-pointer bg-grand-light"
+              >
+                <img src={s.img} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={s.title} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:bg-black/60 transition-colors duration-500"></div>
+                <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                   <div className="w-12 h-1 bg-grand-gold mb-6 transform origin-left transition-all duration-500 group-hover:w-20"></div>
+                   <h3 className="font-serif font-bold text-white text-3xl mb-4 group-hover:-translate-y-2 transition-transform duration-500">{s.title}</h3>
+                   <p className="text-gray-300 text-sm leading-relaxed opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">{s.desc}</p>
+                </div>
+              </motion.div>
+            ))}
           </div>
+
+          {/* --- MOBILE VIEW (Responsive Stack - Fixed Cropping) --- */}
+          <div className="md:hidden flex flex-col gap-12">
+            {services.map((s, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="bg-white rounded-xl overflow-hidden shadow-lg"
+              >
+                {/* IMAGE FIX: 
+                   1. 'aspect-video' forces a 16:9 widescreen ratio. 
+                   2. 'h-auto' allows it to scale naturally. 
+                   3. No more aggressive cropping.
+                */}
+                <div className="w-full aspect-video relative">
+                   <img src={s.img} className="w-full h-full object-cover" alt={s.title} />
+                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50"></div>
+                </div>
+
+                {/* TEXT CONTENT */}
+                <div className="p-8">
+                  <div className="w-10 h-1 bg-grand-gold mb-4"></div>
+                  <h3 className="text-2xl font-serif font-bold text-grand-dark mb-4">{s.title}</h3>
+                  <p className="text-gray-600 leading-relaxed text-sm">{s.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
         </div>
       </div>
     </>
