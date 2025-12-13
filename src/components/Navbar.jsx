@@ -50,7 +50,7 @@ const Navbar = () => {
           <img 
             src={assets.logoWords} 
             alt="Grandkonsul" 
-            className={clsx("h-8 md:h-10 transition-opacity duration-300", isOpen ? "opacity-100" : (scrolled ? "opacity-100" : "opacity-100 mix-blend-difference"))}
+            className={clsx("h-16 md:h-20 lg:h-24 transition-opacity duration-300", isOpen ? "opacity-100" : (scrolled ? "opacity-100" : "opacity-100 mix-blend-difference"))}
           />
         </Link>
 
