@@ -229,7 +229,7 @@ const HorizontalGallery = () => {
             <div className="flex-shrink-0 w-[25vw] flex flex-col justify-center z-10">
                <div className="h-1 w-20 bg-grand-gold mb-8"></div>
                <h2 className="text-white text-7xl font-serif font-bold leading-none">
-                 Selected <br/> <span className="text-transparent stroke-gold">Works</span>
+                 Selected <br/> <span className="stroke-gold">Works</span>
                </h2>
                <p className="text-gray-400 mt-8 text-lg max-w-xs leading-relaxed">
                  A curation of our defining moments in architecture and development.

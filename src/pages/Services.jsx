@@ -34,13 +34,13 @@ const servicesData = [
     id: 5, 
     title: "HMO & Management", 
     desc: "High-yield multi-occupancy housing solutions.", 
-    image: assets.services.coLiving // University Dorm
+    image: assets.services.meeting // Glass Office
   },
   { 
     id: 6, 
     title: "Rent to Rent", 
     desc: "Guaranteed rent schemes for landlords.", 
-    image: assets.services.meeting // Glass Office or similar
+    image: assets.services.coLiving // University Dorm
   }
 ];
 

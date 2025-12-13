@@ -19,7 +19,7 @@ import meeting from '../grandkonsul-images/Business meeting glass office.jpg';
 // Projects
 import villaPool from '../grandkonsul-images/White modern villa pool dusk.jpg';
 import brutalist from '../grandkonsul-images/Brutalist architecture house.jpg';
-import geometric from '../grandkonsul-images/Concrete geometric house.jpg';
+import geometric from '../grandkonsul-images/Geometric concrete architecture.jpg';
 import skyscraper from '../grandkonsul-images/Glass skyscraper looking up.jpg';
 import apartment from '../grandkonsul-images/Modern apartment interior.jpg';
 import abstractGlass from '../grandkonsul-images/Abstract glass architecture facade.jpg';
