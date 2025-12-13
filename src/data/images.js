@@ -7,12 +7,14 @@ import heroBg from '../grandkonsul-images/Moody Modern Architecture.jpg';
 import luxuryInterior from '../grandkonsul-images/Luxury Dark Interior.jpg';
 import velvetSofa from '../grandkonsul-images/Green Velvet Sofa Dark Marble Wall.jpg';
 
-// Services
-import development from '../grandkonsul-images/Architect looking at blueprints construction site.jpg';
-import relocation from '../grandkonsul-images/Unpacking boxes luxury living room.jpg';
-import coLiving from '../grandkonsul-images/Co-living space.jpg';
+// Services (The New Unique Images)
+import development from '../grandkonsul-images/Construction crane sunset silhouette.jpg';
+import relocation from '../grandkonsul-images/Business woman looking out hotel window.jpg';
+import coLiving from '../grandkonsul-images/Modern university dorm interior.jpg';
+import handshake from '../grandkonsul-images/Fountain pen signing contract.jpg';
+// We use the existing meeting image or luxury interior if meeting is missing, 
+// but based on your file list, I'll use the university dorm for HMO/CoLiving contexts.
 import meeting from '../grandkonsul-images/Business meeting glass office.jpg';
-import handshake from '../grandkonsul-images/Handshake close up dark suit.jpg';
 
 // Projects
 import villaPool from '../grandkonsul-images/White modern villa pool dusk.jpg';
@@ -20,7 +22,7 @@ import brutalist from '../grandkonsul-images/Brutalist architecture house.jpg';
 import geometric from '../grandkonsul-images/Concrete geometric house.jpg';
 import skyscraper from '../grandkonsul-images/Glass skyscraper looking up.jpg';
 import apartment from '../grandkonsul-images/Modern apartment interior.jpg';
-import officeFacade from '../grandkonsul-images/Modern office building facade.jpg';
+import abstractGlass from '../grandkonsul-images/Abstract glass architecture facade.jpg';
 
 export const assets = {
   logo,
@@ -29,19 +31,19 @@ export const assets = {
   luxuryInterior,
   velvetSofa,
   services: {
-    development,
-    relocation,
-    coLiving,
-    meeting,
-    handshake
+    development, // Construction Crane
+    relocation,  // Business Woman
+    coLiving,    // University Dorm (Good for HMO)
+    meeting,     // Glass Office
+    handshake    // Fountain Pen (Joint Venture)
   },
   projects: [
     { src: villaPool, title: "Villa Aurora", loc: "Lekki Phase 1" },
-    { src: geometric, title: "The Cube", loc: "Victoria Island" },
-    { src: skyscraper, title: "Akanksha Towers", loc: "Eko Atlantic" },
-    { src: brutalist, title: "Raw Concrete", loc: "Abuja" },
-    { src: apartment, title: "Luxe Haven", loc: "Ikoyi" },
-    { src: officeFacade, title: "Grand HQ", loc: "Banana Island" }
+    { src: geometric, title: "The Cube House", loc: "Victoria Island" },
+    { src: skyscraper, title: "Akanksha Complex", loc: "Abuja" },
+    { src: brutalist, title: "Villa George", loc: "Ikoyi" },
+    { src: apartment, title: "Contemporary Villa", loc: "Banana Island" },
+    { src: abstractGlass, title: "Transparent Materials", loc: "Eko Atlantic" }
   ]
 };
 

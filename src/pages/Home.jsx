@@ -213,39 +213,79 @@ const AboutSection = () => {
 const HorizontalGallery = () => {
   const targetRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: targetRef });
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+  
+  // Controls the horizontal slide of the container
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-85%"]);
 
   return (
     <>
-      {/* DESKTOP VIEW: Horizontal Scroll (Hidden on Mobile) */}
+      {/* DESKTOP VIEW: Parallax Horizontal Scroll */}
       <section ref={targetRef} className="hidden md:block relative h-[300vh] bg-grand-dark">
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-          <motion.div style={{ x, willChange: "transform" }} className="flex gap-20 pl-20">
-            <div className="flex-shrink-0 w-[30vw] flex flex-col justify-center">
-               <h2 className="text-white text-8xl font-serif font-bold leading-tight">
-                 Selected <br/> <span className="text-grand-gold">Works</span>
+          
+          <motion.div style={{ x }} className="flex gap-32 pl-20 pr-40">
+            
+            {/* Title Card */}
+            <div className="flex-shrink-0 w-[25vw] flex flex-col justify-center z-10">
+               <div className="h-1 w-20 bg-grand-gold mb-8"></div>
+               <h2 className="text-white text-7xl font-serif font-bold leading-none">
+                 Selected <br/> <span className="text-transparent stroke-gold">Works</span>
                </h2>
-               <p className="text-gray-400 mt-6 max-w-md">Swipe to explore our architectural landmarks.</p>
+               <p className="text-gray-400 mt-8 text-lg max-w-xs leading-relaxed">
+                 A curation of our defining moments in architecture and development.
+               </p>
             </div>
+
+            {/* Project Cards */}
             {assets.projects.map((project, i) => (
-              <div key={i} className="relative h-[70vh] w-[40vw] flex-shrink-0 group overflow-hidden cursor-pointer">
-                <img src={project.src} alt={project.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-                  <p className="text-grand-gold uppercase tracking-widest text-xs mb-2">{project.loc}</p>
-                  <h3 className="text-white text-4xl font-serif font-bold">{project.title}</h3>
+              <div key={i} className="relative h-[65vh] w-[35vw] flex-shrink-0 group cursor-pointer">
+                
+                {/* Image Container with Overflow Hidden */}
+                <div className="w-full h-full overflow-hidden relative rounded-sm">
+                  {/* The Image (Scales up on hover for a subtle breath effect) */}
+                  <img 
+                    src={project.src} 
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110 grayscale group-hover:grayscale-0"
+                  />
+                  {/* Dark Overlay that vanishes on hover */}
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500"></div>
+                </div>
+                
+                {/* Clean Title - Removed Location */}
+                <div className="absolute -bottom-14 left-0">
+                   <h3 className="text-4xl font-serif text-white font-bold opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                     {project.title}
+                   </h3>
+                </div>
+                
+                {/* Hover Number */}
+                <div className="absolute top-4 right-4 text-grand-gold font-serif text-6xl opacity-0 group-hover:opacity-20 transition-opacity duration-500">
+                  0{i + 1}
                 </div>
               </div>
             ))}
+            
+            {/* CTA at the end of scroll */}
+            <div className="flex-shrink-0 w-[30vw] flex items-center justify-center">
+              <Link to="/projects" className="group flex flex-col items-center gap-4">
+                <div className="w-24 h-24 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-grand-gold group-hover:border-grand-gold transition-all duration-500">
+                  <ArrowUpRight className="text-white h-8 w-8 group-hover:scale-125 transition-transform" />
+                </div>
+                <span className="text-white font-serif text-2xl group-hover:text-grand-gold transition-colors">View All Projects</span>
+              </Link>
+            </div>
+
           </motion.div>
         </div>
       </section>
 
-      {/* MOBILE VIEW: Vertical Stack (Hidden on Desktop) */}
+      {/* MOBILE VIEW: Vertical Stack (Cleaned up) */}
       <section className="md:hidden bg-grand-dark py-20 px-6">
-        <h2 className="text-white text-5xl font-serif font-bold leading-tight mb-10">
+        <h2 className="text-white text-5xl font-serif font-bold leading-tight mb-12">
            Selected <br/> <span className="text-grand-gold">Works</span>
         </h2>
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-16">
           {assets.projects.map((project, i) => (
             <motion.div 
               initial={{ opacity: 0, y: 50 }}
@@ -254,10 +294,12 @@ const HorizontalGallery = () => {
               key={i} 
               className="group"
             >
-              <div className="h-[400px] w-full overflow-hidden rounded-sm mb-4">
+              <div className="h-[450px] w-full overflow-hidden rounded-sm mb-6 relative">
                 <img src={project.src} alt={project.title} className="w-full h-full object-cover" />
+                <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full">
+                  <span className="text-white/80 text-xs uppercase tracking-widest">0{i + 1}</span>
+                </div>
               </div>
-              <p className="text-grand-gold uppercase tracking-widest text-xs mb-1">{project.loc}</p>
               <h3 className="text-white text-3xl font-serif font-bold">{project.title}</h3>
             </motion.div>
           ))}

@@ -6,12 +6,42 @@ import { assets } from '../data/images';
 
 // Map titles to images from your assets file
 const servicesData = [
-  { id: 1, title: "Property Development", desc: "End-to-end management of residential and commercial construction.", image: assets.services.development },
-  { id: 2, title: "Relocation Services", desc: "Corporate and personal relocation logistics and settling-in services.", image: assets.services.relocation },
-  { id: 3, title: "Joint Venture Engineering", desc: "Strategic partnerships to maximize land value and ROI.", image: assets.services.handshake },
-  { id: 4, title: "Service Accommodation", desc: "Premium short-stay apartments for professionals.", image: assets.services.coLiving },
-  { id: 5, title: "HMO & Management", desc: "High-yield multi-occupancy housing solutions.", image: assets.services.meeting },
-  { id: 6, title: "Rent to Rent", desc: "Guaranteed rent schemes for landlords.", image: assets.luxuryInterior }
+  { 
+    id: 1, 
+    title: "Property Development", 
+    desc: "End-to-end management of residential and commercial construction.", 
+    image: assets.services.development // Crane
+  },
+  { 
+    id: 2, 
+    title: "Relocation Services", 
+    desc: "Corporate and personal relocation logistics and settling-in services.", 
+    image: assets.services.relocation // Business Woman
+  },
+  { 
+    id: 3, 
+    title: "Joint Venture Engineering", 
+    desc: "Strategic partnerships to maximize land value and ROI.", 
+    image: assets.services.handshake // Fountain Pen
+  },
+  { 
+    id: 4, 
+    title: "Service Accommodation", 
+    desc: "Premium short-stay apartments for professionals.", 
+    image: assets.luxuryInterior // Use the luxury interior here
+  },
+  { 
+    id: 5, 
+    title: "HMO & Management", 
+    desc: "High-yield multi-occupancy housing solutions.", 
+    image: assets.services.coLiving // University Dorm
+  },
+  { 
+    id: 6, 
+    title: "Rent to Rent", 
+    desc: "Guaranteed rent schemes for landlords.", 
+    image: assets.services.meeting // Glass Office or similar
+  }
 ];
 
 const Services = () => {
