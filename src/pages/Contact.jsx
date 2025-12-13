@@ -27,11 +27,11 @@ const Contact = () => {
         <div className="container mx-auto px-6">
           <div className="bg-white dark:bg-white/5 rounded-xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-transparent dark:border-white/10">
             
-            {/* Contact Information (Left Side) */}
-            <div className="bg-grand-dark dark:bg-grand-dark text-white p-10 md:w-2/5 flex flex-col justify-between relative">
+            {/* Contact Information (Left Side) - Adaptive */}
+            <div className="bg-grand-green dark:bg-grand-dark text-white p-10 md:w-2/5 flex flex-col justify-between relative transition-colors duration-500">
               <div>
                 <h3 className="text-2xl font-serif font-bold text-grand-gold mb-6">Contact Information</h3>
-                <p className="text-gray-400 mb-8 leading-relaxed">
+                <p className="text-white/80 dark:text-gray-400 mb-8 leading-relaxed">
                   Ready to start your next project? Reach out to our team of experts today.
                 </p>
                 
@@ -40,7 +40,9 @@ const Contact = () => {
                     <MapPin className="text-grand-gold mt-1" size={20} />
                     <div>
                       <h4 className="font-bold text-white">Visit Us</h4>
-                      <p className="text-gray-400 text-sm">Itori, Ewekoro LGA, Abeokuta,<br/>Ogun State, Nigeria</p>
+                      <p className="text-white/80 dark:text-gray-400 text-sm">
+                        Itori, Ewekoro LGA, Abeokuta,<br/>Ogun State, Nigeria
+                      </p>
                     </div>
                   </div>
                   
@@ -48,21 +50,24 @@ const Contact = () => {
                     <Phone className="text-grand-gold mt-1" size={20} />
                     <div>
                       <h4 className="font-bold text-white">Phone</h4>
-                      <p className="text-gray-400 text-sm">+447846324245<br/>+234 8125935055</p>
+                      <p className="text-white/80 dark:text-gray-400 text-sm">+44 7846 324245</p>
+                      <p className="text-white/80 dark:text-gray-400 text-sm">+234 812 593 5055</p>
                     </div>
                   </div>
+                  
                   <div className="flex items-start gap-4">
                     <Mail className="text-grand-gold mt-1" size={20} />
                     <div>
                       <h4 className="font-bold text-white">Email</h4>
-                      <p className="text-gray-400 text-sm">info@grandkonsul.com</p>
+                      <p className="text-white/80 dark:text-gray-400 text-sm">info@grandkonsul.com</p>
                     </div>
                   </div>
-                   <div className="flex items-start gap-4">
+                  
+                  <div className="flex items-start gap-4">
                     <Clock className="text-grand-gold mt-1" size={20} />
                     <div>
                       <h4 className="font-bold text-white">Hours</h4>
-                      <p className="text-gray-400 text-sm">Mon-Fri: 9am - 6pm</p>
+                      <p className="text-white/80 dark:text-gray-400 text-sm">Mon-Fri: 9am - 6pm</p>
                     </div>
                   </div>
                 </div>

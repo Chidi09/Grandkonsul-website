@@ -137,3 +137,12 @@ h1, h2, h3, h4, h5, h6 {
   animation: float 5s ease-in-out infinite;
 }
 
+/* Brightens images in light mode, keeps them moody in dark mode */
+.img-adaptive {
+  @apply brightness-110 contrast-105 transition-all duration-500;
+}
+
+.dark .img-adaptive {
+  @apply brightness-90 contrast-100;
+}
+

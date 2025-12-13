@@ -11,36 +11,22 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light');
-  const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    // Check localStorage, otherwise DEFAULT TO 'light'
+    const saved = localStorage.getItem('grandkonsul-theme');
+    return saved || 'light'; 
+  });
 
   useEffect(() => {
-    // Check localStorage first, then system preference
-    const savedTheme = localStorage.getItem('grandkonsul-theme');
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
-    } else {
-      // Fallback to system preference
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const initialTheme = systemPrefersDark ? 'dark' : 'light';
-      setTheme(initialTheme);
-      document.documentElement.classList.toggle('dark', initialTheme === 'dark');
-    }
-    setMounted(true);
-  }, []);
+    const root = window.document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+    localStorage.setItem('grandkonsul-theme', theme);
+  }, [theme]);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    localStorage.setItem('grandkonsul-theme', newTheme);
-    document.documentElement.classList.toggle('dark', newTheme === 'dark');
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
-
-  // Prevent flash of wrong theme
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

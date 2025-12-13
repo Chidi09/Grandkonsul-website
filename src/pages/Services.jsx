@@ -66,7 +66,7 @@ const Services = () => {
                 transition={{ delay: i * 0.1 }}
                 className="group relative h-[500px] overflow-hidden rounded-lg cursor-pointer bg-grand-light"
               >
-                <img src={s.img} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt={s.title} />
+                <img src={s.img} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 img-adaptive" alt={s.title} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent group-hover:bg-black/60 transition-colors duration-500"></div>
                 <div className="absolute inset-0 p-8 flex flex-col justify-end">
                    <div className="w-12 h-1 bg-grand-gold mb-6 transform origin-left transition-all duration-500 group-hover:w-20"></div>
@@ -93,7 +93,7 @@ const Services = () => {
                    3. No more aggressive cropping.
                 */}
                 <div className="w-full aspect-video relative">
-                   <img src={s.img} className="w-full h-full object-cover" alt={s.title} />
+                   <img src={s.img} className="w-full h-full object-cover img-adaptive" alt={s.title} />
                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50"></div>
                 </div>
 

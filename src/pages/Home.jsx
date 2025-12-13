@@ -258,7 +258,7 @@ const AboutSection = () => {
             transition={{ duration: 0.5 }}
             className="w-full h-64 md:h-[600px] overflow-hidden rounded-lg shadow-2xl relative"
           >
-            <img src={assets.velvetSofa} alt="Luxury Interior" className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" />
+            <img src={assets.velvetSofa} alt="Luxury Interior" className="w-full h-full object-cover transition-transform duration-700 hover:scale-110 img-adaptive" />
             <div className="absolute inset-0 bg-black/20"></div>
           </motion.div>
         </div>
@@ -278,53 +278,71 @@ const HorizontalGallery = () => {
 
   return (
     <>
-      {/* DESKTOP VIEW */}
-      <section ref={targetRef} className="hidden md:block relative h-[250vh] bg-grand-dark">
+      {/* DESKTOP VIEW: Adaptive Background & Text */}
+      <section 
+        ref={targetRef} 
+        className="hidden md:block relative h-[250vh] bg-grand-light dark:bg-grand-dark transition-colors duration-500"
+      >
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
           <motion.div style={{ x }} className="flex gap-32 pl-20 pr-40">
+            
+            {/* Title Section */}
             <div className="flex-shrink-0 w-[25vw] flex flex-col justify-center z-10">
                <div className="h-1 w-20 bg-grand-gold mb-8"></div>
-               <h2 className="text-white text-7xl font-serif font-bold leading-none">Selected <br/> <span className="stroke-gold">Works</span></h2>
-               <p className="text-gray-400 mt-8 text-lg max-w-xs leading-relaxed">A preview of our defining moments in architecture.</p>
+               <h2 className="text-grand-dark dark:text-white text-7xl font-serif font-bold leading-none transition-colors duration-500">
+                 Selected <br/> <span className="text-transparent stroke-gold">Works</span>
+               </h2>
+               <p className="text-gray-600 dark:text-gray-400 mt-8 text-lg max-w-xs leading-relaxed transition-colors duration-500">
+                 A preview of our defining moments in architecture.
+               </p>
             </div>
 
             {selectedProjects.map((project, i) => (
               <div key={i} className="relative h-[65vh] w-[35vw] flex-shrink-0 group cursor-pointer">
-                <div className="w-full h-full overflow-hidden relative rounded-sm">
-                  <img src={project.src} alt={project.title} className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110 grayscale group-hover:grayscale-0" />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500"></div>
+                <div className="w-full h-full overflow-hidden relative rounded-sm shadow-xl dark:shadow-none">
+                  <img 
+                    src={project.src} 
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110 img-adaptive" 
+                  />
+                  {/* Overlay: Lighter in light mode, Darker in dark mode */}
+                  <div className="absolute inset-0 bg-black/10 dark:bg-black/40 group-hover:bg-transparent transition-colors duration-500"></div>
                 </div>
+                
                 <div className="absolute -bottom-14 left-0">
-                   <h3 className="text-4xl font-serif text-white font-bold opacity-60 group-hover:opacity-100 transition-opacity duration-500">{project.title}</h3>
+                   <h3 className="text-4xl font-serif text-grand-dark dark:text-white font-bold opacity-60 group-hover:opacity-100 transition-all duration-500">
+                     {project.title}
+                   </h3>
                 </div>
-                <div className="absolute top-4 right-4 text-grand-gold font-serif text-6xl opacity-0 group-hover:opacity-20 transition-opacity duration-500">0{i + 1}</div>
               </div>
             ))}
             
             {/* CTA */}
             <div className="flex-shrink-0 w-[30vw] flex items-center justify-center">
               <a href="/projects" className="group flex flex-col items-center gap-4">
-                <div className="w-24 h-24 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-grand-gold group-hover:border-grand-gold transition-all duration-500">
-                  <ArrowUpRight className="text-white h-8 w-8 group-hover:scale-125 transition-transform" />
+                <div className="w-24 h-24 rounded-full border border-grand-gold/30 dark:border-white/20 flex items-center justify-center group-hover:bg-grand-gold group-hover:border-grand-gold transition-all duration-500">
+                  <ArrowUpRight className="text-grand-dark dark:text-white h-8 w-8 group-hover:scale-125 transition-transform" />
                 </div>
-                <span className="text-white font-serif text-2xl group-hover:text-grand-gold transition-colors">View All Projects</span>
+                <span className="text-grand-dark dark:text-white font-serif text-2xl group-hover:text-grand-gold transition-colors">View All Projects</span>
               </a>
             </div>
+
           </motion.div>
         </div>
       </section>
 
-      {/* MOBILE VIEW */}
-      <section className="md:hidden bg-grand-dark py-20 px-6">
-        <h2 className="text-white text-5xl font-serif font-bold leading-tight mb-12">Selected <br/> <span className="text-grand-gold">Works</span></h2>
+      {/* MOBILE VIEW: Adaptive */}
+      <section className="md:hidden bg-grand-light dark:bg-grand-dark py-20 px-6 transition-colors duration-500">
+        <h2 className="text-grand-dark dark:text-white text-5xl font-serif font-bold leading-tight mb-12">
+          Selected <br/> <span className="text-grand-gold">Works</span>
+        </h2>
         <div className="flex flex-col gap-16">
           {selectedProjects.map((project, i) => (
             <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} key={i} className="group">
-              <div className="h-[400px] w-full overflow-hidden rounded-sm mb-6 relative">
-                <img src={project.src} alt={project.title} className="w-full h-full object-cover" />
-                <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full"><span className="text-white/80 text-xs uppercase tracking-widest">0{i + 1}</span></div>
+              <div className="h-[400px] w-full overflow-hidden rounded-sm mb-6 relative shadow-lg">
+                <img src={project.src} alt={project.title} className="w-full h-full object-cover img-adaptive" />
               </div>
-              <h3 className="text-white text-3xl font-serif font-bold">{project.title}</h3>
+              <h3 className="text-grand-dark dark:text-white text-3xl font-serif font-bold transition-colors">{project.title}</h3>
             </motion.div>
           ))}
           <a href="/projects" className="block w-full py-4 text-center border border-grand-gold text-grand-gold mt-4 rounded-sm uppercase tracking-widest font-bold text-sm">View Full Portfolio</a>

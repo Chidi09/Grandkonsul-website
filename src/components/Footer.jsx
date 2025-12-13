@@ -44,11 +44,11 @@ const Footer = () => {
                 <MapPin size={20} className="text-grand-gold shrink-0 mt-1" />
                 <span>Itori, Ewekoro LGA, Abeokuta,<br/>Ogun State, Nigeria</span>
               </li>
-              <li className="flex gap-4 items-start">
-                <Phone size={20} className="text-grand-gold shrink-0 mt-1" />
+              <li className="flex gap-4 items-center">
+                <Phone size={20} className="text-grand-gold shrink-0" />
                 <div>
-                  <span>+447846324245</span><br/>
-                  <span>+234 8125935055</span>
+                  <p>+44 7846 324245</p>
+                  <p>+234 812 593 5055</p>
                 </div>
               </li>
               <li className="flex gap-4 items-center">

@@ -62,7 +62,7 @@ const Projects = () => {
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 img-adaptive"
                   />
                   <div className="absolute inset-0 bg-black/30 dark:bg-black/30 group-hover:bg-transparent transition-colors duration-500"></div>
                 </div>
@@ -113,7 +113,7 @@ const MobileProjectCard = ({ project, index }) => {
       className="relative"
     >
       <div className="aspect-[4/5] w-full overflow-hidden mb-4">
-        <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+        <img src={project.image} alt={project.title} className="w-full h-full object-cover img-adaptive" />
       </div>
       <h3 className="text-4xl font-serif text-grand-dark dark:text-white mb-2">{project.title}</h3>
       <div className="flex justify-between items-center border-t border-gray-200 dark:border-white/20 pt-4">

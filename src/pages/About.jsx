@@ -72,7 +72,7 @@ const About = () => {
               <img 
                 src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop" 
                 alt="Corporate Office" 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover img-adaptive"
               />
             </div>
             {/* Gold border accent */}
@@ -81,8 +81,8 @@ const About = () => {
         </div>
       </section>
 
-      {/* --- Mission & Vision (Dark Section) --- */}
-      <section className="py-20 bg-grand-dark dark:bg-grand-dark text-white">
+      {/* --- Mission & Vision (Adaptive Section) --- */}
+      <section className="py-20 bg-grand-light dark:bg-grand-dark transition-colors duration-500">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12">
             
@@ -91,14 +91,14 @@ const About = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-white/5 dark:bg-white/5 p-8 border-l-4 border-grand-gold backdrop-blur-sm"
+              className="bg-white dark:bg-white/5 p-8 border-l-4 border-grand-gold shadow-md dark:shadow-none backdrop-blur-sm transition-all duration-500"
             >
               <div className="flex items-center gap-3 mb-4 text-grand-gold">
                 <Target size={32} />
-                <h3 className="text-2xl font-serif font-bold">Our Mission</h3>
+                <h3 className="text-2xl font-serif font-bold text-grand-dark dark:text-white">Our Mission</h3>
               </div>
-              <h4 className="text-xl font-medium mb-3">Solutions built for life and movement</h4>
-              <p className="text-gray-300 dark:text-gray-400 leading-relaxed">
+              <h4 className="text-xl font-medium mb-3 text-grand-green dark:text-grand-gold">Solutions built for life and movement</h4>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                 To provide exceptional property development and relocation solutions that enhance lives, build communities, and deliver lasting value — guided by integrity, innovation, and a deep understanding of our clients' needs.
               </p>
             </motion.div>
@@ -109,14 +109,14 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-white/5 dark:bg-white/5 p-8 border-l-4 border-grand-gold backdrop-blur-sm"
+              className="bg-white dark:bg-white/5 p-8 border-l-4 border-grand-gold shadow-md dark:shadow-none backdrop-blur-sm transition-all duration-500"
             >
               <div className="flex items-center gap-3 mb-4 text-grand-gold">
                 <Eye size={32} />
-                <h3 className="text-2xl font-serif font-bold">Our Vision</h3>
+                <h3 className="text-2xl font-serif font-bold text-grand-dark dark:text-white">Our Vision</h3>
               </div>
-              <h4 className="text-xl font-medium mb-3">Shaping spaces. Connecting lives.</h4>
-              <p className="text-gray-300 dark:text-gray-400 leading-relaxed">
+              <h4 className="text-xl font-medium mb-3 text-grand-green dark:text-grand-gold">Shaping spaces. Connecting lives.</h4>
+              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                 To be a trusted leader in property and relocation services across Africa and beyond — known for excellence, reliability, and a personalized approach to every project we deliver.
               </p>
             </motion.div>
