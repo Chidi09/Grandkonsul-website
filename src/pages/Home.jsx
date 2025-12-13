@@ -245,7 +245,7 @@ const AboutSection = () => {
              </div>
              <div className="w-px bg-gray-300 dark:bg-gray-700 h-10 md:h-12"></div>
              <div className="text-center">
-                <h4 className="text-3xl md:text-4xl font-serif font-bold text-grand-gold">₦50M+</h4>
+                <h4 className="text-3xl md:text-4xl font-serif font-bold text-grand-gold">High</h4>
                 <p className="text-[10px] md:text-xs uppercase tracking-wider">Asset Value</p>
              </div>
           </div>

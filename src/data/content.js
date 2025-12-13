@@ -24,7 +24,7 @@ export const faqs = [
 
 export const stats = [
   { label: "Projects", value: "10+" },
-  { label: "Asset Value", value: "₦50M+" }
+  { label: "Asset Value", value: "High" }
 ];
 
 
