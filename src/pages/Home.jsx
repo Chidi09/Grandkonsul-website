@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Building2, Globe, Handshake, Home as HomeIcon, Key, Briefcase } from 'lucide-react';
+import { ArrowUpRight, Building2, Globe, Users, Home as HomeIcon, Key, Briefcase } from 'lucide-react';
 import SEO from '../components/SEO';
 import { assets } from '../data/images';
 
@@ -280,7 +280,7 @@ const ServicesOverview = () => {
   const services = [
     { title: "Property Development", icon: Building2, desc: "End-to-end construction management." },
     { title: "Relocation Services", icon: Globe, desc: "Seamless corporate & personal moves." },
-    { title: "Joint Ventures", icon: Handshake, desc: "Strategic land partnerships." },
+    { title: "Joint Ventures", icon: Users, desc: "Strategic land partnerships." },
     { title: "Service Accommodation", icon: Briefcase, desc: "Premium short-stay solutions." },
     { title: "HMO Management", icon: HomeIcon, desc: "High-yield multi-occupancy housing." },
     { title: "Rent to Rent", icon: Key, desc: "Guaranteed income for landlords." },
