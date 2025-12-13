@@ -22,7 +22,13 @@ const ScrollToTop = () => {
 function App() {
   return (
     <HelmetProvider>
-      <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothTouch: true }}>
+      <ReactLenis root options={{ 
+        lerp: 0.07,         // Lower = smoother/heavier feel (0.1 is standard, 0.05 is very heavy)
+        duration: 1.2,      // How long the scroll slide takes
+        smoothWheel: true,  // For mouse wheels
+        smoothTouch: true,  // For mobile touch
+        touchMultiplier: 1.5 // Makes mobile feel more responsive
+      }}>
         <Router>
           <div className="noise-overlay"></div>
           <div className="flex flex-col min-h-screen bg-grand-light selection:bg-grand-gold selection:text-white">

@@ -43,7 +43,7 @@ const Projects = () => {
       {/* We make this container very tall (300vh) to give us 'room' to scroll horizontally */}
       <section ref={targetRef} className="hidden md:block relative h-[300vh] bg-grand-dark">
         <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-          <motion.div style={{ x }} className="flex gap-20 pl-20">
+          <motion.div style={{ x, willChange: "transform" }} className="flex gap-20 pl-20">
             {projects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}

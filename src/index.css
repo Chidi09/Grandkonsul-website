@@ -2,8 +2,25 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-html {
-  scroll-behavior: smooth;
+/* Lenis-specific CSS - removes conflict with CSS smooth scroll */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
 body {
@@ -16,6 +33,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .stroke-text {
   -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+}
+
+.stroke-gold {
+  -webkit-text-stroke: 1px #c5a059; /* Gold Outline */
+  color: transparent;
+}
+
+/* Ensure smooth reveal for the accordion */
+.accordion-enter {
+  opacity: 0;
+  height: 0;
 }
 
 /* The Noise Overlay */

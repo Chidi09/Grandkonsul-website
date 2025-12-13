@@ -1,158 +1,277 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight, ArrowDown } from 'lucide-react';
 import SEO from '../components/SEO';
-
-// --- ANIMATION VARIANTS ---
-const textReveal = {
-  hidden: { y: "100%" },
-  visible: { y: "0%", transition: { duration: 1, ease: [0.76, 0, 0.24, 1] } }
-};
+import { assets } from '../data/images';
 
 const Home = () => {
-  const container = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start start", "end end"]
-  });
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Parallax effects
-  const y = useTransform(scrollYProgress, [0, 1], [0, -500]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
+  // Fake Preloader
+  useEffect(() => {
+    setTimeout(() => setIsLoading(false), 2000);
+  }, []);
 
   return (
     <>
-      <SEO title="Home" description="Grandkonsul - Redefining Luxury Living" />
+      <SEO title="Grandkonsul Gardens" description="Luxury Redefined" />
       
-      {/* --- HERO SECTION --- */}
-      <section ref={container} className="relative h-screen overflow-hidden bg-grand-green flex flex-col justify-center items-center">
-        
-        {/* Parallax Background Image */}
-        <motion.div 
-          style={{ y, scale }}
-          className="absolute inset-0 z-0 opacity-40"
-        >
-           <img 
-             src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2500&auto=format&fit=crop" 
-             alt="Luxury Home" 
-             className="w-full h-full object-cover"
-           />
-        </motion.div>
+      <AnimatePresence>
+        {isLoading && <Preloader />}
+      </AnimatePresence>
 
-        {/* Floating Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-grand-green/20 via-transparent to-grand-green z-10"></div>
-
-        {/* Giant Staggered Typography */}
-        <div className="relative z-20 container mx-auto px-4 md:px-8 text-center">
-          <div className="overflow-hidden">
-            <motion.h1 
-              variants={textReveal} initial="hidden" animate="visible"
-              className="text-[12vw] leading-[0.85] font-serif font-bold text-white mix-blend-overlay tracking-tighter"
-            >
-              GRAND
-            </motion.h1>
-          </div>
-          <div className="overflow-hidden">
-             <motion.h1 
-               variants={textReveal} initial="hidden" animate="visible" transition={{ delay: 0.1 }}
-               className="text-[12vw] leading-[0.85] font-serif font-bold text-grand-gold tracking-tighter"
-             >
-               KONSUL
-             </motion.h1>
-          </div>
-          
-          <motion.div 
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1, duration: 1 }}
-            className="mt-8 flex flex-col md:flex-row justify-center items-center gap-6"
-          >
-            <p className="text-white text-lg font-light tracking-widest uppercase max-w-md text-center md:text-right border-r border-grand-gold/50 pr-6">
-              Properties • Relocation <br/> Development
-            </p>
-            <Link to="/projects" className="group flex items-center gap-4 text-white">
-              <span className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center group-hover:bg-grand-gold group-hover:border-grand-gold transition-all duration-300">
-                <ArrowUpRight className="group-hover:rotate-45 transition-transform duration-300" />
-              </span>
-              <span className="text-sm uppercase tracking-widest font-bold group-hover:text-grand-gold transition-colors">Explore Works</span>
-            </Link>
-          </motion.div>
+      {!isLoading && (
+        <div className="bg-grand-light">
+          <HeroSection />
+          <MarqueeSection />
+          <AboutSection />
+          <HorizontalGallery />
+          <ServicesSection />
+          <CallToAction />
         </div>
-      </section>
-
-      {/* --- MARQUEE SECTION (Spam Animation!) --- */}
-      <section className="bg-grand-green py-10 overflow-hidden border-t border-white/10">
-        <motion.div 
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="flex whitespace-nowrap gap-10"
-        >
-          {[...Array(4)].map((_, i) => (
-             <h2 key={i} className="text-8xl md:text-9xl font-serif font-bold text-transparent stroke-text opacity-30">
-               LUXURY LIVING • PREMIUM SPACES • GLOBAL RELOCATION •
-             </h2>
-          ))}
-        </motion.div>
-      </section>
-
-      {/* --- FLOATING IMAGES / ABOUT --- */}
-      <section className="py-32 bg-grand-light relative">
-        <div className="container mx-auto px-6 grid md:grid-cols-2 gap-20 items-center">
-          
-          <div>
-            <motion.h3 
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-grand-gold text-sm font-bold uppercase tracking-[0.3em] mb-4"
-            >
-              The Vision
-            </motion.h3>
-            <motion.h2 
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl md:text-7xl font-serif font-bold text-grand-dark mb-10 leading-[0.9]"
-            >
-              We don't just build.<br/> We <span className="italic text-grand-green">curate.</span>
-            </motion.h2>
-            <motion.p 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl text-gray-600 leading-relaxed mb-8 max-w-md"
-            >
-              Grandkonsul combines architectural mastery with white-glove relocation services. From the foundation to the front door key, we handle the complex so you can live the exceptional.
-            </motion.p>
-            
-            <Link to="/about" className="inline-block border-b border-grand-dark pb-1 text-grand-dark uppercase tracking-widest text-xs hover:text-grand-gold hover:border-grand-gold transition-colors">
-              Read Our Story
-            </Link>
-          </div>
-
-          <div className="relative">
-             <motion.div 
-               initial={{ clipPath: 'inset(100% 0 0 0)' }}
-               whileInView={{ clipPath: 'inset(0% 0 0 0)' }}
-               transition={{ duration: 1.5, ease: [0.76, 0, 0.24, 1] }}
-               className="w-full h-[600px] bg-gray-300"
-             >
-               <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop" className="w-full h-full object-cover" alt="Luxury Architecture" />
-             </motion.div>
-             
-             {/* Floating Badge */}
-             <motion.div 
-               initial={{ scale: 0 }}
-               whileInView={{ scale: 1 }}
-               transition={{ type: "spring", stiffness: 200, delay: 0.5 }}
-               className="absolute -bottom-10 -left-10 bg-grand-gold w-40 h-40 rounded-full flex items-center justify-center text-white text-center p-4 shadow-xl z-10 hidden md:flex"
-             >
-               <span className="font-serif text-lg leading-tight">150+<br/><span className="text-xs font-sans tracking-wide uppercase">Projects Delivered</span></span>
-             </motion.div>
-          </div>
-        </div>
-      </section>
+      )}
     </>
   );
 };
+
+// --- 1. PRELOADER (The "App" Feel) ---
+const Preloader = () => (
+  <motion.div 
+    initial={{ y: 0 }}
+    exit={{ y: "-100%", transition: { duration: 1, ease: [0.76, 0, 0.24, 1] } }}
+    className="fixed inset-0 z-[100] bg-grand-dark flex items-center justify-center"
+  >
+    <motion.img 
+      src={assets.logo} 
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className="w-32 md:w-48"
+      alt="Grandkonsul Logo"
+    />
+  </motion.div>
+);
+
+// --- 2. HERO SECTION (Parallax + Reveal) ---
+const HeroSection = () => {
+  const container = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ["start start", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  return (
+    <section ref={container} className="relative h-screen w-full overflow-hidden bg-grand-dark">
+      {/* Background Image (Parallax) */}
+      <motion.div style={{ y }} className="absolute inset-0 z-0">
+        <img src={assets.heroBg} alt="Luxury Architecture" className="w-full h-full object-cover opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-grand-dark"></div>
+      </motion.div>
+
+      {/* Content */}
+      <motion.div style={{ opacity }} className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4">
+        <motion.p 
+           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.2 }}
+           className="text-grand-gold uppercase tracking-[0.3em] text-sm md:text-base mb-6"
+        >
+          Welcome to
+        </motion.p>
+        
+        <div className="overflow-hidden">
+          <motion.h1 
+            initial={{ y: "100%" }} animate={{ y: "0%" }} transition={{ delay: 2.3, duration: 1, ease: [0.76, 0, 0.24, 1] }}
+            className="text-[12vw] leading-[0.8] font-serif font-bold text-white tracking-tighter"
+          >
+            GRANDKONSUL
+          </motion.h1>
+        </div>
+        <div className="overflow-hidden">
+          <motion.h1 
+            initial={{ y: "100%" }} animate={{ y: "0%" }} transition={{ delay: 2.4, duration: 1, ease: [0.76, 0, 0.24, 1] }}
+            className="text-[12vw] leading-[0.8] font-serif font-bold text-transparent stroke-gold tracking-tighter"
+          >
+            GARDENS
+          </motion.h1>
+        </div>
+
+        <motion.div 
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3 }}
+          className="absolute bottom-10 animate-bounce text-white"
+        >
+          <ArrowDown size={32} />
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+};
+
+// --- 3. MARQUEE (Energy) ---
+const MarqueeSection = () => {
+  return (
+    <div className="py-12 bg-grand-dark border-y border-white/10 overflow-hidden">
+      <motion.div 
+        animate={{ x: "-50%" }} 
+        transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
+        className="flex gap-10 whitespace-nowrap"
+      >
+        {[...Array(4)].map((_, i) => (
+          <h2 key={i} className="text-8xl font-serif text-white/10 font-bold">
+            PREMIUM ESTATES • CORPORATE RELOCATION • JOINT VENTURES •
+          </h2>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+// --- 4. ABOUT / VISION (Pin Zoom Effect) ---
+const AboutSection = () => {
+  return (
+    <section className="py-32 bg-grand-light text-grand-dark relative">
+      <div className="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+        <div>
+          <h3 className="text-grand-gold uppercase tracking-widest font-bold mb-4">Our Philosophy</h3>
+          <h2 className="text-5xl md:text-7xl font-serif font-bold leading-none mb-8">
+            We don't just build.<br/>We <span className="text-grand-green italic">curate.</span>
+          </h2>
+          <p className="text-xl text-gray-600 leading-relaxed mb-8">
+            Grandkonsul Gardens represents the pinnacle of luxury living and strategic property development. From the architectural blueprint to the velvet sofa in the lobby, we obsess over details so you don't have to.
+          </p>
+          <div className="flex gap-4">
+             <div className="text-center">
+                <h4 className="text-4xl font-serif font-bold text-grand-gold">150+</h4>
+                <p className="text-xs uppercase tracking-wider">Projects</p>
+             </div>
+             <div className="w-px bg-gray-300 h-12"></div>
+             <div className="text-center">
+                <h4 className="text-4xl font-serif font-bold text-grand-gold">$50M+</h4>
+                <p className="text-xs uppercase tracking-wider">Asset Value</p>
+             </div>
+          </div>
+        </div>
+        
+        {/* The Image Tilt */}
+        <div className="relative">
+          <motion.div 
+            whileHover={{ scale: 0.95 }}
+            transition={{ duration: 0.5 }}
+            className="w-full h-[600px] overflow-hidden rounded-lg shadow-2xl relative"
+          >
+            <img src={assets.velvetSofa} alt="Luxury Interior" className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" />
+            <div className="absolute inset-0 bg-black/20"></div>
+          </motion.div>
+          {/* Floating Card */}
+          <div className="absolute -bottom-10 -left-10 bg-grand-green text-white p-8 max-w-xs shadow-xl hidden md:block">
+            <p className="font-serif italic text-lg">"Excellence is not an act, but a habit."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// --- 5. HORIZONTAL GALLERY (Showcase) ---
+const HorizontalGallery = () => {
+  const targetRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: targetRef });
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+
+  return (
+    <section ref={targetRef} className="relative h-[300vh] bg-grand-dark">
+      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+        <motion.div style={{ x, willChange: "transform" }} className="flex gap-10 pl-10 md:pl-20">
+          <div className="flex-shrink-0 w-[30vw] flex flex-col justify-center">
+             <h2 className="text-white text-6xl md:text-8xl font-serif font-bold leading-tight">
+               Selected <br/> <span className="text-grand-gold">Works</span>
+             </h2>
+             <p className="text-gray-400 mt-6 max-w-md">Swipe to explore our architectural landmarks across Nigeria and the UK.</p>
+          </div>
+          
+          {assets.projects.map((project, i) => (
+            <div key={i} className="relative h-[70vh] w-[80vw] md:w-[40vw] flex-shrink-0 group overflow-hidden cursor-pointer">
+              <img src={project.src} alt={project.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+                <p className="text-grand-gold uppercase tracking-widest text-xs mb-2">{project.loc}</p>
+                <h3 className="text-white text-3xl md:text-4xl font-serif font-bold">{project.title}</h3>
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+// --- 6. SERVICES (Accordion Style) ---
+const ServicesSection = () => {
+  const [active, setActive] = useState(0);
+
+  const services = [
+    { title: "Property Development", img: assets.services.development, desc: "From breaking ground to ribbon cutting, we manage complex construction with precision." },
+    { title: "Corporate Relocation", img: assets.services.relocation, desc: "Seamless movement of staff and executives across borders." },
+    { title: "Joint Ventures", img: assets.services.handshake, desc: "Partner with us to unlock the true potential of your land assets." },
+    { title: "HMO & Management", img: assets.services.coLiving, desc: "High-yield multi-occupancy solutions designed for modern living." },
+  ];
+
+  return (
+    <section className="py-32 bg-grand-light">
+      <div className="container mx-auto px-6">
+        <h2 className="text-5xl font-serif font-bold text-grand-green mb-16 text-center">Our Expertise</h2>
+        
+        <div className="flex flex-col md:flex-row gap-4 h-[80vh]">
+          {services.map((s, i) => (
+            <motion.div 
+              key={i}
+              onClick={() => setActive(i)}
+              animate={{ flex: active === i ? 3 : 1 }}
+              className="relative overflow-hidden rounded-lg cursor-pointer transition-all duration-700 ease-[0.22, 1, 0.36, 1]"
+            >
+              <img src={s.img} alt={s.title} className="absolute inset-0 w-full h-full object-cover" />
+              <div className={`absolute inset-0 ${active === i ? 'bg-black/30' : 'bg-black/60'} transition-colors duration-500`}></div>
+              
+              <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                 <h3 className={`font-serif font-bold text-white transition-all duration-500 ${active === i ? 'text-4xl mb-4' : 'text-2xl rotate-0 md:-rotate-90 md:origin-bottom-left md:translate-x-8'}`}>
+                   {s.title}
+                 </h3>
+                 <AnimatePresence>
+                   {active === i && (
+                     <motion.p 
+                       initial={{ opacity: 0, height: 0 }} 
+                       animate={{ opacity: 1, height: 'auto' }}
+                       exit={{ opacity: 0, height: 0 }}
+                       className="text-gray-200 max-w-md"
+                     >
+                       {s.desc}
+                     </motion.p>
+                   )}
+                 </AnimatePresence>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// --- 7. CTA ---
+const CallToAction = () => (
+  <section className="py-32 bg-grand-green text-center px-6">
+    <h2 className="text-4xl md:text-7xl font-serif font-bold text-white mb-8">
+      Ready to make your move?
+    </h2>
+    <div className="flex justify-center gap-6 flex-wrap">
+       <Link to="/contact" className="bg-grand-gold text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-grand-green transition-all duration-300">
+         Start a Project
+       </Link>
+       <Link to="/services" className="border border-white text-white px-10 py-4 rounded-full font-bold hover:bg-white hover:text-grand-green transition-all duration-300">
+         Learn More
+       </Link>
+    </div>
+  </section>
+);
 
 export default Home;
