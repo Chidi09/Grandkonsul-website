@@ -72,9 +72,6 @@ const Projects = () => {
                    <h3 className="text-5xl font-serif text-white font-bold opacity-50 group-hover:opacity-100 transition-opacity duration-500">
                      {project.title}
                    </h3>
-                   <p className="text-grand-gold text-sm uppercase tracking-widest mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                     {project.location}
-                   </p>
                 </div>
               </div>
             ))}
