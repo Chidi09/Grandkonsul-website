@@ -20,14 +20,17 @@ const Services = () => {
   return (
     <>
       <SEO title="Our Services" description="Premium Services" />
-      <div className="bg-grand-light min-h-screen pt-40 pb-20">
+
+      {/* Changed bg-grand-light to bg-grand-dark for the header section */}
+      <div className="bg-grand-dark min-h-screen pt-40 pb-20">
         <div className="container mx-auto px-6">
           <motion.h1 
             initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-8xl font-serif font-bold text-grand-green mb-10 md:mb-20 tracking-tighter"
+            className="text-5xl md:text-8xl font-serif font-bold text-white mb-10 md:mb-20 tracking-tighter"
           >
             EXPERTISE
           </motion.h1>
+
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             
             {/* List */}
@@ -39,16 +42,17 @@ const Services = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   onMouseEnter={() => setHoveredService(index)}
-                  className="group py-8 md:py-10 border-b border-gray-300 cursor-pointer relative z-10"
+                  // Changed border color to white/20 for visibility on dark bg
+                  className="group py-8 md:py-10 border-b border-white/20 cursor-pointer relative z-10"
                 >
                   <div className="flex justify-between items-center">
                     <h3 className={`text-2xl md:text-4xl font-serif transition-colors duration-300 ${
-                      hoveredService === index ? "text-grand-gold" : "text-grand-dark"
+                      hoveredService === index ? "text-grand-gold" : "text-white"
                     }`}>
                       {service.title}
                     </h3>
                     <ArrowUpRight className={`transition-all duration-300 transform ${
-                      hoveredService === index ? "text-grand-gold rotate-45 scale-125" : "text-gray-300 scale-100"
+                      hoveredService === index ? "text-grand-gold rotate-45 scale-125" : "text-gray-500 scale-100"
                     }`} />
                   </div>
                   <motion.div 
@@ -59,8 +63,8 @@ const Services = () => {
                     }}
                     className="overflow-hidden"
                   >
-                    <p className="pt-4 text-gray-500 text-base md:text-lg max-w-md">{service.desc}</p>
-                    {/* Mobile Only Image (Visible below text on phones) */}
+                    <p className="pt-4 text-gray-400 text-base md:text-lg max-w-md">{service.desc}</p>
+                    {/* Mobile Only Image */}
                     <div className="block lg:hidden mt-4 h-48 w-full rounded-lg overflow-hidden">
                       <img src={service.image} className="w-full h-full object-cover" alt={service.title} />
                     </div>
@@ -69,8 +73,8 @@ const Services = () => {
               ))}
             </div>
 
-            {/* Floating Image (Desktop Only - Sticky) */}
-            <div className="hidden lg:block relative h-[600px] w-full sticky top-32 rounded-lg overflow-hidden shadow-2xl">
+            {/* Floating Image (Desktop) */}
+            <div className="hidden lg:block relative h-[600px] w-full sticky top-32 rounded-lg overflow-hidden shadow-2xl border border-white/10">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={hoveredService}
@@ -83,9 +87,7 @@ const Services = () => {
                   alt="Service Preview"
                 />
               </AnimatePresence>
-              
-              {/* Optional: Text Overlay on the image */}
-              <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black/80 to-transparent">
+               <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black/80 to-transparent">
                  <p className="text-white font-serif text-2xl">{servicesData[hoveredService].title}</p>
               </div>
             </div>
