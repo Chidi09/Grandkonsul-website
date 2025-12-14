@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Facebook, Linkedin, Instagram } from 'lucide-react';
+import { Phone, Mail, MapPin } from 'lucide-react';
 import { assets } from '../data/images';
 
 const Footer = () => {
@@ -17,11 +17,6 @@ const Footer = () => {
             <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-8 max-w-sm">
               Partner with Grandkonsul for smart property development and hassle-free relocations. Trusted expertise, bespoke service, and a commitment to excellence.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center hover:bg-grand-gold hover:text-white transition-all text-grand-dark dark:text-white"><Facebook size={18} /></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center hover:bg-grand-gold hover:text-white transition-all text-grand-dark dark:text-white"><Linkedin size={18} /></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center hover:bg-grand-gold hover:text-white transition-all text-grand-dark dark:text-white"><Instagram size={18} /></a>
-            </div>
           </div>
 
           {/* Quick Links (Replaces long service list) */}
