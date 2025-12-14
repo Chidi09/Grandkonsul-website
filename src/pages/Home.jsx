@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Building2, Globe, Users, Home as HomeIcon, Key, Briefcase, CheckCircle2, ChevronDown, HelpCircle, ArrowRight } from 'lucide-react';
+import { ArrowUpRight, Building2, Globe, Users, Home as HomeIcon, Key, Briefcase, CheckCircle2, ChevronDown, HelpCircle, ArrowRight, Play, Pause } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { assets } from '../data/images';
@@ -268,6 +268,9 @@ const AboutSection = () => {
 const CinematicVideo = () => {
   const videoRef = useRef(null);
   const containerRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [showControls, setShowControls] = useState(false);
+  
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -276,6 +279,36 @@ const CinematicVideo = () => {
   const scale = useTransform(scrollYProgress, [0, 0.5], [0.9, 1]);
   // Mobile: Smaller border radius. Desktop: Larger.
   const borderRadius = useTransform(scrollYProgress, [0, 0.5], ["1rem", "0rem"]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Set initial playing state
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+    
+    video.addEventListener('play', handlePlay);
+    video.addEventListener('pause', handlePause);
+    
+    return () => {
+      video.removeEventListener('play', handlePlay);
+      video.removeEventListener('pause', handlePause);
+    };
+  }, []);
+
+  const togglePlayPause = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
 
   return (
     <section ref={containerRef} className="relative w-full bg-grand-light dark:bg-grand-dark py-12 md:py-20 overflow-hidden transition-colors duration-500">
@@ -306,7 +339,9 @@ const CinematicVideo = () => {
         <motion.div 
           style={{ scale, borderRadius }}
           // FIX: 'aspect-video' ensures full width on mobile (16:9). 'md:h-[80vh]' keeps it immersive on PC.
-          className="relative w-full aspect-video md:aspect-auto md:h-[80vh] overflow-hidden shadow-2xl mx-auto border border-gray-200 dark:border-white/10"
+          className="relative w-full aspect-video md:aspect-auto md:h-[80vh] overflow-hidden shadow-2xl mx-auto border border-gray-200 dark:border-white/10 group"
+          onMouseEnter={() => setShowControls(true)}
+          onMouseLeave={() => setShowControls(false)}
         >
           <video 
             ref={videoRef}
@@ -324,8 +359,51 @@ const CinematicVideo = () => {
           {/* Gradient Overlay (Subtle) */}
           <div className="absolute inset-0 bg-gradient-to-t from-grand-dark/90 dark:from-grand-dark/90 via-transparent to-transparent opacity-40 dark:opacity-40 pointer-events-none"></div>
           
+          {/* Stylish Play/Pause Button */}
+          <motion.button
+            onClick={togglePlayPause}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 group/btn"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: showControls || !isPlaying ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="relative">
+              {/* Outer glow ring */}
+              <div className="absolute inset-0 bg-grand-gold/30 rounded-full blur-xl animate-pulse"></div>
+              
+              {/* Button circle */}
+              <div className="relative w-20 h-20 md:w-24 md:h-24 bg-black/70 dark:bg-black/80 backdrop-blur-md rounded-full flex items-center justify-center border-2 border-grand-gold/50 group-hover/btn:border-grand-gold transition-all duration-300 shadow-2xl group-hover/btn:shadow-grand-gold/50">
+                <AnimatePresence mode="wait">
+                  {isPlaying ? (
+                    <motion.div
+                      key="pause"
+                      initial={{ scale: 0, rotate: -90 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      exit={{ scale: 0, rotate: 90 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Pause className="w-8 h-8 md:w-10 md:h-10 text-grand-gold fill-grand-gold" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="play"
+                      initial={{ scale: 0, rotate: -90 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      exit={{ scale: 0, rotate: 90 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Play className="w-8 h-8 md:w-10 md:h-10 text-grand-gold fill-grand-gold ml-1" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
+          </motion.button>
+          
           {/* Floating Label - Updated to Olowofela */}
-          <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 bg-white/80 dark:bg-black/60 backdrop-blur-md px-4 py-2 rounded-full md:rounded-lg border border-gray-200 dark:border-white/10">
+          <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 bg-white/80 dark:bg-black/60 backdrop-blur-md px-4 py-2 rounded-full md:rounded-lg border border-gray-200 dark:border-white/10 z-10">
              <p className="text-grand-dark dark:text-white text-[10px] md:text-xs font-bold flex items-center gap-1">
                📍 Olowofela
              </p>

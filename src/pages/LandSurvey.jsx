@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FileText, Map, CheckCircle2, Download, Ruler, Compass, Users, ZoomIn } from 'lucide-react';
+import { FileText, Map, CheckCircle2, Download, Ruler, Compass, Users, ZoomIn, ShieldCheck, Scroll, Landmark } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { assets } from '../data/images';
@@ -49,11 +49,32 @@ const LandSurvey = () => {
     }
   ];
 
+  // UPDATED: Richer Content with "Why it matters"
   const documents = [
-    { title: "Receipt of Payment", desc: "Official proof of your investment." },
-    { title: "Deed of Assignment", desc: "Legal transfer of ownership rights." },
-    { title: "Registered Survey", desc: "Government-approved land mapping." },
-    { title: "Certificate of Occupancy", desc: "State-issued land title (C of O)." }
+    { 
+      title: "Receipt of Payment", 
+      icon: FileText,
+      why: "This is your primary evidence of a transaction. It legally binds us to the sale before the deed is finalized.",
+      advantage: "Instant Issuance: Unlike others who delay, Grandkonsul issues a stamped, verifiable receipt immediately upon confirmation of funds, securing your slot instantly."
+    },
+    { 
+      title: "Deed of Assignment", 
+      icon: Scroll,
+      why: "This is the most critical document transferring ownership rights (interest) from Grandkonsul to you forever.",
+      advantage: "Ironclad Drafting: Our deeds are prepared by top-tier property lawyers, ensuring 'Root of Title' is perfectly traced. This protects you from future litigation or 'Omonile' disputes."
+    },
+    { 
+      title: "Registered Survey Plan", 
+      icon: Map,
+      why: "A map that defines your exact boundary coordinates and lodges them with the Office of the Surveyor-General.",
+      advantage: "No 'Provisional' Copies: We provide a Registered Survey (Red Copy). This means your land is officially entered into the government database, making it impossible for anyone else to claim it."
+    },
+    { 
+      title: "Certificate of Occupancy (C of O)", 
+      icon: Landmark,
+      why: "The ultimate government-backed proof of ownership for 99 years. It makes your land bankable collateral.",
+      advantage: "Hassle-Free Perfection: Securing a C of O can take years of bureaucracy. Grandkonsul manages the entire 'Perfection of Title' process for our estates, handing you a ready-to-bank asset."
+    }
   ];
 
 
@@ -159,32 +180,62 @@ const LandSurvey = () => {
         </div>
       </section>
 
-      {/* --- DOCUMENTATION LIST --- */}
+      {/* --- DETAILED LEGAL GUARANTEE SECTION --- */}
       <section className="py-20 bg-white dark:bg-grand-dark transition-colors duration-500">
         <div className="container mx-auto px-6">
-          <div className="flex items-center gap-4 mb-10">
-            <div className="p-3 bg-grand-gold text-white rounded-lg"><FileText size={24} /></div>
-            <h2 className="text-3xl font-serif font-bold text-grand-dark dark:text-white">Legal Documentation</h2>
+          
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <h2 className="text-3xl font-serif font-bold text-grand-dark dark:text-white mb-4">
+              Your Legal <span className="text-grand-gold">Safety Net</span>
+            </h2>
+            <div className="h-1 w-20 bg-grand-gold mx-auto mb-6"></div>
+            <p className="text-gray-500 dark:text-gray-400">
+              Many developers sell land; we sell <strong className="text-grand-dark dark:text-white">peace of mind</strong>. Every Grandkonsul property comes with a complete, unencumbered documentation package designed to protect your legacy.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 gap-8">
             {documents.map((doc, i) => (
-              <div key={i} className="group relative bg-grand-light dark:bg-white/5 p-6 rounded-xl border border-transparent hover:border-grand-gold transition-all duration-300">
-                <div className="w-full aspect-[1/1.4] bg-white dark:bg-black/20 rounded border border-gray-200 dark:border-white/10 mb-6 flex flex-col items-center justify-center relative overflow-hidden shadow-inner">
-                   <div className="absolute inset-0 bg-grand-gold/5 group-hover:bg-grand-gold/10 transition-colors"></div>
-                   <FileText size={40} className="text-grand-gold/50 mb-2" />
-                   <span className="text-[10px] uppercase font-bold text-grand-dark/30 dark:text-white/30 text-center px-4">{doc.title}</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 size={20} className="text-grand-gold shrink-0 mt-1" />
-                  <div>
-                    <h3 className="font-bold text-grand-dark dark:text-white text-sm">{doc.title}</h3>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{doc.desc}</p>
+              <div key={i} className="flex gap-6 p-8 rounded-2xl bg-grand-light dark:bg-white/5 border border-transparent hover:border-grand-gold transition-all duration-300 group">
+                
+                {/* Icon Column */}
+                <div className="flex-shrink-0">
+                  <div className="w-14 h-14 rounded-full bg-white dark:bg-black/20 flex items-center justify-center text-grand-gold shadow-sm group-hover:bg-grand-gold group-hover:text-white transition-colors">
+                    <doc.icon size={28} />
                   </div>
                 </div>
+
+                {/* Content Column */}
+                <div>
+                  <h3 className="text-xl font-serif font-bold text-grand-dark dark:text-white mb-3">
+                    {doc.title}
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-[10px] uppercase font-bold text-grand-green dark:text-grand-gold mb-1 tracking-widest">
+                        Why you need it
+                      </p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                        {doc.why}
+                      </p>
+                    </div>
+
+                    <div className="pl-4 border-l-2 border-grand-gold/30">
+                      <p className="text-[10px] uppercase font-bold text-grand-dark dark:text-white mb-1 tracking-widest">
+                        The Grandkonsul Edge
+                      </p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 italic leading-relaxed">
+                        "{doc.advantage}"
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             ))}
           </div>
+
         </div>
       </section>
     </>
