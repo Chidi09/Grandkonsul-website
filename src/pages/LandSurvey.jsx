@@ -55,7 +55,7 @@ const LandSurvey = () => {
       <SEO title="Land Survey & Documentation" description="Verified land surveys and legal documentation for Grandkonsul properties." />
       
       {/* Header */}
-      <div className="bg-grand-dark dark:bg-grand-dark pt-40 pb-20 text-center px-6">
+      <div className="bg-grand-green dark:bg-grand-dark pt-40 pb-20 text-center px-6 transition-colors duration-500">
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -63,7 +63,7 @@ const LandSurvey = () => {
         >
           Technical <span className="text-grand-gold">Data</span>
         </motion.h1>
-        <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+        <p className="text-gray-100 dark:text-gray-400 max-w-2xl mx-auto text-lg">
           We believe in absolute transparency. Review the specific survey plans, hectares, and technical coordinates for our prime developments.
         </p>
       </div>
