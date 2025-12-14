@@ -274,25 +274,30 @@ const CinematicVideo = () => {
   });
 
   const scale = useTransform(scrollYProgress, [0, 0.5], [0.9, 1]);
-  const borderRadius = useTransform(scrollYProgress, [0, 0.5], ["2rem", "0rem"]);
+  // Mobile: Smaller border radius. Desktop: Larger.
+  const borderRadius = useTransform(scrollYProgress, [0, 0.5], ["1rem", "0rem"]);
 
   return (
-    <section ref={containerRef} className="relative w-full bg-grand-light dark:bg-grand-dark py-0 md:py-20 overflow-hidden transition-colors duration-500">
+    <section ref={containerRef} className="relative w-full bg-grand-light dark:bg-grand-dark py-12 md:py-20 overflow-hidden transition-colors duration-500">
       
       <div className="container mx-auto px-6 relative z-10">
         
-        {/* Context Header (Explains the video) */}
-        <div className="mb-10 text-center md:text-left flex flex-col md:flex-row justify-between items-end gap-6">
-          <div>
-            <div className="flex items-center gap-2 justify-center md:justify-start mb-2">
+        {/* Context Header */}
+        <div className="mb-8 md:mb-12 flex flex-col md:flex-row justify-between items-center md:items-end gap-6">
+          
+          {/* Title Area - Centered on Mobile, Left on Desktop */}
+          <div className="text-center md:text-left w-full md:w-auto">
+            <div className="flex items-center gap-2 justify-center md:justify-start mb-3">
               <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
               <span className="text-grand-gold text-xs font-bold uppercase tracking-widest">Live Preview</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-grand-dark dark:text-white">
-              Cliftonville <span className="text-grand-gold">Grand Estate</span>
+            <h2 className="text-3xl md:text-5xl font-serif font-bold text-grand-dark dark:text-white leading-tight">
+              Featured <span className="text-grand-gold block md:inline">Development</span>
             </h2>
           </div>
-          <p className="text-gray-600 dark:text-gray-400 max-w-md text-sm md:text-base leading-relaxed text-center md:text-right">
+
+          {/* Description - Centered on Mobile, Right on Desktop */}
+          <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base leading-relaxed text-center md:text-right max-w-md">
             Take a virtual tour of our flagship development. Featuring secure gated access, paved road networks, and modern infrastructure designed for elite living.
           </p>
         </div>
@@ -300,7 +305,8 @@ const CinematicVideo = () => {
         {/* Video Player */}
         <motion.div 
           style={{ scale, borderRadius }}
-          className="relative w-full h-[50vh] md:h-[80vh] overflow-hidden shadow-2xl mx-auto border border-gray-200 dark:border-white/10"
+          // FIX: 'aspect-video' ensures full width on mobile (16:9). 'md:h-[80vh]' keeps it immersive on PC.
+          className="relative w-full aspect-video md:aspect-auto md:h-[80vh] overflow-hidden shadow-2xl mx-auto border border-gray-200 dark:border-white/10"
         >
           <video 
             ref={videoRef}
@@ -315,12 +321,14 @@ const CinematicVideo = () => {
             Your browser does not support the video tag.
           </video>
 
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-grand-dark/80 dark:from-grand-dark via-transparent to-transparent opacity-60 dark:opacity-60 pointer-events-none"></div>
+          {/* Gradient Overlay (Subtle) */}
+          <div className="absolute inset-0 bg-gradient-to-t from-grand-dark/90 dark:from-grand-dark/90 via-transparent to-transparent opacity-40 dark:opacity-40 pointer-events-none"></div>
           
-          {/* Floating Label inside video */}
-          <div className="absolute bottom-6 left-6 bg-white/80 dark:bg-black/40 backdrop-blur-md px-4 py-2 rounded-lg border border-gray-200 dark:border-white/10">
-             <p className="text-grand-dark dark:text-white text-xs font-bold">📍 Itori, Ogun State</p>
+          {/* Floating Label - Updated to Olowofela */}
+          <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 bg-white/80 dark:bg-black/60 backdrop-blur-md px-4 py-2 rounded-full md:rounded-lg border border-gray-200 dark:border-white/10">
+             <p className="text-grand-dark dark:text-white text-[10px] md:text-xs font-bold flex items-center gap-1">
+               📍 Olowofela
+             </p>
           </div>
         </motion.div>
 
