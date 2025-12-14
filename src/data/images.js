@@ -1,6 +1,7 @@
 // Import all your images here
 import logo from '../grandkonsul-images/logo.png';
 import logoWords from '../grandkonsul-images/logo_with_words-removebg-preview.png';
+import heroVideo from '../grandkonsul-images/hero-video.mp4';
 
 // Hero & Backgrounds
 import heroBg from '../grandkonsul-images/Moody Modern Architecture.jpg';

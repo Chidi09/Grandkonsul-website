@@ -27,6 +27,7 @@ const Home = () => {
           <HeroSection />
           <MarqueeSection />
           <AboutSection />
+          <CinematicVideo />
           <ServicesOverview />
           <FAQPreview />
           <CallToAction />
