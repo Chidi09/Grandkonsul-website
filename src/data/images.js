@@ -25,6 +25,11 @@ import skyscraper from '../grandkonsul-images/Glass skyscraper looking up.jpg';
 import apartment from '../grandkonsul-images/Modern apartment interior.jpg';
 import abstractGlass from '../grandkonsul-images/Abstract glass architecture facade.jpg';
 
+// Survey Plans
+import surveyPCG from '../grandkonsul-images/survey-pcg.jpg';
+import surveyOlowofela from '../grandkonsul-images/survey-olowofela.jpg';
+import surveyUchenna from '../grandkonsul-images/survey-uchenna.jpg';
+
 export const assets = {
   logo,
   logoWords,
@@ -46,6 +51,11 @@ export const assets = {
     { src: brutalist, title: "Villa George", loc: "Ikoyi" },
     { src: apartment, title: "Contemporary Villa", loc: "Banana Island" },
     { src: abstractGlass, title: "Transparent Materials", loc: "Eko Atlantic" }
-  ]
+  ],
+  surveys: {
+    pcg: surveyPCG,
+    olowofela: surveyOlowofela,
+    uchenna: surveyUchenna
+  }
 };
 
