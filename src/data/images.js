@@ -29,6 +29,7 @@ export const assets = {
   logo,
   logoWords,
   heroBg,
+  heroVideo,
   luxuryInterior,
   velvetSofa,
   cubeHouse: geometric, // Exported so it can be used on Services page

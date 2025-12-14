@@ -264,6 +264,49 @@ const AboutSection = () => {
 
 // REMOVED: HorizontalGallery (Selected Works) section
 
+// --- 5. CINEMATIC VIDEO (After About Section) ---
+const CinematicVideo = () => {
+  const containerRef = useRef(null);
+  const videoRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Scale and round corners on scroll
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
+  const borderRadius = useTransform(scrollYProgress, [0, 0.5, 1], [40, 0, 40]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+
+  return (
+    <section 
+      ref={containerRef}
+      className="relative py-20 md:py-32 bg-grand-dark overflow-hidden"
+    >
+      <div className="container mx-auto px-6">
+        <motion.div
+          style={{ scale, borderRadius, opacity }}
+          className="relative w-full aspect-video max-w-7xl mx-auto shadow-2xl overflow-hidden"
+        >
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+            src={assets.heroVideo}
+          >
+            Your browser does not support the video tag.
+          </video>
+          {/* Subtle overlay for better contrast */}
+          <div className="absolute inset-0 bg-black/20"></div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
 // --- 6. SERVICES SPOTLIGHT (Mouse-Tracking Spotlight Effect) ---
 const ServicesOverview = () => {
   const containerRef = useRef(null);
