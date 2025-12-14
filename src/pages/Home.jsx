@@ -28,6 +28,7 @@ const Home = () => {
           <MarqueeSection />
           <AboutSection />
           <CinematicVideo />
+          <PromoSection />
           <ServicesOverview />
           <FAQPreview />
           <CallToAction />
@@ -415,7 +416,110 @@ const CinematicVideo = () => {
   );
 };
 
-// --- 6. SERVICES SPOTLIGHT (Mouse-Tracking Spotlight Effect) ---
+// --- 6. MEGA PROMO SECTION ---
+const PromoSection = () => {
+  const offers = [
+    { title: "4 Bed Terrace Duplex", size: "265 SQM", type: "Duplex" },
+    { title: "4 Bed Semi-Detached", size: "350 SQM", type: "Duplex" },
+    { title: "4 Bed Fully Detached", size: "500 SQM", type: "Duplex" },
+    { title: "3 Bed Terrace Duplex", size: "180 SQM", type: "Bungalow" },
+    { title: "3 Bed Semi Bungalow", size: "350 SQM", type: "Bungalow" },
+    { title: "3 Bed Fully Detached", size: "500 SQM", type: "Bungalow" },
+  ];
+
+  return (
+    <section className="py-20 bg-white dark:bg-grand-dark transition-colors duration-500 overflow-hidden">
+      <div className="container mx-auto px-6">
+        
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <span className="bg-red-600 text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest animate-pulse">
+            Limited Time Offer
+          </span>
+          <h2 className="text-4xl md:text-6xl font-serif font-bold text-grand-dark dark:text-white mt-6 mb-4">
+            MEGA <span className="text-grand-green">PROMO</span>
+          </h2>
+          <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
+            Secure your spot at <strong>Papalanto, Shagamu Interchange</strong> (Close to Olorunsogo Powerplant). Prices slashed on all plot sizes.
+          </p>
+        </div>
+
+        <div className="flex flex-col lg:flex-row items-center gap-16">
+          
+          {/* LEFT: The Flyer Display (Visual Proof) */}
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="w-full lg:w-1/2"
+          >
+            <div className="relative group">
+              {/* Glow Effect behind flyer */}
+              <div className="absolute -inset-2 bg-gradient-to-r from-grand-green to-grand-gold rounded-2xl blur-lg opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+              
+              <img 
+                src={assets.promoFlyer} 
+                alt="Mega Promo Flyer" 
+                className="relative rounded-2xl shadow-2xl w-full object-cover transform transition-transform duration-500 group-hover:scale-[1.02]" 
+              />
+              
+              {/* Badge */}
+              <div className="absolute top-6 right-6 bg-grand-dark text-grand-gold font-bold h-20 w-20 rounded-full flex items-center justify-center text-center text-xs shadow-lg rotate-12">
+                SELLING<br/>FAST
+              </div>
+            </div>
+          </motion.div>
+
+          {/* RIGHT: The Offer List (Readable & Actionable) */}
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="w-full lg:w-1/2"
+          >
+            <h3 className="text-2xl font-serif font-bold text-grand-dark dark:text-white mb-8">Available Allocations</h3>
+            
+            <div className="grid sm:grid-cols-2 gap-4 mb-10">
+              {offers.map((offer, i) => (
+                <div key={i} className="flex items-center justify-between p-4 border border-gray-200 dark:border-white/10 rounded-lg hover:border-grand-green dark:hover:border-grand-gold transition-colors bg-grand-light dark:bg-white/5">
+                  <div>
+                    <h4 className="font-bold text-grand-dark dark:text-white text-sm">{offer.title}</h4>
+                    <span className="text-[10px] uppercase text-gray-500 dark:text-gray-400 tracking-wider">{offer.type}</span>
+                  </div>
+                  <div className="bg-grand-green/10 text-grand-green dark:text-grand-gold text-xs font-bold px-3 py-1 rounded-full">
+                    {offer.size}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Call to Actions */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <a 
+                href="/contact" 
+                className="flex-1 bg-grand-green text-white text-center py-4 rounded-full font-bold hover:bg-grand-gold transition-all shadow-lg hover:shadow-grand-green/50"
+              >
+                Claim This Offer
+              </a>
+              <a 
+                href="tel:08066337632" 
+                className="flex-1 border border-grand-dark dark:border-white/30 text-grand-dark dark:text-white text-center py-4 rounded-full font-bold hover:bg-grand-dark hover:text-white transition-all"
+              >
+                Call: 0806 633 7632
+              </a>
+            </div>
+            <p className="text-center text-xs text-gray-400 mt-4">
+              * Promo valid while stocks last. Terms and conditions apply.
+            </p>
+
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// --- 7. SERVICES SPOTLIGHT (Mouse-Tracking Spotlight Effect) ---
 const ServicesOverview = () => {
   const containerRef = useRef(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -484,7 +588,7 @@ const ServicesOverview = () => {
   );
 };
 
-// --- 7. FAQ PREVIEW (Enhanced Design) ---
+// --- 8. FAQ PREVIEW (Enhanced Design) ---
 const FAQPreview = () => {
   const previewFAQs = faqs.slice(0, 2);
 
@@ -584,7 +688,7 @@ const FAQPreview = () => {
   );
 };
 
-// --- 8. CTA (With Documents List) ---
+// --- 9. CTA (With Documents List) ---
 const CallToAction = () => {
   const documents = [
     "Receipt of Payment",

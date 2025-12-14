@@ -30,6 +30,9 @@ import surveyPCG from '../grandkonsul-images/survey-pcg.jpg';
 import surveyOlowofela from '../grandkonsul-images/survey-olowofela.jpg';
 import surveyUchenna from '../grandkonsul-images/survey-uchenna.jpg';
 
+// Promo
+import promoFlyer from '../grandkonsul-images/promo-flyer.jpg';
+
 export const assets = {
   logo,
   logoWords,
@@ -56,6 +59,7 @@ export const assets = {
     pcg: surveyPCG,
     olowofela: surveyOlowofela,
     uchenna: surveyUchenna
-  }
+  },
+  promoFlyer
 };
 
