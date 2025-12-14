@@ -277,7 +277,7 @@ const CinematicVideo = () => {
   const borderRadius = useTransform(scrollYProgress, [0, 0.5], ["2rem", "0rem"]);
 
   return (
-    <section ref={containerRef} className="relative w-full bg-grand-dark py-0 md:py-20 overflow-hidden">
+    <section ref={containerRef} className="relative w-full bg-grand-light dark:bg-grand-dark py-0 md:py-20 overflow-hidden transition-colors duration-500">
       
       <div className="container mx-auto px-6 relative z-10">
         
@@ -288,11 +288,11 @@ const CinematicVideo = () => {
               <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
               <span className="text-grand-gold text-xs font-bold uppercase tracking-widest">Live Preview</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-white">
+            <h2 className="text-3xl md:text-5xl font-serif font-bold text-grand-dark dark:text-white">
               Cliftonville <span className="text-grand-gold">Grand Estate</span>
             </h2>
           </div>
-          <p className="text-gray-400 max-w-md text-sm md:text-base leading-relaxed text-center md:text-right">
+          <p className="text-gray-600 dark:text-gray-400 max-w-md text-sm md:text-base leading-relaxed text-center md:text-right">
             Take a virtual tour of our flagship development. Featuring secure gated access, paved road networks, and modern infrastructure designed for elite living.
           </p>
         </div>
@@ -300,7 +300,7 @@ const CinematicVideo = () => {
         {/* Video Player */}
         <motion.div 
           style={{ scale, borderRadius }}
-          className="relative w-full h-[50vh] md:h-[80vh] overflow-hidden shadow-2xl mx-auto border border-white/10"
+          className="relative w-full h-[50vh] md:h-[80vh] overflow-hidden shadow-2xl mx-auto border border-gray-200 dark:border-white/10"
         >
           <video 
             ref={videoRef}
@@ -316,11 +316,11 @@ const CinematicVideo = () => {
           </video>
 
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-grand-dark via-transparent to-transparent opacity-60 pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-grand-dark/80 dark:from-grand-dark via-transparent to-transparent opacity-60 dark:opacity-60 pointer-events-none"></div>
           
           {/* Floating Label inside video */}
-          <div className="absolute bottom-6 left-6 bg-black/40 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10">
-             <p className="text-white text-xs font-bold">📍 Itori, Ogun State</p>
+          <div className="absolute bottom-6 left-6 bg-white/80 dark:bg-black/40 backdrop-blur-md px-4 py-2 rounded-lg border border-gray-200 dark:border-white/10">
+             <p className="text-grand-dark dark:text-white text-xs font-bold">📍 Itori, Ogun State</p>
           </div>
         </motion.div>
 
