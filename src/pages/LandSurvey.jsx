@@ -8,7 +8,7 @@ const LandSurvey = () => {
   // Data extracted directly from your uploaded PDF text layers
   const featuredSurveys = [
     { 
-      title: "P.C.G Nigeria Limited", 
+      title: "Grandkonsul Survey Team", 
       subtitle: "Papalanto/Sagamu Road Scheme",
       image: assets.surveys.pcg,
       location: "Moose/Ijoko Village, via Papalanto, Ifo LGA, Ogun State",
@@ -21,7 +21,7 @@ const LandSurvey = () => {
       ]
     },
     { 
-      title: "Ms. Laide Olowofela", 
+      title: "Grandkonsul Survey Team", 
       subtitle: "Land Encroachment Map",
       image: assets.surveys.olowofela,
       location: "Erunbe Stream Axis, Ewekoro LGA",
@@ -31,19 +31,6 @@ const LandSurvey = () => {
       desc: "Topographical map detailing the Erunbe stream path and seasonal water flow boundaries.",
       files: [
         { name: "MS.LAIDE OLOWOFELA LAND ENCRO.pdf", label: "Land Survey" },
-        { name: "plan shewing the difference in stream path.pdf", label: "Stream Path Plan" }
-      ]
-    },
-    { 
-      title: "Uchenna Adedayo Ubachukwu", 
-      subtitle: "Olorunsogo Village Scheme",
-      image: assets.surveys.uchenna,
-      location: "Off Sagamu/Papalanto Expressway, Ewekoro LGA",
-      area: "41.953 Hectares (103.665 Acres)",
-      planNo: "Zone 31 UTM",
-      surveyor: "Grandkonsul Survey Team",
-      desc: "Detailed survey of Olowofela/Aromokun Village showing pipeline setbacks and road networks.",
-      files: [
         { name: "plan shewing the difference in stream path.pdf", label: "Stream Path Plan" }
       ]
     }
