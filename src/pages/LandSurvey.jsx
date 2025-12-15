@@ -63,7 +63,7 @@ const LandSurvey = () => {
             <h2 className="text-3xl font-serif font-bold text-grand-dark dark:text-white">Verified Survey Plans</h2>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-10">
+          <div className="grid gap-10 sm:grid-cols-2 max-w-5xl mx-auto">
             {featuredSurveys.map((survey, i) => (
               <div key={i} className="bg-white dark:bg-white/5 rounded-xl shadow-sm border border-gray-100 dark:border-white/10 hover:border-grand-gold transition-all duration-300 overflow-hidden flex flex-col group">
                 {/* ACTUAL SURVEY IMAGE */}
