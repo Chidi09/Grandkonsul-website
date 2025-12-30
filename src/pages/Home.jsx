@@ -502,10 +502,16 @@ const PromoSection = () => {
                 Claim This Offer
               </a>
               <a 
-                href="tel:08066337632" 
+                href="tel:+447846324245" 
                 className="flex-1 border border-grand-dark dark:border-white/30 text-grand-dark dark:text-white text-center py-4 rounded-full font-bold hover:bg-grand-dark hover:text-white transition-all"
               >
-                Call: 0806 633 7632
+                Call: +44 7846 324245
+              </a>
+              <a 
+                href="tel:+2348125935055" 
+                className="flex-1 border border-grand-dark dark:border-white/30 text-grand-dark dark:text-white text-center py-4 rounded-full font-bold hover:bg-grand-dark hover:text-white transition-all"
+              >
+                Call: +234 812 593 5055
               </a>
             </div>
             <p className="text-center text-xs text-gray-400 mt-4">
