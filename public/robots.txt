@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://grandkonsul.com/sitemap.xml
+
+# Disallow access to admin or private areas if any
+# User-agent: *
+# Disallow: /admin/
