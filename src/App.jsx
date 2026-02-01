@@ -1,17 +1,23 @@
-import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
-import { ThemeProvider } from './contexts/ThemeContext';
-import SmoothScroll from './components/SmoothScroll';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import About from './pages/About';
-import Services from './pages/Services';
-import LandSurvey from './pages/LandSurvey';
-import Contact from './pages/Contact';
-import Privacy from './pages/Privacy';
-import Terms from './pages/Terms';
+import { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import SmoothScroll from "./components/SmoothScroll";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import Projects from "./pages/Projects";
+import LandSurvey from "./pages/LandSurvey";
+import Contact from "./pages/Contact";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 
 // Helper to ensure page starts at top when navigating
 const ScrollToTop = () => {
@@ -37,6 +43,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/services" element={<Services />} />
+                  <Route path="/projects" element={<Projects />} />
                   <Route path="/land-survey" element={<LandSurvey />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/privacy" element={<Privacy />} />
@@ -53,4 +60,3 @@ function App() {
 }
 
 export default App;
-

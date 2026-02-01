@@ -2,49 +2,56 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://www.grandkonsul.com/</loc>
+    <loc>https://www.grandkonsulgardens.com/</loc>
     <lastmod>2026-02-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://www.grandkonsul.com/about</loc>
+    <loc>https://www.grandkonsulgardens.com/about</loc>
     <lastmod>2026-02-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.grandkonsul.com/services</loc>
+    <loc>https://www.grandkonsulgardens.com/services</loc>
     <lastmod>2026-02-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.grandkonsul.com/land-survey</loc>
+    <loc>https://www.grandkonsulgardens.com/projects</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.grandkonsulgardens.com/land-survey</loc>
     <lastmod>2026-02-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://www.grandkonsul.com/contact</loc>
+    <loc>https://www.grandkonsulgardens.com/contact</loc>
     <lastmod>2026-02-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://www.grandkonsul.com/privacy</loc>
+    <loc>https://www.grandkonsulgardens.com/privacy</loc>
     <lastmod>2026-02-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://www.grandkonsul.com/terms</loc>
+    <loc>https://www.grandkonsulgardens.com/terms</loc>
     <lastmod>2026-02-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

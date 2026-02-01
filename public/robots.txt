@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://www.grandkonsul.com/sitemap.xml
+Sitemap: https://www.grandkonsulgardens.com/sitemap.xml
 
 # Disallow access to admin or private areas if any
 # User-agent: *
