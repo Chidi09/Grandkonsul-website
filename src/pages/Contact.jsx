@@ -1,12 +1,41 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const Contact = () => {
-  const handleSubmit = (e) => {
+  const empty = { firstName: '', lastName: '', email: '', message: '', website: '' };
+  const [form, setForm] = useState(empty);
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    if (status === 'error') setStatus('idle');
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add form submission logic here later (e.g., EmailJS or Formspree)
-    alert("Thank you! We will be in touch shortly.");
+    setStatus('sending');
+    setError('');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, source: 'Grandkonsul contact form' }),
+      });
+      if (res.ok) {
+        setStatus('sent');
+        setForm(empty);
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error || 'Something went wrong. Please try again.');
+        setStatus('error');
+      }
+    } catch {
+      setError('Network error. Please check your connection or call +234 812 593 5055.');
+      setStatus('error');
+    }
   };
 
   return (
@@ -78,29 +107,39 @@ const Contact = () => {
 
             {/* Contact Form (Right Side) */}
             <div className="p-10 md:w-3/5">
+              {status === 'sent' ? (
+                <div className="h-full flex flex-col items-center justify-center text-center py-12">
+                  <CheckCircle className="text-grand-gold mb-4" size={48} />
+                  <h3 className="text-2xl font-serif font-bold text-grand-dark dark:text-white mb-2">Thank you!</h3>
+                  <p className="text-gray-600 dark:text-gray-400">We have received your message and will be in touch shortly.</p>
+                </div>
+              ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                <input type="text" name="website" value={form.website} onChange={handleChange} tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">First Name</label>
-                    <input type="text" className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors text-grand-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400" placeholder="John" required />
+                    <input type="text" className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors text-grand-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400" placeholder="John" name="firstName" value={form.firstName} onChange={handleChange} required />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Last Name</label>
-                    <input type="text" className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors text-grand-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400" placeholder="Doe" required />
+                    <input type="text" className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors text-grand-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400" placeholder="Doe" name="lastName" value={form.lastName} onChange={handleChange} required />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
-                  <input type="email" className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors text-grand-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400" placeholder="john@example.com" required />
+                  <input type="email" className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors text-grand-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400" placeholder="john@example.com" name="email" value={form.email} onChange={handleChange} required />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message</label>
-                  <textarea rows="4" className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors text-grand-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400" placeholder="How can we help you?" required></textarea>
+                  <textarea rows="4" className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-sm focus:outline-none focus:border-grand-gold focus:ring-1 focus:ring-grand-gold transition-colors text-grand-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400" placeholder="How can we help you?" name="message" value={form.message} onChange={handleChange} required></textarea>
                 </div>
-                <button type="submit" className="bg-grand-green dark:bg-grand-gold text-white px-8 py-3 rounded-sm font-semibold hover:bg-grand-gold dark:hover:bg-grand-gold/90 transition-colors flex items-center gap-2">
-                  Send Message <Send size={18} />
+                {status === 'error' && <p className="text-sm text-red-600 dark:text-red-400" role="alert">{error}</p>}
+                <button type="submit" disabled={status === 'sending'} className="disabled:opacity-60 bg-grand-green dark:bg-grand-gold text-white px-8 py-3 rounded-sm font-semibold hover:bg-grand-gold dark:hover:bg-grand-gold/90 transition-colors flex items-center gap-2">
+                  {status === 'sending' ? 'Sending...' : 'Send Message'} <Send size={18} />
                 </button>
               </form>
+              )}
             </div>
           </div>
         </div>
